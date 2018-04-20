@@ -36,13 +36,13 @@ public class ConnectionPool {
 		try {
 			Class.forName(DRIVER_NAME);
 		} catch (ClassNotFoundException e) {
-
+			e.printStackTrace();
 		}
 		for (int i = 0; i < MIN_CONNECTION_COUNT; i++) {
 			try {
 				pool.add(DriverManager.getConnection(URL, LOGIN, PASSWORD));
 			} catch (SQLException e) {
-
+				e.printStackTrace();
 			}
 		}
 	}

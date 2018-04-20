@@ -11,6 +11,10 @@ public interface OrderDao extends BaseDao<Order> {
 	
 	List<Order> readAllWithStatus(OrderStatusEnum orderStatus);
 	
-	Order instantRead(Order order);
+//	Order instantRead(Order order);
+	
+	int getLastInsertId();
+	
+	int createOrderTransaction(Order entity);
 
 }

@@ -17,11 +17,11 @@
 
 	<h4>Your personal information:</h4>	
 	<form action="CarRentalServlet" method="post">
-		<strong>Name:</strong> ${this_order.getCustomerName()} <p>
-		<strong>Surname:</strong> ${this_order.getCustomerSurname()} <p>
-		<strong>Passport Number:</strong> ${this_order.getPassportNumb()} <p>
-		<strong>Date of birth:</strong> ${this_order.getDateOfBirth().toString()} <p>
-		<strong>Driving experience:</strong> ${this_order.getDrivingExp()} <p>
+		<strong>Name:</strong> ${cpData.getName()} <p>
+		<strong>Surname:</strong> ${cpData.getSurname()} <p>
+		<strong>Passport Number:</strong> ${cpData.getPassportNumb()} <p>
+		<strong>Date of birth:</strong> ${cpData.getDateOfBirth().toString()} <p>
+		<strong>Driving experience:</strong> ${cpData.getDrivingExp()} <p>
 		<strong>Start date of rent:</strong> ${this_order.getStartDate().toString()} <p>
 		<strong>End date of rent:</strong> ${this_order.getEndDate().toString()} <p>
 	</form>

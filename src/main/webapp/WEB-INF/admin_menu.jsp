@@ -65,8 +65,8 @@
 		<form action="CarRentalServlet" method="post"> 
 		<c:out value="${order.getId()}"/>
 		<c:out value="${order.getStatus()}"/>
-		<c:out value="${order.getCustomerName()}"/>
-		<c:out value="${order.getCustomerSurname()}"/>	
+		<c:out value="${order.getCustomer().getName()}"/>
+		<c:out value="${order.getCustomer().getSurname()}"/>	
 		<button type="submit" name="command" value="VIEW_ORDER_DETAILS">View details</button>
 		<input type="hidden" name="order_id" value="${order.getId()}"/>
 		</form>	

@@ -8,12 +8,15 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.htp.sprynchan.car_rental.bean.CustomerPersonalData;
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.bean.User;
 import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
+import by.htp.sprynchan.car_rental.service.CustomerPersonalDataService;
 import by.htp.sprynchan.car_rental.service.OrderService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
+import by.htp.sprynchan.car_rental.service.impl.CustomerPersonalDataServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
@@ -22,6 +25,7 @@ public class CreateOrderCommandImpl implements BaseCommand {
 
 	private OrderService orderService = new OrderServiceImpl();
 	private CarService carService = new CarServiceImpl();
+	private CustomerPersonalDataService customerPersonalDataService = new CustomerPersonalDataServiceImpl();
 	
 	private static final String PARAMETER_USER = "user";
 	private static final String PARAMETER_CUSTOMER_NAME = "customer_name";
@@ -37,6 +41,7 @@ public class CreateOrderCommandImpl implements BaseCommand {
 	@Override
 	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
 		
+		//TODO refactor date constructor
 		Date date = new Date();
 		java.sql.Date sDate = new java.sql.Date(date.getTime());		
 		OrderStatusEnum orderStatus = OrderStatusEnum.WAITING_FOR_APPROVE;
@@ -55,20 +60,20 @@ public class CreateOrderCommandImpl implements BaseCommand {
 		Order order = new Order();
 		order.setStatus(orderStatus);
 		order.setOrderDate(orderDate);
-		order.setCustomerName(customerName);
-		order.setCustomerSurname(customerSurname);
 		order.setUserId(userId);
-		order.setPassportNumb(passportNumb);
-		order.setDateOfBirth(dateOfBirth);
-		order.setDrivingExp(drivingExp);
 		order.setCarId(bookingCarId);
 		order.setStartDate(startDate);
 		order.setEndDate(endDate);
+		order.setCustomer(new CustomerPersonalData(customerName, customerSurname, passportNumb, dateOfBirth, drivingExp));
+			
+		int id = orderService.createNewOrder(order);
 		
-		orderService.createNewOrder(order);
 		carService.updateIsAvailableStatus(bookingCarId, request.getParameter(COMMAND));
+		
+		System.out.println(")))))))))))))))))  " +  id);
 				
-		request.setAttribute("this_order", orderService.executeInstantRead(order));
+		request.setAttribute("this_order", orderService.getOrder(id));
+		request.setAttribute("cpData", customerPersonalDataService.getCustomerPersonalData(orderService.getOrder(id).getCustomer().getId()));
 		request.setAttribute("booking_car", carService.getCar(bookingCarId));
 							
 		return PAGE_SUBMIT_STEP;

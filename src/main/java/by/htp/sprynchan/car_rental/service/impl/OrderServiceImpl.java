@@ -16,9 +16,9 @@ public class OrderServiceImpl implements OrderService {
 	OrderDao orderDao = new OrderDaoImpl();
 
 	@Override
-	public void createNewOrder(Order order) {
+	public int createNewOrder(Order order) {
 
-		orderDao.create(order);
+		return orderDao.createOrderTransaction(order);
 
 	}
 
@@ -37,12 +37,12 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
-	@Override
-	public Order executeInstantRead(Order order) {
-		
-		return orderDao.instantRead(order);
-		
-	}
+//	@Override
+//	public Order executeInstantRead(Order order) {
+//		
+//		return orderDao.instantRead(order);
+//		
+//	}
 
 	@Override
 	public List<Order> getOrderList(OrderStatusEnum orderStatus) {
@@ -92,5 +92,10 @@ public class OrderServiceImpl implements OrderService {
 		
 		return orders;
 	}
+
+//	@Override
+//	public int getInsertedOrderId() {
+//		return orderDao.getLastInsertId();
+//	}
 
 }

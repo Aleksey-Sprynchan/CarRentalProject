@@ -11,13 +11,15 @@ public interface OrderService {
 	
 	List<Order> getOrderList(OrderStatusEnum orderStatus);
 	
-	void createNewOrder (Order order);
+	int createNewOrder (Order order);
 	
 	Order getOrder(int id);
 	
 	void updateOrderStatus(int id, OrderStatusEnum orderStatus);
 	
-	Order executeInstantRead(Order order);
+//	int getInsertedOrderId();
+	
+//	Order executeInstantRead(Order order);
 	
 	void rejectOrder(int id, String reason);
 	

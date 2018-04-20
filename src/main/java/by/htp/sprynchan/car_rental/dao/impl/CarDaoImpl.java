@@ -25,6 +25,7 @@ public class CarDaoImpl implements CarDao {
 				+ "passengers, fuel, isAirCondition, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		connector = dataBaseConnection.getConnection();
+		
 
 		PreparedStatement ps;
 		try {
