@@ -29,6 +29,7 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 	private static final String PARAMETER_PASSENGERS= "passengers";
 	private static final String PARAMETER_FUEL= "fuel";
 	private static final String PARAMETER_AIR_CONDITION= "is_air_condition";
+	private static final String PARAMETER_PRICE_PER_DAY= "price_per_day";
 	private static final String PARAMETER_IS_AVAILABLE = "is_available";
 	
 	
@@ -46,10 +47,11 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 		int doors = Integer.parseInt(request.getParameter(PARAMETER_DOORS));
 		int passengers = Integer.parseInt(request.getParameter(PARAMETER_PASSENGERS));
 		String fuel = request.getParameter(PARAMETER_FUEL);
-		boolean isAirCondition = Boolean.parseBoolean(request.getParameter(PARAMETER_AIR_CONDITION));	
+		boolean isAirCondition = Boolean.parseBoolean(request.getParameter(PARAMETER_AIR_CONDITION));
+		int pricePerDay = Integer.parseInt(request.getParameter(PARAMETER_PRICE_PER_DAY));
 		boolean isAvailable = Boolean.parseBoolean(request.getParameter(PARAMETER_IS_AVAILABLE));
 		
-		carService.updateCarInfo(new Car(carId, brandName, model, type, transmission, doors, passengers, fuel, isAirCondition, isAvailable));
+		carService.updateCarInfo(new Car(carId, brandName, model, type, transmission, doors, passengers, fuel, isAirCondition, pricePerDay, isAvailable));
 		request.setAttribute(PARAMETER_MESSAGE, MESSAGE);
 		
 		setAttributetOrderList(request, null);

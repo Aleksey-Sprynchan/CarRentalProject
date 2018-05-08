@@ -12,24 +12,26 @@ import java.util.List;
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.dao.CarDao;
 
-public class CarDaoImpl implements CarDao {
+public class CarDaoDBImpl implements CarDao {
 
 	private static final String url = "jdbc:mysql://localhost/car_rental?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
 
 	@Override
-	public void create(Car entity) {
-
-		Connection connector = null;
+	public int create(Car entity) {
+		 // TODO transaction with damage_costs threw car_id
+		
+		
+		
+		Connection connection = null;
 
 		String sql = "INSERT INTO cars (brand_name, model, type, transmission, doors, "
-				+ "passengers, fuel, isAirCondition, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "passengers, fuel, isAirCondition, price_per_day, isAvailable) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		connector = dataBaseConnection.getConnection();
+		connection = dataBaseConnection.getConnection();
 		
-
-		PreparedStatement ps;
-		try {
-			ps = connector.prepareStatement(sql);
+		int id = 0;
+		
+		try(PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			ps.setString(1, entity.getBrandName());
 			ps.setString(2, entity.getModel());
 			ps.setString(3, entity.getType());
@@ -38,13 +40,22 @@ public class CarDaoImpl implements CarDao {
 			ps.setInt(6, entity.getPassengers());
 			ps.setString(7, entity.getFuel());
 			ps.setBoolean(8, entity.isAirCondition());
-			ps.setBoolean(9, entity.isAvailable());
+			ps.setInt(9, entity.getPricePerDay());
+			ps.setBoolean(10, entity.isAvailable());
 			ps.executeUpdate();
+			
+			ResultSet resultSet = ps.getGeneratedKeys();
+			if (resultSet.next()) {
+				id = resultSet.getInt(1);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			dataBaseConnection.closeConnection(connector);
+			dataBaseConnection.closeConnection(connection);
 		}
+		
+		return id;
 
 	}
 
@@ -68,7 +79,7 @@ public class CarDaoImpl implements CarDao {
 			if (rs.next()) {
 				car = new Car(rs.getString("brand_name"), rs.getString("model"), rs.getString("type"),
 						rs.getString("transmission"), rs.getInt("doors"), rs.getInt("passengers"), 
-						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getBoolean("isAvailable"));
+						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getInt("price_per_day"), rs.getBoolean("isAvailable"));
 
 				car.setId(rs.getInt("id"));
 			}
@@ -82,10 +93,10 @@ public class CarDaoImpl implements CarDao {
 	}
 
 	@Override
-	public void update(Car entity) {
+	public int update(Car entity) {
 
 		String sql = "UPDATE cars SET brand_name=?, model=?, type=?, transmission=?, "
-				+ "doors=?, passengers=?, fuel=?, isAirCondition=?, isAvailable=?  WHERE ID=?;";
+				+ "doors=?, passengers=?, fuel=?, isAirCondition=?, price_per_day=?, isAvailable=?  WHERE ID=?;";
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -105,13 +116,15 @@ public class CarDaoImpl implements CarDao {
 			ps.setInt(6, entity.getPassengers());
 			ps.setString(7, entity.getFuel());
 			ps.setBoolean(8, entity.isAirCondition());
-			ps.setBoolean(9, entity.isAvailable());		
-			ps.setInt(10, entity.getId());
+			ps.setInt(9, entity.getPricePerDay());
+			ps.setBoolean(10, entity.isAvailable());		
+			ps.setInt(11, entity.getId());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return 0;
 
 	}
 
@@ -158,7 +171,7 @@ public class CarDaoImpl implements CarDao {
 			while (rs.next()) {
 				car = new Car(rs.getString("brand_name"), rs.getString("model"), rs.getString("type"),
 						rs.getString("transmission"), rs.getInt("doors"), rs.getInt("passengers"), 
-						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getBoolean("isAvailable"));
+						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getInt("price_per_day"), rs.getBoolean("isAvailable"));
 				car.setId(rs.getInt("id"));
 				carList.add(car);
 			}
@@ -190,7 +203,7 @@ public class CarDaoImpl implements CarDao {
 			while (rs.next()) {
 				car = new Car(rs.getString("brand_name"), rs.getString("model"), rs.getString("type"),
 						rs.getString("transmission"), rs.getInt("doors"), rs.getInt("passengers"), 
-						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getBoolean("isAvailable"));
+						rs.getString("fuel"), rs.getBoolean("isAirCondition"), rs.getInt("price_per_day"), rs.getBoolean("isAvailable"));
 				car.setId(rs.getInt("id"));
 				carList.add(car);
 			}

@@ -34,7 +34,14 @@
 	</div> 
 	
 	<div align="left">
+	
+	<c:if test="${not empty info_message}">
+		<p><strong><c:out value="${info_message}" /></strong></p>
+	</c:if>
+	
+	
 	<c:choose>
+	
 		<c:when test="${user_type == 'ADMIN'}">
 			<p> loggedIn as Admin</p>
 			<form action="CarRentalServlet" method="post">

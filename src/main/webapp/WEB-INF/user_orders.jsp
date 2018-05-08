@@ -48,35 +48,42 @@
 		<p>
 		<li>
 		<form action="CarRentalServlet" method="post"> 
-		<c:out value="${order.getCustomerName()}" />
-		<c:out value="${order.getCustomerSurname()}" />	
+		<c:out value="${order.getCustomer().getName()}" />
+		<c:out value="${order.getCustomer().getSurname()}" />	
 		<c:out value="${order.getCarId()}" />
 		<c:out value="${orderCar_map.get(order.getId())}" />
 		<c:out value="${order.getStartDate()}" />
 		<c:out value="${order.getEndDate()}" />	
-		<strong><c:out value="${order.getStatus().name()}" /></strong>		
+		<strong><c:out value="${order.getStatus().name()}" /></strong>
+		<c:out value="${order.getTotalPrice()}$" />	
 		<c:choose>
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_PAYMENT'}">	
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<button type="submit" name="command" value="PAY_FOR_ORDER">Pay for order</button>		
+			<button type="submit" name="command" value="PAY_FOR_ORDER">Pay for order</button>
+			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
 		</c:when>	
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_DAMAGE_PAYMENT'}">		
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
 			<strong><c:out value="${order.getDamageAmount()} USD" /></strong>
 			<button type="submit" name="command" value="PAY_FOR_DAMAGE">Pay for damage</button>	
 		</c:when>
-		<c:when test="${order.getStatus().name() == 'CANCELLED'}">	
+		<c:when test="${order.getStatus().name() == 'REJECTED'}">	
 			<font size="3" color="red" face="Times New Roman">This order has been rejected by admin!</font>
 			<c:out value="(${order.getRejectionReason()})"/> 	
 		</c:when>
-		<c:when test="${order.getStatus().name() == 'WAITING_FOR_APPROVE'}">		
+		<c:when test="${order.getStatus().name() == 'WAITING_FOR_APPROVE'}">
+			<input type="hidden" name="order_id" value="${order.getId()}"/>
+			<button type="submit" name="command" value="CHANGING_ORDER_PAGE">Change order info</button>	
+			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'PAID'}">		
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'FINISHED'}">		
 		</c:when>
+		<c:when test="${order.getStatus().name() == 'CANCELLED'}">		
+		</c:when>
 		<c:otherwise>
-		<strong>Eror</strong>
+		<strong>Error</strong>
 		</c:otherwise>
 		</c:choose>	
 		</form>	

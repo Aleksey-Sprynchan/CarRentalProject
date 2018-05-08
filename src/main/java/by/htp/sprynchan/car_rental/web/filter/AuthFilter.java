@@ -35,7 +35,6 @@ public class AuthFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-//		System.out.println("FILTER 11111111");
 
 		final HttpServletRequest req = (HttpServletRequest) request;
 		final HttpSession session = req.getSession(true);

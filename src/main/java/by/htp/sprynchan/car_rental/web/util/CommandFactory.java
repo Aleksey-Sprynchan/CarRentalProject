@@ -25,10 +25,22 @@ import by.htp.sprynchan.car_rental.web.commands.impl.all.RegistrationPageCommand
 import by.htp.sprynchan.car_rental.web.commands.impl.all.SignOutCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.ToMyProfilePageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.BookCarCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.CancelOrderCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangeAccountInfoCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangeOrderCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangePasswordCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingAccountInfoPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingOrderPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingPasswordPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.CreateOrderCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.DeleteAccountCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.DeleteAccountPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.DepositPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.MakeDepositCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForDamageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.SubmitOrderFormCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewAccountDetailsCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewMyOrdersCommandImpl;
 
 public class CommandFactory {
@@ -50,6 +62,42 @@ public class CommandFactory {
 		System.out.println(inputCommand);
 		
 		switch(commandName) {
+		case CANCEL_ORDER:
+			command = new CancelOrderCommandImpl();
+			break;
+		case CHANGE_ORDER:
+			command = new ChangeOrderCommandImpl();
+			break;
+		case CHANGING_ORDER_PAGE:
+			command = new ChangingOrderPageCommandImpl();
+			break;
+		case CHANGE_ACCOUNT_INFO:
+			command = new ChangeAccountInfoCommandImpl();
+			break;
+		case CHANGING_ACCOUNT_INFO_PAGE:
+			command = new ChangingAccountInfoPageCommandImpl();
+			break;
+		case CHANGE_PASSWORD:
+			command = new ChangePasswordCommandImpl();
+			break;
+		case CHANGING_PASSWORD_PAGE:
+			command = new ChangingPasswordPageCommandImpl();
+			break;
+		case DELETE_ACCOUNT:
+			command = new DeleteAccountCommandImpl();
+			break;
+		case DELETE_ACCOUNT_PAGE:
+			command = new DeleteAccountPageCommandImpl();
+			break;
+		case MAKE_DEPOSIT:
+			command = new MakeDepositCommandImpl();
+			break;
+		case DEPOSIT_PAGE:
+			command = new DepositPageCommandImpl();
+			break;
+		case VIEW_ACCOUNT_DETAILS:
+			command = new ViewAccountDetailsCommandImpl();
+			break;
 		case SHOW_ORDERS_BY_STATUS:
 			command = new ShowOrdersByStatusCommandImpl();
 			 break;

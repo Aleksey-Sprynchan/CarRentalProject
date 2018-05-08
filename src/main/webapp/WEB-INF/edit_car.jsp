@@ -40,6 +40,9 @@
 		<strong>AirCondition:</strong> 
 		<input size="30" name="is_air_condition" value="${carToEdit.isAirCondition()}" placeholder="is Air Condition">
 		
+		<strong>Price per day:</strong> 
+		<input size="30" name="price_per_day" value="${carToEdit.getPricePerDay()}" placeholder="Enter price">
+		
 		<input type="hidden" name="car_id" value="${carToEdit.getId()}" />
 		<input type="hidden" name="is_available" value="${carToEdit.isAvailable()}" />
 		<button type="submit" name="command" value="UPDATE_CAR">Update car info</button>

@@ -1,21 +1,22 @@
 package by.htp.sprynchan.car_rental.bean;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public class Order extends Entity {
 
-	private static final long serialVersionUID = 5169169366838229002L;
+	private static final long serialVersionUID = 6603138063504802529L;
 	
 	private OrderStatusEnum status;
-	private Date orderDate;
+	private LocalDate orderDate;
 	private int userId; 
 	private int carId;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private CustomerPersonalData customer;
 	private int totalPrice;
+	private boolean isInsurance;
 	private boolean isDamaged;
 	private int damageAmount;
 	private String rejectionReason;
@@ -26,9 +27,9 @@ public class Order extends Entity {
 		super(id);
 	}
 
-	public Order(OrderStatusEnum status, Date orderDate, int userId, int carId, Date startDate, Date endDate,
-			CustomerPersonalData customer, int totalPrice, boolean isDamaged, int damageAmount,
-			String rejectionReason) {
+	public Order(OrderStatusEnum status, LocalDate orderDate, int userId, int carId, LocalDate startDate,
+			LocalDate endDate, CustomerPersonalData customer, int totalPrice, boolean isInsurance, boolean isDamaged,
+			int damageAmount, String rejectionReason) {
 		super();
 		this.status = status;
 		this.orderDate = orderDate;
@@ -38,6 +39,7 @@ public class Order extends Entity {
 		this.endDate = endDate;
 		this.customer = customer;
 		this.totalPrice = totalPrice;
+		this.isInsurance = isInsurance;
 		this.isDamaged = isDamaged;
 		this.damageAmount = damageAmount;
 		this.rejectionReason = rejectionReason;
@@ -51,11 +53,11 @@ public class Order extends Entity {
 		this.status = status;
 	}
 
-	public Date getOrderDate() {
+	public LocalDate getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -75,19 +77,19 @@ public class Order extends Entity {
 		this.carId = carId;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
@@ -105,6 +107,14 @@ public class Order extends Entity {
 
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public boolean isInsurance() {
+		return isInsurance;
+	}
+
+	public void setInsurance(boolean insurance) {
+		this.isInsurance = insurance;
 	}
 
 	public boolean isDamaged() {
@@ -139,6 +149,7 @@ public class Order extends Entity {
 		result = prime * result + ((customer == null) ? 0 : customer.hashCode());
 		result = prime * result + damageAmount;
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result + (isInsurance ? 1231 : 1237);
 		result = prime * result + (isDamaged ? 1231 : 1237);
 		result = prime * result + ((orderDate == null) ? 0 : orderDate.hashCode());
 		result = prime * result + ((rejectionReason == null) ? 0 : rejectionReason.hashCode());
@@ -172,6 +183,8 @@ public class Order extends Entity {
 				return false;
 		} else if (!endDate.equals(other.endDate))
 			return false;
+		if (isInsurance != other.isInsurance)
+			return false;
 		if (isDamaged != other.isDamaged)
 			return false;
 		if (orderDate == null) {
@@ -202,9 +215,12 @@ public class Order extends Entity {
 	public String toString() {
 		return "Order [status=" + status + ", orderDate=" + orderDate + ", userId=" + userId + ", carId=" + carId
 				+ ", startDate=" + startDate + ", endDate=" + endDate + ", customer=" + customer + ", totalPrice="
-				+ totalPrice + ", isDamaged=" + isDamaged + ", damageAmount=" + damageAmount + ", rejectionReason="
-				+ rejectionReason + ", getId()=" + getId() + "]";
+				+ totalPrice + ", isInsurance=" + isInsurance + ", isDamaged=" + isDamaged + ", damageAmount="
+				+ damageAmount + ", rejectionReason=" + rejectionReason + ", getId()=" + getId() + "]";
 	}
+	
+	
+	
 	
 
 }

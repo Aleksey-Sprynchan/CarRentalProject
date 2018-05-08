@@ -24,6 +24,8 @@
 		<strong>Driving experience:</strong> ${cpData.getDrivingExp()} <p>
 		<strong>Start date of rent:</strong> ${this_order.getStartDate().toString()} <p>
 		<strong>End date of rent:</strong> ${this_order.getEndDate().toString()} <p>
+		<strong>Total price:</strong> ${this_order.getTotalPrice()} <p>
+		<strong>Insurance</strong> ${this_order.isInsurance()} <p>
 	</form>
 	
 	

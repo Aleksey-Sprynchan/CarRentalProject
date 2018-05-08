@@ -24,6 +24,12 @@
        <h1>Hello,
        <c:out value="${user.getName()}"/>
        <c:out value="${user.getSurname()} !" /></h1>
+      
+       <form action="CarRentalServlet" method="get">
+       <p>Your balance: <strong><c:out value="${user.getBalance()}$ "></c:out></strong>
+		<button type="submit" name="command" value="DEPOSIT_PAGE">Make a deposit</button>
+		</form>
+       
        
      <div class="block1">  
      <c:forEach items="${car_list}" var="car">
@@ -39,6 +45,9 @@
 	<div align="left"><p>
 	<form action="CarRentalServlet" method="post"> 	
 		<button type="submit" name="command" value="VIEW_MY_ORDERS">My orders</button>
+	</form>
+	<form action="CarRentalServlet" method="post">
+		<p><button type="submit" name="command" value="VIEW_ACCOUNT_DETAILS">My Account</button>
 	</form>
 	<form action="CarRentalServlet" method="post">
 		<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>

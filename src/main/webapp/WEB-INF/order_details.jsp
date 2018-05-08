@@ -10,6 +10,7 @@
 </head>
 <body>
 		<c:out value="${order}" />
+		<p><c:out value="${user}" />
 		
 		<c:choose>
 		<c:when test="${order.getStatus() == 'WAITING_FOR_APPROVE'}">

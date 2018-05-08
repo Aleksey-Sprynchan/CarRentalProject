@@ -2,13 +2,14 @@ package by.htp.sprynchan.car_rental.bean;
 
 public class User extends Entity {
 	
-	private static final long serialVersionUID = -849039266968882096L;
+	private static final long serialVersionUID = -6195181364789221777L;
 	
 	private String login;
 	private String password;
 	private String name;
 	private String surname;
 	private String email;
+	private int balance;
 	private boolean isAdmin;
 	
 	public User() {}
@@ -17,13 +18,8 @@ public class User extends Entity {
 		super(id);
 	}
 
-	public User(String login, String password, boolean isAdmin) {
-		this.login = login;
-		this.password = password;
-		this.isAdmin = isAdmin;
-	}
-
 	public User(String login, String password, String name, String surname, String email) {
+		super();
 		this.login = login;
 		this.password = password;
 		this.name = name;
@@ -71,6 +67,14 @@ public class User extends Entity {
 		this.email = email;
 	}
 
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
 	public boolean isAdmin() {
 		return isAdmin;
 	}
@@ -83,6 +87,7 @@ public class User extends Entity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + balance;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + (isAdmin ? 1231 : 1237);
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
@@ -101,6 +106,8 @@ public class User extends Entity {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (balance != other.balance)
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -134,9 +141,7 @@ public class User extends Entity {
 	@Override
 	public String toString() {
 		return "User [login=" + login + ", password=" + password + ", name=" + name + ", surname=" + surname
-				+ ", email=" + email + ", isAdmin=" + isAdmin + ", getId()=" + getId() + "]";
+				+ ", email=" + email + ", balance=" + balance + ", isAdmin=" + isAdmin + ", getId()=" + getId() + "]";
 	}
 
-
-	
 }

@@ -19,6 +19,7 @@ public class RegisterCommandImpl implements BaseCommand {
 	private static final String PARAMETER_NAME = "name";
 	private static final String PARAMETER_SURNAME = "surname";
 	private static final String PARAMETER_EMAIL = "email";
+	private static final String PARAMETER_DUPLICATE_MESSAGE = "dup_message";
 
 	
 	@Override
@@ -30,8 +31,13 @@ public class RegisterCommandImpl implements BaseCommand {
 		String surname = request.getParameter(PARAMETER_SURNAME);
 		String email = request.getParameter(PARAMETER_EMAIL);
 		
-		userService.createNewUser(login, password, name, surname, email);			
-		return PAGE_INDEX;
+		String message = userService.createNewUser(login, password, name, surname, email);	
+		if(message ==null) {
+			return PAGE_INDEX;
+		} else {
+			request.setAttribute(PARAMETER_DUPLICATE_MESSAGE, message);
+			return PAGE_REGISTRATION;
+		}
 	}
 
 }

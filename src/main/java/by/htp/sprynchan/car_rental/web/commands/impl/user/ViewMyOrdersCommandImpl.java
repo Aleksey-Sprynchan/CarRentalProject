@@ -40,7 +40,7 @@ public class ViewMyOrdersCommandImpl implements BaseCommand {
 		return PAGE_USER_ORDERS;
 	}
 
-	Map<Integer, Car> getCarsForOrderList(List<Order> orderList) {
+		Map<Integer, Car> getCarsForOrderList(List<Order> orderList) {
 		Map<Integer, Car> orderCarMap = new HashMap<Integer, Car>();
 		for (Order order : orderList) {
 			int carId = order.getCarId();

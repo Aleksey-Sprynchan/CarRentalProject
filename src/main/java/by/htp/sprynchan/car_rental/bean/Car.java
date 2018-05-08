@@ -2,8 +2,8 @@ package by.htp.sprynchan.car_rental.bean;
 
 public class Car extends Entity {
 
-	private static final long serialVersionUID = 6503000720043560391L;
-	
+	private static final long serialVersionUID = 5101074728089686144L;
+
 	private String brandName;
 	private String model;
 	private String type;
@@ -12,6 +12,7 @@ public class Car extends Entity {
 	private int passengers;
 	private String fuel;
 	private boolean isAirCondition;
+	private int pricePerDay;
 	private boolean isAvailable;
 
 	public Car() {
@@ -21,30 +22,32 @@ public class Car extends Entity {
 		super(id);
 	}
 
-	public Car(int id, String brandName, String model, String type, String transmission, int doors, int passangers,
-			String fuel, boolean isAirCondition, boolean isAvailable) {
+	public Car(String brandName, String model, String type, String transmission, int doors, int passengers, String fuel,
+			boolean isAirCondition, int pricePerDay, boolean isAvailable) {
+		this.brandName = brandName;
+		this.model = model;
+		this.type = type;
+		this.transmission = transmission;
+		this.doors = doors;
+		this.passengers = passengers;
+		this.fuel = fuel;
+		this.isAirCondition = isAirCondition;
+		this.pricePerDay = pricePerDay;
+		this.isAvailable = isAvailable;
+	}
+
+	public Car(int id, String brandName, String model, String type, String transmission, int doors, int passengers, String fuel,
+			boolean isAirCondition, int pricePerDay, boolean isAvailable) {
 		super(id);
 		this.brandName = brandName;
 		this.model = model;
 		this.type = type;
 		this.transmission = transmission;
 		this.doors = doors;
-		this.passengers = passangers;
+		this.passengers = passengers;
 		this.fuel = fuel;
 		this.isAirCondition = isAirCondition;
-		this.isAvailable = isAvailable;
-	}
-
-	public Car(String brandName, String model, String type, String transmission, int doors, int passangers, String fuel,
-			boolean isAirCondition, boolean isAvailable) {
-		this.brandName = brandName;
-		this.model = model;
-		this.type = type;
-		this.transmission = transmission;
-		this.doors = doors;
-		this.passengers = passangers;
-		this.fuel = fuel;
-		this.isAirCondition = isAirCondition;
+		this.pricePerDay = pricePerDay;
 		this.isAvailable = isAvailable;
 	}
 
@@ -92,8 +95,8 @@ public class Car extends Entity {
 		return passengers;
 	}
 
-	public void setPassengers(int passangers) {
-		this.passengers = passangers;
+	public void setPassengers(int passengers) {
+		this.passengers = passengers;
 	}
 
 	public String getFuel() {
@@ -110,6 +113,14 @@ public class Car extends Entity {
 
 	public void setAirCondition(boolean isAirCondition) {
 		this.isAirCondition = isAirCondition;
+	}
+
+	public int getPricePerDay() {
+		return pricePerDay;
+	}
+
+	public void setPricePerDay(int pricePerDay) {
+		this.pricePerDay = pricePerDay;
 	}
 
 	public boolean isAvailable() {
@@ -131,6 +142,7 @@ public class Car extends Entity {
 		result = prime * result + (isAvailable ? 1231 : 1237);
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		result = prime * result + passengers;
+		result = prime * result + pricePerDay;
 		result = prime * result + ((transmission == null) ? 0 : transmission.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -168,6 +180,8 @@ public class Car extends Entity {
 			return false;
 		if (passengers != other.passengers)
 			return false;
+		if (pricePerDay != other.pricePerDay)
+			return false;
 		if (transmission == null) {
 			if (other.transmission != null)
 				return false;
@@ -184,8 +198,9 @@ public class Car extends Entity {
 	@Override
 	public String toString() {
 		return "Car [brandName=" + brandName + ", model=" + model + ", type=" + type + ", transmission=" + transmission
-				+ ", doors=" + doors + ", passangers=" + passengers + ", fuel=" + fuel + ", isAirCondition="
-				+ isAirCondition + ", isAvailable=" + isAvailable + "]";
+				+ ", doors=" + doors + ", passengers=" + passengers + ", fuel=" + fuel + ", isAirCondition="
+				+ isAirCondition + ", pricePerDay=" + pricePerDay + ", isAvailable=" + isAvailable + "]";
 	}
+
 
 }

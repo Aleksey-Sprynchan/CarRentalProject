@@ -17,15 +17,18 @@ public interface OrderService {
 	
 	void updateOrderStatus(int id, OrderStatusEnum orderStatus);
 	
-//	int getInsertedOrderId();
-	
-//	Order executeInstantRead(Order order);
 	
 	void rejectOrder(int id, String reason);
 	
 	void sendDamagesAmount(int id, String[] damageValues);
 	
-	List<Order> getUserOrderList(int id);
+	List<Order> getUserOrderList(int userId);
+	
+	boolean checkForUnfinishedOrders (int userId);
+	
+	List<String> getResevedDatesList(int carId);
+	
+	
 	
 
 }

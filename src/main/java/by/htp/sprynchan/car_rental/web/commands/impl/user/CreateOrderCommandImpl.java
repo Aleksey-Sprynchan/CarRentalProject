@@ -3,7 +3,7 @@ package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
 import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,27 +35,28 @@ public class CreateOrderCommandImpl implements BaseCommand {
 	private static final String PARAMETER_DRIVING_EXP = "driving_exp";
 	private static final String PARAMETER_CAR_ID = "car_id";
 	private static final String PARAMETER_START_DATE = "start_date";
-	private static final String PARAMETER_END_DATE = "end_date";	
+	private static final String PARAMETER_END_DATE = "end_date";
+	private static final String PARAMETER_TOTAL_PRICE = "total_price";
+	private static final String PARAMETER_INSURANCE = "insurance";
 	private static final String COMMAND = "command";
 	
 	@Override
 	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
-		
-		//TODO refactor date constructor
-		Date date = new Date();
-		java.sql.Date sDate = new java.sql.Date(date.getTime());		
+				
 		OrderStatusEnum orderStatus = OrderStatusEnum.WAITING_FOR_APPROVE;
-		Date orderDate = sDate;
+		LocalDate orderDate = LocalDate.now();
 		String customerName = request.getParameter(PARAMETER_CUSTOMER_NAME);
-		String customerSurname = request.getParameter(PARAMETER_CUSTOMER_SURNAME);;
+		String customerSurname = request.getParameter(PARAMETER_CUSTOMER_SURNAME);
 		User user = (User) request.getSession().getAttribute(PARAMETER_USER);
 		int userId  = user.getId();
 		String passportNumb  = request.getParameter(PARAMETER_PASSPORT_NUMB);
-		Date dateOfBirth = java.sql.Date.valueOf(request.getParameter(PARAMETER_DATE_OF_BIRTH));
+		LocalDate dateOfBirth = LocalDate.parse(request.getParameter(PARAMETER_DATE_OF_BIRTH));	
 		int drivingExp = Integer.parseInt(request.getParameter(PARAMETER_DRIVING_EXP));
 		int bookingCarId = Integer.parseInt(request.getParameter(PARAMETER_CAR_ID));
-		Date startDate = java.sql.Date.valueOf(request.getParameter(PARAMETER_START_DATE));
-		Date endDate = java.sql.Date.valueOf(request.getParameter(PARAMETER_END_DATE));		
+		LocalDate startDate = LocalDate.parse(request.getParameter(PARAMETER_START_DATE));
+		LocalDate endDate = LocalDate.parse(request.getParameter(PARAMETER_END_DATE));	
+		int totalPrice = Integer.parseInt(request.getParameter(PARAMETER_TOTAL_PRICE));		
+		boolean isInsurance = Boolean.parseBoolean(request.getParameter(PARAMETER_INSURANCE)); 
 		
 		Order order = new Order();
 		order.setStatus(orderStatus);
@@ -65,13 +66,14 @@ public class CreateOrderCommandImpl implements BaseCommand {
 		order.setStartDate(startDate);
 		order.setEndDate(endDate);
 		order.setCustomer(new CustomerPersonalData(customerName, customerSurname, passportNumb, dateOfBirth, drivingExp));
+		order.setTotalPrice(totalPrice);
+		order.setInsurance(isInsurance);
+		
 			
 		int id = orderService.createNewOrder(order);
 		
-		carService.updateIsAvailableStatus(bookingCarId, request.getParameter(COMMAND));
-		
-		System.out.println(")))))))))))))))))  " +  id);
-				
+//		carService.updateIsAvailableStatus(bookingCarId, request.getParameter(COMMAND));
+					
 		request.setAttribute("this_order", orderService.getOrder(id));
 		request.setAttribute("cpData", customerPersonalDataService.getCustomerPersonalData(orderService.getOrder(id).getCustomer().getId()));
 		request.setAttribute("booking_car", carService.getCar(bookingCarId));

@@ -66,7 +66,8 @@ public class AuthorizationCommandImpl extends CommonAdminCommand  implements Bas
 		request.getSession().setAttribute(PARAMETER_USER_TYPE, UserTypeEnum.USER);
 		List<Car> carList = carService.getAvailableCarPark();
 		request.setAttribute(PARAMETER_CAR_LIST, carList);
-		request.setAttribute(PARAMETER_USER, resultUser);
+		request.setAttribute(PARAMETER_USER, resultUser);		
+		
 		return PAGE_USER_PROFILE;
 	}
 

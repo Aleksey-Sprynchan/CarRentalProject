@@ -10,6 +10,9 @@
 </head>
 <body>
 	
+	<c:if test="${not empty dup_message}">
+		<p><font size="3" color="red" face="Arial"><c:out value="${dup_message}"/></font>	
+	</c:if>
 	
 	<form action="CarRentalServlet" method="post">
 		<p><strong>Login:</strong> 
@@ -29,10 +32,10 @@
 				
 		<button type="submit" name="command" value="REGISTER">Register</button>
 	</form>
-
-
-
-
+	
+	<form action="CarRentalServlet" method="get">				
+		<p><button type="submit" name="command" value="TO_MY_PROFILE_PAGE">Home Page</button>
+	</form>
 
 </body>
 </html>

@@ -7,14 +7,10 @@ import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public interface OrderDao extends BaseDao<Order> {
 	
-	List<Order> readAll();
-	
+	List<Order> readAll();	
 	List<Order> readAllWithStatus(OrderStatusEnum orderStatus);
+	List<Order> readUserOrders(int userId);
+	List<Order> readReservedDatesForCar(int carId);
 	
-//	Order instantRead(Order order);
-	
-	int getLastInsertId();
-	
-	int createOrderTransaction(Order entity);
 
 }

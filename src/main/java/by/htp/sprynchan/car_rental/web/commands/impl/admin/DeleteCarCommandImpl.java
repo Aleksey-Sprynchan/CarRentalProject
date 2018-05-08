@@ -21,7 +21,7 @@ public class DeleteCarCommandImpl extends CommonAdminCommand implements BaseComm
 	
 	private static final String PARAMETER_CAR_ID = "car_id";
 	private static final String PARAMETER_MESSAGE = "info_message";
-	private static final String MESSAGE = "Book was succsefully deleted from car park!";
+	private static final String MESSAGE = "Car was succsefully deleted from car park!";
 	
 	@Override
 	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {

@@ -9,6 +9,18 @@ public interface UserService {
 	
 	User getUserByLoginPassword (String login, String password) throws UserNotFoundException;
 	
-	void createNewUser(String login, String password, String name, String surname, String email);
+	String createNewUser(String login, String password, String name, String surname, String email);
+	
+	void deleteUser (int id);
+	
+	User getUser (int id);
+	
+	String updateUserInfo (User user);
+	
+	void changeUserBalance (User user);
+	
+	void changeUserPassword (User user);
+	
+	
 
 }

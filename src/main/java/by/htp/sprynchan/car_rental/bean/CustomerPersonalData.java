@@ -1,6 +1,7 @@
 package by.htp.sprynchan.car_rental.bean;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 
 public class CustomerPersonalData extends Entity {
 	
@@ -9,7 +10,7 @@ public class CustomerPersonalData extends Entity {
 	private String name;
 	private String surname;
 	private String passportNumb;
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 	private int drivingExp;
 		
 	public CustomerPersonalData() {}
@@ -19,7 +20,7 @@ public class CustomerPersonalData extends Entity {
 	}
 
 
-	public CustomerPersonalData(String name, String surname, String passportNumb, Date dateOfBirth, int drivingExp) {
+	public CustomerPersonalData(String name, String surname, String passportNumb, LocalDate dateOfBirth, int drivingExp) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -52,11 +53,11 @@ public class CustomerPersonalData extends Entity {
 		this.passportNumb = passportNumb;
 	}
 
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

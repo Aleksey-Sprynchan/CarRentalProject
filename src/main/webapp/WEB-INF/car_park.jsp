@@ -20,6 +20,7 @@
 			<c:out value="${car.getPassengers()} passengers" />
 			<c:out value="${car.getFuel()}" />
 			<c:out value="Air Condition: ${car.isAirCondition()}" />
+			<c:out value="Price:  ${car.getPricePerDay()}$" />
 			<c:choose>
 				<c:when test="${car.isAvailable()}">
         			<c:out value="Available for rent" />

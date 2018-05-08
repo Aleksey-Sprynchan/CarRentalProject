@@ -6,4 +6,6 @@ public interface CustomerPersonalDataService {
 	
 	CustomerPersonalData getCustomerPersonalData(int id);
 	
+	void changeCustomerInfo(CustomerPersonalData customer);
+	
 }

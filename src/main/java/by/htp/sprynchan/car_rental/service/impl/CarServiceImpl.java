@@ -8,12 +8,12 @@ import java.util.Set;
 //import by.htp.login.exception.BookCatalogNotFoundException;
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.dao.CarDao;
-import by.htp.sprynchan.car_rental.dao.impl.CarDaoImpl;
+import by.htp.sprynchan.car_rental.dao.impl.CarDaoDBImpl;
 import by.htp.sprynchan.car_rental.service.CarService;
 
 public class CarServiceImpl implements CarService {
 
-	private CarDao carDao = new CarDaoImpl();
+	private CarDao carDao = new CarDaoDBImpl();
 
 	public CarServiceImpl() {
 	}
