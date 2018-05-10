@@ -58,16 +58,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void sendDamagesAmount(int id, String[] damageValues) {
+	public void sendDamagesAmount(int id, int totalAmount) {
 
 		Order order = orderDao.read(id);
-		int finalAmount = 0;
-		for (String value : damageValues) {
-			finalAmount = finalAmount + Integer.parseInt(value);
-		}
 		order.setDamaged(true);
 		order.setStatus(OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT);
-		order.setDamageAmount(finalAmount);
+		order.setDamageAmount(totalAmount);
 		orderDao.update(order);
 
 	}

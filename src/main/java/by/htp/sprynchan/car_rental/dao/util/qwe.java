@@ -3,6 +3,7 @@ package by.htp.sprynchan.car_rental.dao.util;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 
@@ -68,6 +69,11 @@ public class qwe {
 		}
 		
 		System.out.println(ar);
+		
+		
+		List<Map> qwe = new ArrayList<>();
+		
+		
 		
 	}
 

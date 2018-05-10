@@ -5,22 +5,40 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>REPORT DAMAGES</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+function AddItem() {
+  div=document.getElementById("items");
+  button=document.getElementById("add");
+
+  newitem="<p><strong>Damage type: </strong>";
+  newitem+="<input type=\"text\" name=\"damage_name";
+  newitem+="\" size=\"30\"> ";
+  newitem+="<strong>damage price: </strong><input type=\"text\" name=\"damage_cost\" size=\"10\"></p>";
+  newnode=document.createElement("span");
+  newnode.innerHTML=newitem;
+  div.insertBefore(newnode,button);
+}
+
+</script>
+
+
 </head>
 <body>
-	
-	<form action="CarRentalServlet" method="post">
-	<input type="checkbox" name="damage" value="99" checked="checked"/>The car is not recoverable<br /> 
-	<input type="checkbox" name="damage" value="152" /> Headlight is broken <br /> 
-	<input type="checkbox" name="damage" value="185" /> Punctured wheel<br /> 
-	<input type="checkbox" name="damage" value="154" /> Engine is lost<br /> 
-	<input type="checkbox" name="damage" value="36" /> There is no car roof<br /> 
-	<input type="checkbox" name="damage" value="85" /> Side door is crushed <br />
-	<input type="hidden" name="damage" value="0"/>
-	<input type="hidden" name="order_id" value="${order_id}"/> 
-	<p><button type="submit" name="command" value="SEND_DAMAGE_REPORT">Send damage payment amount to customer</button></p>
-	<input type="reset" value="Reset" />
+
+	<form name="form1" action="CarRentalServlet" method="post">
+	<div ID="items">
+    <strong>Damage type: </strong><input type="text" name="damage_name" size="30">
+    <strong>damage price: </strong><input type="text" name="damage_cost" size="10"><p>
+    <div ID="add"><input type="button" value="Add one more damage" onClick="AddItem();" ></div>
+    
+    <input type="hidden" name="order_id" value="${order_id}"/> 
+    <input type="hidden" name="car_id" value="${car_id}"/> 
+ <!--   <p><button type="submit" name="command" value="ADD_DAMAGE">Add damage</button></p>-->  
+	<p><button type="submit" name="command" value="SEND_DAMAGE_REPORT">SEND damage report</button></p>
+	</div>
 	</form>
 	
 

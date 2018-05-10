@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MY ORDERS</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 <style type="text/css">
    .block1 { 
    	text-align: left;
@@ -27,6 +34,9 @@
     float: left;
    }
   </style> 
+  
+
+  
 </head>
 <body>
 
@@ -78,7 +88,23 @@
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'PAID'}">		
 		</c:when>
-		<c:when test="${order.getStatus().name() == 'FINISHED'}">		
+		<c:when test="${order.getStatus().name() == 'FINISHED'}">
+		
+		<div class="container">
+  			
+  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#${order.getId()}">View details</button>
+ 				<div id="${order.getId()}" class="collapse">
+   					 <c:out value="${order.getCustomer().getName()}" />
+						<c:out value="${order.getCustomer().getSurname()}" />	
+						<c:out value="${order.getCarId()}" />
+					<c:out value="${orderCar_map.get(order.getId())}" />
+  				</div>
+		</div>
+		
+		
+		
+		
+		
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'CANCELLED'}">		
 		</c:when>

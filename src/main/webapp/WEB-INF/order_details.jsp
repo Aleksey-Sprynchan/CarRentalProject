@@ -31,6 +31,7 @@
 		<c:when test="${order.getStatus() == 'RETURNED'}">
 			<form action="CarRentalServlet" method="post">
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
+			<input type="hidden" name="car_id" value="${order.getCarId()}"/>
 			<p><button type="submit" name="command" value="REPORT_DAMAGES">Report damages</button></p>
 			<p><button type="submit" name="command" value="FINISH_ORDER">Finish order</button></p>
 			</form>

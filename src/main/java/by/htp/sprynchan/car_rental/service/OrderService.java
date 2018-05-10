@@ -20,7 +20,7 @@ public interface OrderService {
 	
 	void rejectOrder(int id, String reason);
 	
-	void sendDamagesAmount(int id, String[] damageValues);
+	void sendDamagesAmount(int id, int totalAmount);
 	
 	List<Order> getUserOrderList(int userId);
 	

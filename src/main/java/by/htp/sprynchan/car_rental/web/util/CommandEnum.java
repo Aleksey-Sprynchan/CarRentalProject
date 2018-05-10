@@ -45,7 +45,8 @@ public enum CommandEnum {
 	SEND_REJECT_MESSAGE(UserTypeEnum.ADMIN),
 	REPORT_DAMAGES(UserTypeEnum.ADMIN),
 	SEND_DAMAGE_REPORT(UserTypeEnum.ADMIN),
-	FINISH_ORDER(UserTypeEnum.ADMIN);
+	FINISH_ORDER(UserTypeEnum.ADMIN),
+	ADD_DAMAGE(UserTypeEnum.ADMIN);
 	
 
 	

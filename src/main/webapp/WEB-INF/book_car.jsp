@@ -83,6 +83,7 @@ function countAmount() {
 </head>
 <body>
 
+
 	<h3>Fill the bid to book this car:</h3>
 	<font size="5" color="red" face="Times New Roman"><c:out value="${car}"/></font>
 

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `cars` (
   `isAirCondition` tinyint(3) unsigned DEFAULT NULL,
   `price_per_day` int(10) unsigned DEFAULT NULL,
   `isAvailable` tinyint(4) unsigned DEFAULT '1',
-  `image` blob,
+  `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
@@ -78,17 +78,42 @@ CREATE TABLE IF NOT EXISTS `customer_personal_data` (
   `date_of_birth` date DEFAULT NULL,
   `driving_exp` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы car_rental.customer_personal_data: ~4 rows (приблизительно)
+-- Дамп данных таблицы car_rental.customer_personal_data: ~6 rows (приблизительно)
 DELETE FROM `customer_personal_data`;
 /*!40000 ALTER TABLE `customer_personal_data` DISABLE KEYS */;
 INSERT INTO `customer_personal_data` (`id`, `name`, `surname`, `passport_numb`, `date_of_birth`, `driving_exp`) VALUES
 	(32, 'Aleksey321', 'Sprynchan', 'MP88888888', '1990-12-04', 15),
 	(33, 'uidyfsh', 'adsgf', 'jjsgdf', '2018-05-15', 20),
 	(34, 'dhgfgh', 'cnedgwg', 'gssefs', '2018-05-17', 34),
-	(37, 'fdcfca', 'asdasda', 'asdaczc', '2018-05-02', 2);
+	(37, 'fdcfca', 'asdasda', 'asdaczc', '2018-05-02', 2),
+	(38, 'asdzxc', 'zxczxc', 'ascd', '2018-05-16', 45),
+	(39, 'sdfsfs', 'dfsvx', 'cvxcv', '2018-05-14', 23);
 /*!40000 ALTER TABLE `customer_personal_data` ENABLE KEYS */;
+
+-- Дамп структуры для таблица car_rental.damages
+CREATE TABLE IF NOT EXISTS `damages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int(10) unsigned DEFAULT NULL,
+  `car_id` int(10) unsigned DEFAULT NULL,
+  `damage_name` varchar(255) DEFAULT NULL,
+  `damage_cost` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_damages_cars` (`car_id`),
+  KEY `FK_damages_orders` (`order_id`),
+  CONSTRAINT `FK_damages_cars` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_damages_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы car_rental.damages: ~3 rows (приблизительно)
+DELETE FROM `damages`;
+/*!40000 ALTER TABLE `damages` DISABLE KEYS */;
+INSERT INTO `damages` (`id`, `order_id`, `car_id`, `damage_name`, `damage_cost`) VALUES
+	(10, 86, 1, 'broken wheel', 120),
+	(11, 86, 1, 'small dent', 50),
+	(12, 86, 1, 'engine damage', 565);
+/*!40000 ALTER TABLE `damages` ENABLE KEYS */;
 
 -- Дамп структуры для таблица car_rental.damage_history
 CREATE TABLE IF NOT EXISTS `damage_history` (
@@ -136,16 +161,18 @@ CREATE TABLE IF NOT EXISTS `orders` (
   CONSTRAINT `FK_orders__cars` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_orders__customer` FOREIGN KEY (`customer_id`) REFERENCES `customer_personal_data` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `FK_orders__users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы car_rental.orders: ~4 rows (приблизительно)
+-- Дамп данных таблицы car_rental.orders: ~6 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
 INSERT INTO `orders` (`id`, `status`, `order_date`, `user_id`, `car_id`, `start_date`, `end_date`, `customer_id`, `total_price`, `insurance`, `isDamaged`, `damage_amount`, `rejection_reason`) VALUES
 	(80, 'CANCELLED', '2018-05-05', 2, 1, '2018-05-09', '2018-05-11', 32, 192, 1, 0, 0, NULL),
-	(85, 'PAID', '2018-05-06', 2, 1, '2018-05-15', '2018-05-18', 33, 288, 1, 0, 0, NULL),
-	(86, 'PAID', '2018-05-06', 2, 1, '2018-05-28', '2018-05-30', 34, 190, 0, 0, 0, NULL),
-	(89, 'REJECTED', '2018-05-07', 2, 2, '2018-05-22', '2018-05-25', 37, 63, 1, 0, 0, 'qweaxczxc');
+	(85, 'FINISHED', '2018-05-06', 2, 1, '2018-05-15', '2018-05-18', 33, 288, 1, 0, 0, NULL),
+	(86, 'FINISHED', '2018-05-06', 2, 1, '2018-05-28', '2018-05-30', 34, 190, 0, 1, 735, NULL),
+	(89, 'REJECTED', '2018-05-07', 2, 2, '2018-05-22', '2018-05-25', 37, 63, 1, 0, 0, 'qweaxczxc'),
+	(90, 'REJECTED', '2018-05-08', 2, 1, '2018-05-23', '2018-05-25', 38, 192, 1, 0, 0, 'sdg'),
+	(91, 'WAITING_FOR_APPROVE', '2018-05-09', 2, 2, '2018-05-22', '2018-05-25', 39, 63, 1, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 
 -- Дамп структуры для таблица car_rental.users
@@ -168,7 +195,7 @@ DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `login`, `password`, `name`, `surname`, `email`, `balance`, `isAdmin`) VALUES
 	(1, 'admin', 'admin', 'Aleksey', 'Sprynchan', 'a.spirt@gmail.com', 0, 1),
-	(2, 'user1', 'pass1', 'Ivan', 'Ivanov', 'ivan@gmail.com', 50, 0),
+	(2, 'user1', 'pass1', 'Ivan', 'Ivanov', 'ivan@gmail.com', 400, 0),
 	(3, 'user2', 'pass2', 'Petr', 'Petrov', 'petr@gmail.com', 867, 0),
 	(4, 'user3', 'pass3', 'Sidor', 'Sidorov', 'sidor@gmail.com', 0, 0),
 	(5, 'Ekaterina', '1604', 'Ekaterina', 'Sprynchan', 'kate@gmail.com', 150, 0);
