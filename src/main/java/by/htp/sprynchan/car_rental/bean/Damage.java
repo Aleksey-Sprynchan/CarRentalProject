@@ -92,7 +92,7 @@ public class Damage extends Entity {
 
 	@Override
 	public String toString() {
-		return "Damages [orderId=" + orderId + ", carId=" + carId + ", damageName=" + damageName + ", damageCost="
+		return "Damage [orderId=" + orderId + ", carId=" + carId + ", damageName=" + damageName + ", damageCost="
 				+ damageCost + ", getId()=" + getId() + "]";
 	}
 	

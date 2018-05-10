@@ -27,5 +27,6 @@ public final class PagePathConstantPool {
 	public static final String PAGE_CHANGE_PASSWORD = "/WEB-INF/change_password.jsp";
 	public static final String PAGE_CHANGE_ACCOUNT_INFO = "/WEB-INF/change_account_info.jsp";
 	public static final String PAGE_CHANGE_ORDER= "/WEB-INF/change_order.jsp";
+	public static final String PAGE_CAR_DAMAGE_HISTORY= "/WEB-INF/car_damage_history.jsp";
 	
 }

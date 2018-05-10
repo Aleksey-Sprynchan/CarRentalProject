@@ -67,15 +67,27 @@
 		<strong><c:out value="${order.getStatus().name()}" /></strong>
 		<c:out value="${order.getTotalPrice()}$" />	
 		<c:choose>
+		
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_PAYMENT'}">	
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
 			<button type="submit" name="command" value="PAY_FOR_ORDER">Pay for order</button>
 			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
 		</c:when>	
+		
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_DAMAGE_PAYMENT'}">		
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
 			<strong><c:out value="${order.getDamageAmount()} USD" /></strong>
 			<button type="submit" name="command" value="PAY_FOR_DAMAGE">Pay for damage</button>	
+			
+			<div class="container">		
+  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#${order.getId()}">View damages</button>
+ 				<div id="${order.getId()}" class="collapse">
+ 				 <c:forEach items="${orderDam_map.get(order.getId())}" var="damage">
+ 				 	<c:out value="${damage}" /><br>			 
+ 				 </c:forEach>				
+  				</div>
+			</div>	
+		
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'REJECTED'}">	
 			<font size="3" color="red" face="Times New Roman">This order has been rejected by admin!</font>
@@ -86,14 +98,25 @@
 			<button type="submit" name="command" value="CHANGING_ORDER_PAGE">Change order info</button>	
 			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
 		</c:when>
-		<c:when test="${order.getStatus().name() == 'PAID'}">		
+		
+		<c:when test="${order.getStatus().name() == 'PAID'}">
+		<div class="container">			
+  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#order${order.getId()}">View details</button>
+ 				<div id="order${order.getId()}" class="collapse">
+   					 <c:out value="${order.getCustomer().getName()}" />
+						<c:out value="${order.getCustomer().getSurname()}" />	
+						<c:out value="${order.getCarId()}" />
+					<c:out value="${orderCar_map.get(order.getId())}" />
+  				</div>
+		</div>			
 		</c:when>
+		
 		<c:when test="${order.getStatus().name() == 'FINISHED'}">
 		
 		<div class="container">
   			
-  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#${order.getId()}">View details</button>
- 				<div id="${order.getId()}" class="collapse">
+  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#order${order.getId()}">View details</button>
+ 				<div id="order${order.getId()}" class="collapse">
    					 <c:out value="${order.getCustomer().getName()}" />
 						<c:out value="${order.getCustomer().getSurname()}" />	
 						<c:out value="${order.getCarId()}" />
@@ -102,9 +125,18 @@
 		</div>
 		
 		
+		<c:if test="${order.isDamaged()}">
+		<div class="container">		
+  			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#damages${order.getId()}">View damages</button>
+ 				<div id="damages${order.getId()}" class="collapse">
+ 				 <c:forEach items="${orderDam_map.get(order.getId())}" var="damage">
+ 				 	<c:out value="${damage}" /><br>			 
+ 				 </c:forEach>				
+  				</div>
+		</div>	
+		</c:if>
 		
-		
-		
+
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'CANCELLED'}">		
 		</c:when>

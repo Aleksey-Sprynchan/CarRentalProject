@@ -17,6 +17,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.SendDamageReportComma
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.SendRejectMessageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ShowOrdersByStatusCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.UpdateCarCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarDamageHistoryCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarParkCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewOrderDetailsCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.AuthorizationCommandImpl;
@@ -63,6 +64,9 @@ public class CommandFactory {
 		System.out.println(inputCommand);
 		
 		switch(commandName) {
+		case VIEW_CAR_DAMAGE_HISTORY:
+			command = new ViewCarDamageHistoryCommandImpl();
+			break;
 		case ADD_DAMAGE:
 			command = new AddDamageCommandImpl();
 			break;

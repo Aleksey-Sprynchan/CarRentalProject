@@ -123,17 +123,6 @@ public class DamageDaoDBImpl implements DamageDao {
 		return ordersIdList;
 	}
 	
-	private Damage buildDamage(ResultSet resultSet) throws SQLException {
-
-		Damage damage = new Damage();
-		damage.setId(resultSet.getInt(DAMAGES_COLUMN_ID));
-		damage.setOrderId(resultSet.getInt(DAMAGES_COLUMN_ORDER_ID));
-		damage.setCarId(resultSet.getInt(DAMAGES_COLUMN_CAR_ID));
-		damage.setDamageName(resultSet.getString(DAMAGES_COLUMN_DAMAGE_NAME));
-		damage.setDamageCost(resultSet.getInt(DAMAGES_COLUMN_DAMAGE_COST));
-		return damage;
-	}
-
 	@Override
 	public int countOrderDamageAmount(int orderId) {
 		
@@ -154,5 +143,17 @@ public class DamageDaoDBImpl implements DamageDao {
 		}
 		return totalAmount;
 	}
+	
+	private Damage buildDamage(ResultSet resultSet) throws SQLException {
+
+		Damage damage = new Damage();
+		damage.setId(resultSet.getInt(DAMAGES_COLUMN_ID));
+		damage.setOrderId(resultSet.getInt(DAMAGES_COLUMN_ORDER_ID));
+		damage.setCarId(resultSet.getInt(DAMAGES_COLUMN_CAR_ID));
+		damage.setDamageName(resultSet.getString(DAMAGES_COLUMN_DAMAGE_NAME));
+		damage.setDamageCost(resultSet.getInt(DAMAGES_COLUMN_DAMAGE_COST));
+		return damage;
+	}
+
 
 }

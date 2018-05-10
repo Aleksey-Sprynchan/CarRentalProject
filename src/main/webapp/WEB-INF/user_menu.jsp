@@ -7,6 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>My Profile</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <style type="text/css">
    .block1 { 
    	text-align: center;
@@ -44,7 +49,7 @@
 	
 	<div align="left"><p>
 	<form action="CarRentalServlet" method="post"> 	
-		<button type="submit" name="command" value="VIEW_MY_ORDERS">My orders</button>
+		<p><button type="submit" name="command" value="VIEW_MY_ORDERS">My orders</button>
 	</form>
 	<form action="CarRentalServlet" method="post">
 		<p><button type="submit" name="command" value="VIEW_ACCOUNT_DETAILS">My Account</button>
