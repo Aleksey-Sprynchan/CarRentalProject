@@ -26,12 +26,18 @@
 <body>
 
 	<div class="block1">  
+	<c:if test="${not empty car_list}">
      <c:forEach items="${car_list}" var="car">
 		<p>
-		<img src="images/qwe.jpeg" width="100" height="100" alt="car_image" >
+		<img src="${car.getImage()}" alt="car_image" width="120" height="120">
 		<c:out value="${car}" />	
 	</c:forEach>
-	</div> 
+	</c:if>
+	<c:if test="${empty car_list}">
+	There are no available cars for rent!
+	</c:if>
+	</div>
+	 
 	
 	<div align="left">
 	

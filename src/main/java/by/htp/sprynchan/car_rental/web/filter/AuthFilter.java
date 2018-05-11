@@ -24,26 +24,24 @@ public class AuthFilter implements Filter {
 
 	public static final String PARAMETER_MESSAGE = "message";
 	public static final String MESSAGE_NO_RIGHTS = "no_rights_message";
+	
+	
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-
-		System.out.println("INIT FILTER 111111111");
+		Filter.super.init(filterConfig);
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-
 		final HttpServletRequest req = (HttpServletRequest) request;
 		final HttpSession session = req.getSession(true);
 
 		User currentUser = (User) session.getAttribute(PARAMETER_USER);
 		String inputCommand = request.getParameter(PARAMETER_COMMAND);
-
 		CommandEnum command = null;
-
 		if (inputCommand != null) {
 			command = CommandEnum.valueOf(inputCommand);
 
@@ -74,10 +72,10 @@ public class AuthFilter implements Filter {
 		}
 
 	}
-
+	
 	@Override
 	public void destroy() {
-		System.out.println("DESTROY FILTER 111111111");
+		Filter.super.destroy();
 	}
 
 }

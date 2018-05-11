@@ -1,6 +1,7 @@
 package by.htp.sprynchan.car_rental.dao.impl;
 
-import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.*;
+import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.ORDERS_COLUMN_START_DATE;
+import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.ORDERS_COLUMN_END_DATE;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +12,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.htp.sprynchan.car_rental.bean.CustomerPersonalData;
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.dao.OrderDao;
+import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
-public class OrderDaoDBImpl implements OrderDao {
+public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	
 	private static final String ADD_CUSTOMER_PERSONAL_DATA = "INSERT INTO customer_personal_data "
 			+ "(name, surname, passport_numb, date_of_birth, driving_exp) VALUES (?, ?, ?, ?, ?);";
@@ -26,26 +27,26 @@ public class OrderDaoDBImpl implements OrderDao {
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 	private static final String READ_ORDER_BY_ID = "SELECT id, status, order_date, user_id, car_id, start_date, end_date, "
-			+ "customer_id, total_price, insurance, isDamaged, damage_amount, rejection_reason FROM orders WHERE id = ?;";
+			+ "customer_id, total_price, insurance, is_damaged, damage_amount, rejection_reason FROM orders WHERE id = ?;";
 
 	private static final String UPDATE_ORDER = "UPDATE orders SET status = ?, order_date = ?, user_id = ?, car_id = ?, "
 			+ "start_date = ?, end_date = ?, customer_id = ?, total_price = ?, insurance = ?, "
-			+ "isDamaged = ?, damage_amount = ?, rejection_reason = ? WHERE id = ?";
+			+ "is_damaged = ?, damage_amount = ?, rejection_reason = ? WHERE id = ?";
 
 	private static final String DELETE_ORDER_BY_ID = "DELETE FROM orders WHERE id = ?;";
 
 	private static final String READ_ALL_ORDERS = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, o.start_date, "
-			+ "o.end_date, o.customer_id, o.total_price, o.insurance, o.isDamaged, o.damage_amount, o.rejection_reason, c.name, "
+			+ "o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, c.name, "
 			+ "c.surname, c.passport_numb, c.date_of_birth, c.driving_exp "
 			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id;";
 
 	private static final String READ_ORDERS_WITH_STATUS = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, "
-			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.isDamaged, o.damage_amount, o.rejection_reason, "
+			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, "
 			+ "c.name, c.surname, c.passport_numb, c.date_of_birth, c.driving_exp "
 			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id WHERE o.status = ?;";
 	
 	private static final String READ_USER_ORDERS_BY_USER_ID = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, "
-			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.isDamaged, o.damage_amount, o.rejection_reason, "
+			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, "
 			+ "c.name, c.surname, c.passport_numb, c.date_of_birth, c.driving_exp "
 			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id WHERE o.user_id = ?;";
 	
@@ -53,7 +54,9 @@ public class OrderDaoDBImpl implements OrderDao {
 			+ "FROM (SELECT * FROM orders o WHERE o.car_id = ?) s "
 			+ "WHERE s.status = 'PAID' OR s.status = 'WAITING_FOR_APPROVE' OR s.status = 'WAITING_FOR_PAYMENT';";
 
-	public OrderDaoDBImpl() {}
+	public OrderDaoDBImpl() {
+		super();
+	}
 
 	@Override
 	public int create(Order entity) {
@@ -273,35 +276,6 @@ public class OrderDaoDBImpl implements OrderDao {
 	}
 	
 	
-	private Order buildOrder(ResultSet resultSet) throws SQLException {
-
-		Order order = new Order();
-		order.setId(resultSet.getInt(ORDERS_COLUMN_ID));
-		order.setStatus(OrderStatusEnum.valueOf(resultSet.getString(ORDERS_COLUMN_STATUS)));
-		order.setOrderDate(LocalDate.parse(resultSet.getString(ORDERS_COLUMN_ORDER_DATE)));
-		order.setUserId(resultSet.getInt(ORDERS_COLUMN_USER_ID));
-		order.setCarId(resultSet.getInt(ORDERS_COLUMN_CAR_ID));
-		order.setStartDate(LocalDate.parse(resultSet.getString(ORDERS_COLUMN_START_DATE)));
-		order.setEndDate(LocalDate.parse(resultSet.getString(ORDERS_COLUMN_END_DATE)));
-		order.setCustomer(new CustomerPersonalData(resultSet.getInt(ORDERS_COLUMN_CUSTOMER_ID)));
-		order.setTotalPrice(resultSet.getInt(ORDERS_COLUMN_TOTAL_PRICE));
-		order.setInsurance(resultSet.getBoolean(ORDERS_COLUMN_IS_INSURANCE));
-		order.setDamaged(resultSet.getBoolean(ORDERS_COLUMN_IS_DAMAGED));
-		order.setDamageAmount(resultSet.getInt(ORDERS_COLUMN_DAMAGE_AMOUNT));
-		order.setRejectionReason(resultSet.getString(ORDERS_COLUMN_REJECTION_REASON));
-		return order;
-	}
-
-	private CustomerPersonalData buildCustomer(ResultSet resultSet) throws SQLException {
-
-		CustomerPersonalData customer = new CustomerPersonalData();
-		customer.setId(resultSet.getInt(CUSTPERSDATA_COLUMN_ID));
-		customer.setName(resultSet.getString(CUSTPERSDATA_COLUMN_NAME));
-		customer.setSurname(resultSet.getString(CUSTPERSDATA_COLUMN_SURNAME));
-		customer.setPassportNumb(resultSet.getString(CUSTPERSDATA_COLUMN_PASSPORT_NUMB));
-		customer.setDateOfBirth(LocalDate.parse(resultSet.getString(CUSTPERSDATA_COLUMN_DATE_OF_BIRTH)));
-		customer.setDrivingExp(resultSet.getInt(CUSTPERSDATA_COLUMN_DRIVING_EXP));
-		return customer;
-	}
+	
 
 }

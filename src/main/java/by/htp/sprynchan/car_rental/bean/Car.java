@@ -1,54 +1,54 @@
 package by.htp.sprynchan.car_rental.bean;
 
 public class Car extends Entity {
-
-	private static final long serialVersionUID = 5101074728089686144L;
-
+	
+	private static final long serialVersionUID = 1937498168638918279L;
+	
 	private String brandName;
 	private String model;
 	private String type;
 	private String transmission;
-	private int doors;
 	private int passengers;
 	private String fuel;
 	private boolean isAirCondition;
 	private int pricePerDay;
 	private boolean isAvailable;
+	private String image;
 
-	public Car() {
-	}
+	public Car() {}
 
 	public Car(int id) {
 		super(id);
 	}
 
-	public Car(String brandName, String model, String type, String transmission, int doors, int passengers, String fuel,
-			boolean isAirCondition, int pricePerDay, boolean isAvailable) {
+	public Car(String brandName, String model, String type, String transmission, int passengers, String fuel,
+			boolean isAirCondition, int pricePerDay, boolean isAvailable, String image) {
+		super();
 		this.brandName = brandName;
 		this.model = model;
 		this.type = type;
 		this.transmission = transmission;
-		this.doors = doors;
 		this.passengers = passengers;
 		this.fuel = fuel;
 		this.isAirCondition = isAirCondition;
 		this.pricePerDay = pricePerDay;
 		this.isAvailable = isAvailable;
+		this.image = image;
 	}
 
-	public Car(int id, String brandName, String model, String type, String transmission, int doors, int passengers, String fuel,
-			boolean isAirCondition, int pricePerDay, boolean isAvailable) {
+	public Car(int id, String brandName, String model, String type, String transmission, int passengers, String fuel,
+			boolean isAirCondition, int pricePerDay, boolean isAvailable, String image) {
 		super(id);
 		this.brandName = brandName;
 		this.model = model;
 		this.type = type;
 		this.transmission = transmission;
-		this.doors = doors;
 		this.passengers = passengers;
 		this.fuel = fuel;
 		this.isAirCondition = isAirCondition;
 		this.pricePerDay = pricePerDay;
 		this.isAvailable = isAvailable;
+		this.image = image;
 	}
 
 	public String getBrandName() {
@@ -81,14 +81,6 @@ public class Car extends Entity {
 
 	public void setTransmission(String transmission) {
 		this.transmission = transmission;
-	}
-
-	public int getDoors() {
-		return doors;
-	}
-
-	public void setDoors(int doors) {
-		this.doors = doors;
 	}
 
 	public int getPassengers() {
@@ -131,13 +123,21 @@ public class Car extends Entity {
 		this.isAvailable = isAvailable;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((brandName == null) ? 0 : brandName.hashCode());
-		result = prime * result + doors;
 		result = prime * result + ((fuel == null) ? 0 : fuel.hashCode());
+		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		result = prime * result + (isAirCondition ? 1231 : 1237);
 		result = prime * result + (isAvailable ? 1231 : 1237);
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
@@ -162,12 +162,15 @@ public class Car extends Entity {
 				return false;
 		} else if (!brandName.equals(other.brandName))
 			return false;
-		if (doors != other.doors)
-			return false;
 		if (fuel == null) {
 			if (other.fuel != null)
 				return false;
 		} else if (!fuel.equals(other.fuel))
+			return false;
+		if (image == null) {
+			if (other.image != null)
+				return false;
+		} else if (!image.equals(other.image))
 			return false;
 		if (isAirCondition != other.isAirCondition)
 			return false;
@@ -197,10 +200,9 @@ public class Car extends Entity {
 
 	@Override
 	public String toString() {
-		return "Car [brandName=" + brandName + ", model=" + model + ", type=" + type + ", transmission=" + transmission
-				+ ", doors=" + doors + ", passengers=" + passengers + ", fuel=" + fuel + ", isAirCondition="
-				+ isAirCondition + ", pricePerDay=" + pricePerDay + ", isAvailable=" + isAvailable + "]";
+		return brandName + " " + model + " (" + type + ") "+ transmission + " transmission ," 
+				+ passengers + " passengers "+ " " + fuel + " , Air condition=" + isAirCondition
+				+ " " + "only " + pricePerDay + "$/day";
 	}
-
-
+	
 }

@@ -30,9 +30,6 @@
 		<p>Transmission 
 		<input size="30" name="transmission" placeholder="Enter car transmission type here" required>
 		
-		<p>Doors 
-		<input size="30" name="doors" placeholder="Enter doors number" required pattern="^[0-9]+$">
-		
 		<p>Passengers 
 		<input size="30" name="passengers" placeholder="Enter passengers number" required pattern="^[0-9]+$">
 		
@@ -42,31 +39,14 @@
 		<p>Price per day 
 		<input size="30" name="price_per_day" placeholder="Enter price" required pattern="^[0-9]+$"> (integer value)
 		
-		<p>AirCondition 
-		<input size="30" name="is_air_condition" placeholder="is Air Condition" required> (TRUE of FALSE)
-		
-	<!--	<p><strong>Damage costs for this car:</strong> 
-		
-	 	<p>Cracked windshield 
-		<input size="30" name="cracked_windshield_cost" placeholder="Cracked windshield cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Small dent 
-		<input size="30" name="small_dent_cost" placeholder="Small dent cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Broken headlight 
-		<input size="30" name="broken_headlight_cost" placeholder="Broken headlight cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Punctured wheel 
-		<input size="30" name="punctured_wheel_cost" placeholder="Punctured wheel cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Large dent 
-		<input size="30" name="large_dent_cost" placeholder="Large dent cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Engine damage 
-		<input size="30" name="engine_damage_cost" placeholder="Engine damage cost" required pattern="^[0-9]+$"> (integer value)
-		
-		<p>Huge damage 
-		<input size="30" name="huge_damage_cost" placeholder="Huge damage cost" required pattern="^[0-9]+$"> (integer value) -->
+		<fieldset>
+    	 <legend>Air Condition</legend>
+      		<input type="radio" name="is_air_condition" value="true">Yes
+      		<input type="radio" name="is_air_condition" value="false">No
+   		 </fieldset>
+
+		<p>Image link
+		<input size="30" name="image" placeholder="insert link here" required>
 	
 		<p><button type="submit" name="command" value="ADD_CAR">Add car</button>
 	</form>

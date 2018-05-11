@@ -9,8 +9,7 @@ public class Damage extends Entity {
 	private String damageName;
 	private int damageCost;
 		
-	public Damage() {		
-	}
+	public Damage() {}
 
 	public Damage(int id) {
 		super(id);
@@ -95,7 +94,5 @@ public class Damage extends Entity {
 		return "Damage [orderId=" + orderId + ", carId=" + carId + ", damageName=" + damageName + ", damageCost="
 				+ damageCost + ", getId()=" + getId() + "]";
 	}
-	
-	
 
 }

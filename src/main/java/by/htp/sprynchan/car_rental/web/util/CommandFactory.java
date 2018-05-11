@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.AddCarCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.admin.AddDamageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.AddingCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ApproveOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.DeleteCarCommandImpl;
@@ -66,9 +65,6 @@ public class CommandFactory {
 		switch(commandName) {
 		case VIEW_CAR_DAMAGE_HISTORY:
 			command = new ViewCarDamageHistoryCommandImpl();
-			break;
-		case ADD_DAMAGE:
-			command = new AddDamageCommandImpl();
 			break;
 		case CANCEL_ORDER:
 			command = new CancelOrderCommandImpl();

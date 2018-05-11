@@ -218,9 +218,5 @@ public class Order extends Entity {
 				+ totalPrice + ", isInsurance=" + isInsurance + ", isDamaged=" + isDamaged + ", damageAmount="
 				+ damageAmount + ", rejectionReason=" + rejectionReason + ", getId()=" + getId() + "]";
 	}
-	
-	
-	
-	
 
 }

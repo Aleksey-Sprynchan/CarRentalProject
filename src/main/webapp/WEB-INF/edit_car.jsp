@@ -27,9 +27,7 @@
 
 		<strong>Transmission:</strong> 
 		<input size="30" name="transmission" value="${carToEdit.getTransmission()}" placeholder="Enter car transmission type here">
-		
-		<strong>Doors:</strong> 
-		<input size="30" name="doors" value="${carToEdit.getDoors()}" placeholder="Enter doors number">
+	
 		
 		<strong>Passengers:</strong> 
 		<input size="30" name="passengers" value="${carToEdit.getPassengers()}" placeholder="Enter passengers number">

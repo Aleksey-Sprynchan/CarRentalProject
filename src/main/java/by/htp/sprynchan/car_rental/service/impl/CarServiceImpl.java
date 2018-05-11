@@ -1,6 +1,5 @@
 package by.htp.sprynchan.car_rental.service.impl;
 
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,41 +15,23 @@ public class CarServiceImpl implements CarService {
 	private CarDao carDao = new CarDaoDBImpl();
 
 	public CarServiceImpl() {
+		super();
 	}
 
 	@Override
 	public List<Car> getCarPark() {
-
-		List<Car> carList = carDao.readAll();
-		if (carList.isEmpty()) {
-			// throw new BookCatalogNotFoundException();
-		} else {
-			return carList;
-		}
-
-		return carList;
+		return carDao.readAll();		
 	}
 	
 	@Override
-	public List<Car> getAvailableCarPark() {
-		
-		List<Car> carList = carDao.readAllAvailable();
-		if (carList.isEmpty()) {
-			// throw new BookCatalogNotFoundException();
-		} else {
-			return carList;
-		}
-
-		return carList;
-		
+	public List<Car> getAvailableCarPark() {	
+		return carDao.readAllAvailable();	
 	}
 
 
 	@Override
 	public void addCarToCarPark(Car car) {
-
 		carDao.create(car);
-
 	}
 
 	@Override
@@ -58,51 +39,25 @@ public class CarServiceImpl implements CarService {
 
 		List<Car> cars = carDao.readAll();
 		Set<String> brandList = new HashSet<String>();
-
 		for (Car car : cars) {
 			brandList.add(car.getBrandName());
 		}
 		return brandList;
-
 	}
 
 	@Override
-	public Car getCar(int id) {
-		
-		return carDao.read(id);
-		
+	public Car getCar(int id) {		
+		return carDao.read(id);	
 	}
 	
 	@Override
-	public void updateIsAvailableStatus(int id, String command) {
-		
-		Car car = carDao.read(id);
-		
-		if(command.equals("CREATE_ORDER")) {
-			car.setAvailable(false);					
-		} else if(command.equals("MARK_AS_RETURNED") || command.equals("REJECT_ORDER")) {
-			car.setAvailable(true);
-		} else {
-			throw new IllegalArgumentException();
-		}
-		
-		carDao.update(car);
-		
+	public void deleteCarFromCarPark(int id) {				
+		carDao.setUnavailableStatus(id);	
 	}
 
 	@Override
-	public void deleteCarFromCarPark(int id) {
-		
-		carDao.delete(id);
-		
+	public void updateCarInfo(Car car) {		
+		carDao.update(car);	
 	}
-
-	@Override
-	public void updateCarInfo(Car car) {
-		
-		carDao.update(car);
-		
-	}
-	
 	
 }

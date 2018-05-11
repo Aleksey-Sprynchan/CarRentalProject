@@ -20,11 +20,11 @@ public class AddCarCommandImpl extends CommonAdminCommand implements BaseCommand
 	private static final String PARAMETER_MODEL = "model";
 	private static final String PARAMETER_TYPE = "type";
 	private static final String PARAMETER_TRANSMISSION= "transmission";
-	private static final String PARAMETER_DOORS= "doors";
 	private static final String PARAMETER_PASSENGERS= "passengers";
 	private static final String PARAMETER_FUEL= "fuel";
 	private static final String PARAMETER_AIR_CONDITION= "is_air_condition";
 	private static final String PARAMETER_PRICE_PER_DAY= "price_per_day";
+	private static final String PARAMETER_IMAGE= "image";
 	
 	private static final String PARAMETER_MESSAGE = "info_message";
 	private static final String MESSAGE = "New car was succsefully added to car park!";
@@ -35,14 +35,15 @@ public class AddCarCommandImpl extends CommonAdminCommand implements BaseCommand
 		String model = request.getParameter(PARAMETER_MODEL);
 		String type = request.getParameter(PARAMETER_TYPE);
 		String transmission = request.getParameter(PARAMETER_TRANSMISSION);
-		int doors = Integer.parseInt(request.getParameter(PARAMETER_DOORS));
 		int passengers = Integer.parseInt(request.getParameter(PARAMETER_PASSENGERS));
 		String fuel = request.getParameter(PARAMETER_FUEL);
 		boolean isAirCondition = Boolean.parseBoolean(request.getParameter(PARAMETER_AIR_CONDITION));
 		int pricePerDay = Integer.parseInt(request.getParameter(PARAMETER_PRICE_PER_DAY));
+		String image = request.getParameter(PARAMETER_IMAGE);
 		
 
-		carService.addCarToCarPark(new Car(brandName, model, type, transmission, doors, passengers, fuel, isAirCondition, pricePerDay, true));
+		carService.addCarToCarPark(new Car(brandName, model, type, transmission, 
+				passengers, fuel, isAirCondition, pricePerDay, true, image));
 		request.setAttribute(PARAMETER_MESSAGE, MESSAGE);
 		setAttributetOrderList(request, null);
 		setAttributetOrderStatusList(request);

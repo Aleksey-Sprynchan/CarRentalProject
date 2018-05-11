@@ -13,6 +13,10 @@ import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 public class OrderServiceImpl implements OrderService {
 
 	OrderDao orderDao = new OrderDaoDBImpl();
+	
+	public OrderServiceImpl() {
+		super();
+	}
 
 	@Override
 	public int createNewOrder(Order order) {
@@ -83,14 +87,11 @@ public class OrderServiceImpl implements OrderService {
 			return false;
 		}
 		for(Order order: userOrders) {
-			if (order.getStatus() == OrderStatusEnum.PAID) {
+			if (order.getStatus() == OrderStatusEnum.PAID || order.getStatus() == OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT) {
 				return true;
-			} else if (order.getStatus() == OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT) {
-				return true;
-			} else {}
+			}
 		}
-		return false;
-		
+		return false;		
 	}
 
 	@Override

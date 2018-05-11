@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao = new UserDaoDBImpl();
 
 	public UserServiceImpl() {
+		super();
 	}
 
 	@Override

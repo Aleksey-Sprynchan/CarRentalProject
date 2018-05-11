@@ -25,13 +25,12 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 	private static final String PARAMETER_MODEL = "model";
 	private static final String PARAMETER_TYPE = "type";
 	private static final String PARAMETER_TRANSMISSION= "transmission";
-	private static final String PARAMETER_DOORS= "doors";
 	private static final String PARAMETER_PASSENGERS= "passengers";
 	private static final String PARAMETER_FUEL= "fuel";
 	private static final String PARAMETER_AIR_CONDITION= "is_air_condition";
 	private static final String PARAMETER_PRICE_PER_DAY= "price_per_day";
 	private static final String PARAMETER_IS_AVAILABLE = "is_available";
-	
+	private static final String PARAMETER_IMAGE= "image";
 	
 	private static final String PARAMETER_MESSAGE = "info_message";
 	private static final String MESSAGE = "Information was succsefully updated!";
@@ -44,14 +43,15 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 		String model = request.getParameter(PARAMETER_MODEL);
 		String type = request.getParameter(PARAMETER_TYPE);
 		String transmission = request.getParameter(PARAMETER_TRANSMISSION);
-		int doors = Integer.parseInt(request.getParameter(PARAMETER_DOORS));
 		int passengers = Integer.parseInt(request.getParameter(PARAMETER_PASSENGERS));
 		String fuel = request.getParameter(PARAMETER_FUEL);
 		boolean isAirCondition = Boolean.parseBoolean(request.getParameter(PARAMETER_AIR_CONDITION));
 		int pricePerDay = Integer.parseInt(request.getParameter(PARAMETER_PRICE_PER_DAY));
 		boolean isAvailable = Boolean.parseBoolean(request.getParameter(PARAMETER_IS_AVAILABLE));
+		String image = request.getParameter(PARAMETER_IMAGE);
 		
-		carService.updateCarInfo(new Car(carId, brandName, model, type, transmission, doors, passengers, fuel, isAirCondition, pricePerDay, isAvailable));
+		carService.updateCarInfo(new Car(carId, brandName, model, type, transmission, 
+				passengers, fuel, isAirCondition, pricePerDay, isAvailable, image));
 		request.setAttribute(PARAMETER_MESSAGE, MESSAGE);
 		
 		setAttributetOrderList(request, null);

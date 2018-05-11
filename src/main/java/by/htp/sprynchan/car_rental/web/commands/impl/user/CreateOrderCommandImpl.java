@@ -38,7 +38,6 @@ public class CreateOrderCommandImpl implements BaseCommand {
 	private static final String PARAMETER_END_DATE = "end_date";
 	private static final String PARAMETER_TOTAL_PRICE = "total_price";
 	private static final String PARAMETER_INSURANCE = "insurance";
-	private static final String COMMAND = "command";
 	
 	@Override
 	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
@@ -71,8 +70,6 @@ public class CreateOrderCommandImpl implements BaseCommand {
 		
 			
 		int id = orderService.createNewOrder(order);
-		
-//		carService.updateIsAvailableStatus(bookingCarId, request.getParameter(COMMAND));
 					
 		request.setAttribute("this_order", orderService.getOrder(id));
 		request.setAttribute("cpData", customerPersonalDataService.getCustomerPersonalData(orderService.getOrder(id).getCustomer().getId()));

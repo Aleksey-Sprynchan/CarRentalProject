@@ -22,16 +22,6 @@ public class CarRentalServlet extends HttpServlet {
 	
 	private static final Logger logger = LogManager.getLogger();
 
-	@Override
-	public void init() throws ServletException {
-		System.out.println("init servlet");
-	}
-
-	@Override
-	public void destroy() {
-		System.out.println("destroy");
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

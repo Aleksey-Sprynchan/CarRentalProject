@@ -13,7 +13,7 @@ public class DamageServiceImpl implements DamageService {
 	DamageDaoDBImpl damageDao = new DamageDaoDBImpl();
 
 	public DamageServiceImpl() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Override

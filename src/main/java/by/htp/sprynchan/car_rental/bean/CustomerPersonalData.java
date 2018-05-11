@@ -2,7 +2,6 @@ package by.htp.sprynchan.car_rental.bean;
 
 import java.time.LocalDate;
 
-
 public class CustomerPersonalData extends Entity {
 	
 	private static final long serialVersionUID = -1864812238811847229L;
@@ -18,7 +17,6 @@ public class CustomerPersonalData extends Entity {
 	public CustomerPersonalData(int id) {
 		super(id);
 	}
-
 
 	public CustomerPersonalData(String name, String surname, String passportNumb, LocalDate dateOfBirth, int drivingExp) {
 		super();
@@ -81,7 +79,6 @@ public class CustomerPersonalData extends Entity {
 		return result;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -115,7 +112,6 @@ public class CustomerPersonalData extends Entity {
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {

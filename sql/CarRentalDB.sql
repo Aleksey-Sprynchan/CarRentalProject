@@ -23,29 +23,28 @@ CREATE TABLE IF NOT EXISTS `cars` (
   `model` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
   `transmission` varchar(255) DEFAULT NULL,
-  `doors` int(10) unsigned DEFAULT NULL,
   `passengers` int(10) unsigned DEFAULT NULL,
   `fuel` varchar(255) DEFAULT NULL,
-  `isAirCondition` tinyint(3) unsigned DEFAULT NULL,
+  `is_air_condition` tinyint(3) unsigned DEFAULT NULL,
   `price_per_day` int(10) unsigned DEFAULT NULL,
-  `isAvailable` tinyint(4) unsigned DEFAULT '1',
+  `is_available` tinyint(4) unsigned DEFAULT '1',
   `image` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы car_rental.cars: ~9 rows (приблизительно)
 DELETE FROM `cars`;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` (`id`, `brand_name`, `model`, `type`, `transmission`, `doors`, `passengers`, `fuel`, `isAirCondition`, `price_per_day`, `isAvailable`, `image`) VALUES
-	(1, 'Mercedes-Benz', 'S500', 'Sedan', 'Automatic', 5, 5, 'Diesel', 1, 95, 1, NULL),
-	(2, 'BMW', 'X5', 'SUV', 'Automatic', 5, 5, 'Diesel', 1, 20, 1, NULL),
-	(3, 'Kia', 'Rio', 'Mini', 'Manual', 5, 5, 'Gas', 1, 30, 1, NULL),
-	(4, 'Renault', 'Logan', 'Sedan', 'Manual', 5, 4, 'Gas', 0, 40, 1, NULL),
-	(6, 'Volvo', 'XC90', 'SUV', 'Automatic', 5, 5, 'Gas', 1, 55, 1, NULL),
-	(7, 'Mazda', 'model 6', 'Sedan', 'Automatic', 5, 5, 'Gas', 1, 35, 1, NULL),
-	(10, 'Mazda', 'model 3', 'Sedan', 'Automatic', 5, 4, 'Gas', 1, 24, 1, NULL),
-	(12, 'Mercedes-Benz', 'C230', 'Sedan', 'Manual', 5, 4, 'Diesel', 1, 28, 1, NULL),
-	(20, 'Honda', 'Accord', 'Sedan', 'Automatic', 5, 4, 'Gas', 1, 19, 1, NULL);
+INSERT INTO `cars` (`id`, `brand_name`, `model`, `type`, `transmission`, `passengers`, `fuel`, `is_air_condition`, `price_per_day`, `is_available`, `image`) VALUES
+	(1, 'Mercedes-Benz', 'S500', 'Sedan', 'Automatic', 5, 'Diesel', 1, 95, 1, 'https://thumb.ibb.co/ijGQRJ/Mercedes_Benz_S500.jpg'),
+	(2, 'BMW', 'X5', 'SUV', 'Automatic', 5, 'Diesel', 1, 20, 1, 'https://thumb.ibb.co/kOcPmJ/bmwX5.jpg'),
+	(3, 'Kia', 'Rio', 'Mini', 'Manual', 5, 'Gas', 1, 30, 1, 'https://thumb.ibb.co/fhXM0d/KiaRio.jpg'),
+	(4, 'Renault', 'Logan', 'Sedan', 'Manual', 4, 'Gas', 0, 40, 1, 'https://thumb.ibb.co/m2V26J/Renault_Logan.png'),
+	(6, 'Volvo', 'XC90', 'SUV', 'Automatic', 5, 'Gas', 1, 55, 1, 'https://thumb.ibb.co/f1YYDy/Volvo_XC90.jpg'),
+	(7, 'Mazda', 'model 6', 'Sedan', 'Automatic', 5, 'Gas', 1, 35, 1, 'https://thumb.ibb.co/e9Qr0d/Mazda6.jpg'),
+	(10, 'Mazda', 'model 3', 'Sedan', 'Automatic', 4, 'Gas', 1, 24, 1, 'https://thumb.ibb.co/dz7FRJ/Mazda3.jpg'),
+	(12, 'Mercedes-Benz', 'C230', 'Sedan', 'Manual', 4, 'Diesel', 1, 28, 1, 'https://thumb.ibb.co/kMsM0d/C200.jpg'),
+	(20, 'Honda', 'Accord', 'Sedan', 'Automatic', 4, 'Gas', 1, 19, 0, 'https://thumb.ibb.co/bDMyyy/Honda_Accord.png');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 
 -- Дамп структуры для таблица car_rental.customer_personal_data
@@ -59,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `customer_personal_data` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы car_rental.customer_personal_data: ~7 rows (приблизительно)
+-- Дамп данных таблицы car_rental.customer_personal_data: ~6 rows (приблизительно)
 DELETE FROM `customer_personal_data`;
 /*!40000 ALTER TABLE `customer_personal_data` DISABLE KEYS */;
 INSERT INTO `customer_personal_data` (`id`, `name`, `surname`, `passport_numb`, `date_of_birth`, `driving_exp`) VALUES
@@ -82,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `damages` (
   PRIMARY KEY (`id`),
   KEY `FK_damages_cars` (`car_id`),
   KEY `FK_damages_orders` (`order_id`),
-  CONSTRAINT `FK_damages_cars` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `FK_damages_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON UPDATE CASCADE
+  CONSTRAINT `FK_damages__cars` FOREIGN KEY (`car_id`) REFERENCES `cars` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_damages__orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- Дамп данных таблицы car_rental.damages: ~10 rows (приблизительно)
@@ -114,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `customer_id` int(10) unsigned DEFAULT NULL,
   `total_price` int(10) unsigned DEFAULT NULL,
   `insurance` tinyint(3) unsigned DEFAULT NULL,
-  `isDamaged` tinyint(3) unsigned DEFAULT NULL,
+  `is_damaged` tinyint(3) unsigned DEFAULT NULL,
   `damage_amount` int(10) unsigned DEFAULT NULL,
   `rejection_reason` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -126,10 +125,10 @@ CREATE TABLE IF NOT EXISTS `orders` (
   CONSTRAINT `FK_orders__users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы car_rental.orders: ~7 rows (приблизительно)
+-- Дамп данных таблицы car_rental.orders: ~6 rows (приблизительно)
 DELETE FROM `orders`;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` (`id`, `status`, `order_date`, `user_id`, `car_id`, `start_date`, `end_date`, `customer_id`, `total_price`, `insurance`, `isDamaged`, `damage_amount`, `rejection_reason`) VALUES
+INSERT INTO `orders` (`id`, `status`, `order_date`, `user_id`, `car_id`, `start_date`, `end_date`, `customer_id`, `total_price`, `insurance`, `is_damaged`, `damage_amount`, `rejection_reason`) VALUES
 	(80, 'CANCELLED', '2018-05-05', 2, 1, '2018-05-09', '2018-05-11', 32, 192, 1, 0, 0, NULL),
 	(85, 'FINISHED', '2018-05-06', 2, 1, '2018-05-15', '2018-05-18', 33, 288, 1, 0, 0, NULL),
 	(86, 'FINISHED', '2018-05-06', 2, 1, '2018-05-28', '2018-05-30', 34, 190, 0, 1, 735, NULL),
@@ -148,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `surname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `balance` int(10) unsigned NOT NULL DEFAULT '0',
-  `isAdmin` tinyint(4) unsigned NOT NULL DEFAULT '0',
+  `is_admin` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `login` (`login`)
@@ -157,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы car_rental.users: ~5 rows (приблизительно)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `login`, `password`, `name`, `surname`, `email`, `balance`, `isAdmin`) VALUES
+INSERT INTO `users` (`id`, `login`, `password`, `name`, `surname`, `email`, `balance`, `is_admin`) VALUES
 	(1, 'admin', 'admin', 'Aleksey', 'Sprynchan', 'a.spirt@gmail.com', 0, 1),
 	(2, 'user1', 'pass1', 'Ivan', 'Ivanov', 'ivan@gmail.com', 242, 0),
 	(3, 'user2', 'pass2', 'Petr', 'Petrov', 'petr@gmail.com', 867, 0),

@@ -13,9 +13,7 @@ import by.htp.sprynchan.car_rental.dao.impl.OrderDaoDBImpl;
 
 public class qwe {
 
-	public qwe() {
-		// TODO Auto-generated constructor stub
-	}
+
 
 	public static void main(String[] args) {
 		
@@ -72,6 +70,8 @@ public class qwe {
 		
 		
 		List<Map> qwe = new ArrayList<>();
+		
+		qwe qjaghda = new qwe();
 		
 		
 		

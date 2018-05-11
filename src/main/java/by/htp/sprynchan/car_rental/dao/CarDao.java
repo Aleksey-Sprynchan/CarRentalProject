@@ -8,5 +8,6 @@ public interface CarDao extends BaseDao<Car> {
 	
 	List<Car> readAll();	
 	List<Car> readAllAvailable();
+	void setUnavailableStatus(int id);
 	
 }

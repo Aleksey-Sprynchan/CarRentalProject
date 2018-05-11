@@ -46,7 +46,6 @@ public enum CommandEnum {
 	REPORT_DAMAGES(UserTypeEnum.ADMIN),
 	SEND_DAMAGE_REPORT(UserTypeEnum.ADMIN),
 	FINISH_ORDER(UserTypeEnum.ADMIN),
-	ADD_DAMAGE(UserTypeEnum.ADMIN),
 	VIEW_CAR_DAMAGE_HISTORY(UserTypeEnum.ADMIN);
 	
 

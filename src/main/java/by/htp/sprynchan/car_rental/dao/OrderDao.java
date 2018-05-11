@@ -12,5 +12,4 @@ public interface OrderDao extends BaseDao<Order> {
 	List<Order> readUserOrders(int userId);
 	List<Order> readReservedDatesForCar(int carId);
 	
-
 }

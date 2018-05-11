@@ -28,6 +28,7 @@ public class DeleteCarCommandImpl extends CommonAdminCommand implements BaseComm
 		
 		int carId = Integer.parseInt(request.getParameter(PARAMETER_CAR_ID));
 		carService.deleteCarFromCarPark(carId);
+		
 		request.setAttribute(PARAMETER_MESSAGE, MESSAGE);
 		setAttributetOrderList(request, null);
 		setAttributetOrderStatusList(request);

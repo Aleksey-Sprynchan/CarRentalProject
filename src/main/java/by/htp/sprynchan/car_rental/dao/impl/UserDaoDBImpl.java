@@ -1,7 +1,5 @@
 package by.htp.sprynchan.car_rental.dao.impl;
 
-import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,17 +7,18 @@ import java.sql.SQLException;
 
 import by.htp.sprynchan.car_rental.bean.User;
 import by.htp.sprynchan.car_rental.dao.UserDao;
+import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
-public class UserDaoDBImpl implements UserDao {
+public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	private static final String ADD_USER = "INSERT INTO users (login, password, name, surname, email)"
 			+ " VALUES (?, ?, ?, ?,?);";
 
 	private static final String FIND_USER_BY_LOGIN_PASSWORD = "SELECT id, login, password, "
-			+ "name, surname, email, balance, isAdmin FROM users WHERE login= ? and password = ?;";
+			+ "name, surname, email, balance, is_admin FROM users WHERE login= ? and password = ?;";
 
 	private static final String READ_USER_BY_ID = "SELECT id, login, password, "
-			+ "name, surname, email, balance, isAdmin FROM users WHERE id = ?;";
+			+ "name, surname, email, balance, is_admin FROM users WHERE id = ?;";
 
 	private static final String UPDATE_USER_PERSONAL_INFO = "UPDATE users SET name = ?, surname = ?, "
 			+ "email = ? WHERE id = ?;";
@@ -31,6 +30,10 @@ public class UserDaoDBImpl implements UserDao {
 	private static final int ER_DUP_ENTRY_CODE = 1062;
 	private static final String ENDS_WITH_LOGIN = "key 'login'";
 	private static final String ENDS_WITH_EMAIL = "key 'email'";
+
+	public UserDaoDBImpl() {
+		super();
+	}
 
 	@Override
 	public int create(User entity) {
@@ -172,17 +175,4 @@ public class UserDaoDBImpl implements UserDao {
 		}
 	}
 
-	private User buildUser(ResultSet resultSet) throws SQLException {
-
-		User user = new User();
-		user.setId(resultSet.getInt(USERS_COLUMN_ID));
-		user.setLogin(resultSet.getString(USERS_COLUMN_LOGIN));
-		user.setPassword(resultSet.getString(USERS_COLUMN_PASSWORD));
-		user.setName(resultSet.getString(USERS_COLUMN_NAME));
-		user.setSurname(resultSet.getString(USERS_COLUMN_SURNAME));
-		user.setEmail(resultSet.getString(USERS_COLUMN_EMAIL));
-		user.setBalance(resultSet.getInt(USERS_COLUMN_BALANCE));
-		user.setAdmin(resultSet.getBoolean(USERS_COLUMN_IS_ADMIN));
-		return user;
-	}
 }

@@ -10,7 +10,7 @@ public class CustomerPersonalDataServiceImpl implements CustomerPersonalDataServ
 	CustomerPersonalDataDao customerPersonalDataDao = new CustomerPersonalDataDBDaoImpl();
 
 	public CustomerPersonalDataServiceImpl() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	@Override
