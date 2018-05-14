@@ -29,7 +29,7 @@
 	<c:if test="${not empty car_list}">
      <c:forEach items="${car_list}" var="car">
 		<p>
-		<img src="${car.getImage()}" alt="car_image" width="120" height="120">
+		<img src="${car.getImage()}" alt="car_image">
 		<c:out value="${car}" />	
 	</c:forEach>
 	</c:if>

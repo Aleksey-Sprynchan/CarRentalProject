@@ -16,8 +16,8 @@
 <body>
 
 	
-	<c:if test="${not empty order_set}">
-	<c:forEach items="${order_set}" var="order">
+	<c:if test="${not empty orderId_set}">
+	<c:forEach items="${orderId_set}" var="order">
 		<br><p><strong><c:out value="Order №${order}:" /></strong></p>	
 		<c:forEach items="${carDamHist_map.get(order)}" var="damage">
 			<c:out value="${damage}" /><br>		

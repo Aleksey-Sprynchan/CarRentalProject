@@ -34,7 +34,7 @@
 
 	<br>
 	<form action="CarRentalServlet" method="get"> 
-	<input type="hidden" name="command" value="ADDING_CAR"/>
+	<input type="hidden" name="command" value="CREATE_CAR"/>
 	<input type="submit" value="Create car"/>
 	</form>
 

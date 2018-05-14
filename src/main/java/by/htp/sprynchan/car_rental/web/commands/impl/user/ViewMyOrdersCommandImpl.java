@@ -1,13 +1,13 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
 import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_USER_ORDERS;
+import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.bean.Damage;
@@ -27,34 +27,24 @@ public class ViewMyOrdersCommandImpl implements BaseCommand {
 	private OrderService orderService = new OrderServiceImpl();
 	private CarService carService = new CarServiceImpl();
 	private DamageService damageService = new DamageServiceImpl();
-	private static final String PARAMETER_USER = "user";
-	public static final String PARAMETER_ORDER_LIST = "order_list";
-	public static final String PARAMETER_ORDER_CAR_MAP = "orderCar_map";
-	public static final String PARAMETER_ORDER_DAMAGE_MAP = "orderDam_map";
-
 
 	@Override
-	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws BaseException {
 
-		User user = (User) request.getSession().getAttribute(PARAMETER_USER);
-		int userId = user.getId();
-		List<Order> orderList = orderService.getUserOrderList(userId);
-		Map<Integer, Car> orderCarMap = getCarsForOrderList(orderList);	
-		
-		
+		User user = (User) request.getSession().getAttribute(REQUEST_PARAM_USER);
+		List<Order> orderList = orderService.getUserOrderList(user.getId());
+		Map<Integer, Car> orderCarMap = getCarsForOrderList(orderList);
 		Map<Integer, List<Damage>> orderDamageMap = new HashMap<Integer, List<Damage>>();
-		for(Order order: orderList) {
-			orderDamageMap.put(order.getId(), damageService.getOrderDamages(order.getId()));		
-		}		
-		
-		
-		request.setAttribute(PARAMETER_ORDER_LIST, orderList);
-		request.setAttribute(PARAMETER_ORDER_CAR_MAP, orderCarMap);
-		request.setAttribute(PARAMETER_ORDER_DAMAGE_MAP, orderDamageMap);
+		for (Order order : orderList) {
+			orderDamageMap.put(order.getId(), damageService.getOrderDamages(order.getId()));
+		}
+		request.setAttribute(REQUEST_PARAM_ORDER_LIST, orderList);
+		request.setAttribute(REQUEST_PARAM_ORDER_CAR_MAP, orderCarMap);
+		request.setAttribute(REQUEST_PARAM_ORDER_DAMAGE_MAP, orderDamageMap);
 		return PAGE_USER_ORDERS;
 	}
 
-		Map<Integer, Car> getCarsForOrderList(List<Order> orderList) {
+	private Map<Integer, Car> getCarsForOrderList(List<Order> orderList) {
 		Map<Integer, Car> orderCarMap = new HashMap<Integer, Car>();
 		for (Order order : orderList) {
 			int carId = order.getCarId();
@@ -62,7 +52,6 @@ public class ViewMyOrdersCommandImpl implements BaseCommand {
 			orderCarMap.put(order.getId(), car);
 		}
 		return orderCarMap;
-
 	}
 
 }

@@ -16,12 +16,9 @@ import by.htp.sprynchan.car_rental.web.util.CommandEnum;
 import by.htp.sprynchan.car_rental.web.util.UserTypeEnum;
 
 public class AuthFilter implements Filter {
-
-	public static final String PARAMETER_LOGIN = "login";
-	public static final String PARAMETER_PASSWORD = "password";
+	
 	public static final String PARAMETER_USER = "user";
 	public static final String PARAMETER_COMMAND = "command";
-
 	public static final String PARAMETER_MESSAGE = "message";
 	public static final String MESSAGE_NO_RIGHTS = "no_rights_message";
 	
@@ -46,7 +43,6 @@ public class AuthFilter implements Filter {
 			command = CommandEnum.valueOf(inputCommand);
 
 			if (currentUser != null) {
-
 				if (currentUser.isAdmin() && command.getUserType() == UserTypeEnum.ADMIN) {
 					chain.doFilter(request, response);
 				} else if (!currentUser.isAdmin() && command.getUserType() == UserTypeEnum.USER) {

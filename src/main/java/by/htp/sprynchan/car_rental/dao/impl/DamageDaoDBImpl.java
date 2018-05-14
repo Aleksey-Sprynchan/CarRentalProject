@@ -26,10 +26,6 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 
 	private static final String READ_ORDER_DAMAGE_AMOUNT = "SELECT SUM(damage_cost) FROM damages Where order_id = ?";
 
-	public DamageDaoDBImpl() {
-		super();
-	}
-
 	@Override
 	public int create(Damage entity) {
 

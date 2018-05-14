@@ -31,10 +31,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 	private static final String ENDS_WITH_LOGIN = "key 'login'";
 	private static final String ENDS_WITH_EMAIL = "key 'email'";
 
-	public UserDaoDBImpl() {
-		super();
-	}
-
 	@Override
 	public int create(User entity) {
 

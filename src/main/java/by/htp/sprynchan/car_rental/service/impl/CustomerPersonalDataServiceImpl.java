@@ -7,16 +7,11 @@ import by.htp.sprynchan.car_rental.service.CustomerPersonalDataService;
 
 public class CustomerPersonalDataServiceImpl implements CustomerPersonalDataService {
 	
-	CustomerPersonalDataDao customerPersonalDataDao = new CustomerPersonalDataDBDaoImpl();
-
-	public CustomerPersonalDataServiceImpl() {
-		super();
-	}
+	private CustomerPersonalDataDao customerPersonalDataDao = new CustomerPersonalDataDBDaoImpl();
 
 	@Override
 	public CustomerPersonalData getCustomerPersonalData(int id) {
 		return customerPersonalDataDao.read(id);
-
 	}
 
 	@Override

@@ -1,9 +1,9 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.admin;
 
 import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ORDER_DETAILS;
+import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.exeption.BaseException;
@@ -16,16 +16,13 @@ public class MarkAsReturnedCommandImpl implements BaseCommand {
 
 	private OrderService orderService = new OrderServiceImpl();
 	
-	public static final String PARAMETER_ORDER_ID = "order_id";
-	public static final String PARAMETER_ORDER = "order";
-
 	@Override
-	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws BaseException {
 		
-		int orderId = Integer.parseInt(request.getParameter(PARAMETER_ORDER_ID));		
+		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));		
 		orderService.updateOrderStatus(orderId, OrderStatusEnum.RETURNED);	
 		Order order = orderService.getOrder(orderId);
-		request.setAttribute(PARAMETER_ORDER, order);		
+		request.setAttribute(REQUEST_PARAM_ORDER, order);		
 		return PAGE_ORDER_DETAILS;
 	}
 }

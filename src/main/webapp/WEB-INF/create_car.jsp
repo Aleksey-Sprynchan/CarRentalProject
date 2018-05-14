@@ -16,7 +16,7 @@
 		<input type="text" name="brand_name" list="brandList" placeholder="Select or enter brand">
 		
 		<datalist id="brandList">
-			<c:forEach items="${brand_names}" var="brand">
+			<c:forEach items="${brand_names_list}" var="brand">
 				<option value="${brand}">${brand}</option>
 			</c:forEach>
 		</datalist>
@@ -41,8 +41,8 @@
 		
 		<fieldset>
     	 <legend>Air Condition</legend>
-      		<input type="radio" name="is_air_condition" value="true">Yes
-      		<input type="radio" name="is_air_condition" value="false">No
+      		<input type="radio" name="air_condition" value="true">Yes
+      		<input type="radio" name="air_condition" value="false">No
    		 </fieldset>
 
 		<p>Image link

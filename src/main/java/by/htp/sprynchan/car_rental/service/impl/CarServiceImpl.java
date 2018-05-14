@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//import by.htp.login.exception.BookCatalogNotFoundException;
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.dao.CarDao;
 import by.htp.sprynchan.car_rental.dao.impl.CarDaoDBImpl;
@@ -13,10 +12,6 @@ import by.htp.sprynchan.car_rental.service.CarService;
 public class CarServiceImpl implements CarService {
 
 	private CarDao carDao = new CarDaoDBImpl();
-
-	public CarServiceImpl() {
-		super();
-	}
 
 	@Override
 	public List<Car> getCarPark() {
@@ -36,9 +31,8 @@ public class CarServiceImpl implements CarService {
 
 	@Override
 	public Set<String> getBrandList() {
-
 		List<Car> cars = carDao.readAll();
-		Set<String> brandList = new HashSet<String>();
+		Set<String> brandList = new HashSet<>();
 		for (Car car : cars) {
 			brandList.add(car.getBrandName());
 		}

@@ -10,13 +10,9 @@
 </head>
 <body>
 
-
 	<jsp:forward page="/CarRentalServlet">
-		<jsp:param  name="command" value="INDEX_PAGE"/>
+		<jsp:param  name="command" value="START_PAGE"/>
 	</jsp:forward>
-
-	
-
 
 </body>
 </html>

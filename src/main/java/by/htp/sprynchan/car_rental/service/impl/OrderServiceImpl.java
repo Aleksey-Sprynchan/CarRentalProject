@@ -12,32 +12,23 @@ import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public class OrderServiceImpl implements OrderService {
 
-	OrderDao orderDao = new OrderDaoDBImpl();
-	
-	public OrderServiceImpl() {
-		super();
-	}
+	private OrderDao orderDao = new OrderDaoDBImpl();
 
 	@Override
 	public int createNewOrder(Order order) {
-
 		return orderDao.create(order);
-
 	}
 
 	@Override
 	public Order getOrder(int id) {
-
 		return orderDao.read(id);
 	}
 
 	@Override
 	public void updateOrderStatus(int id, OrderStatusEnum orderStatus) {
-
 		Order order = orderDao.read(id);
 		order.setStatus(orderStatus);
 		orderDao.update(order);
-
 	}
 
 	@Override
@@ -53,41 +44,35 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void rejectOrder(int id, String reason) {
-
 		Order order = orderDao.read(id);
 		order.setStatus(OrderStatusEnum.REJECTED);
 		order.setRejectionReason(reason);
 		orderDao.update(order);
-
 	}
 
 	@Override
 	public void sendDamagesAmount(int id, int totalAmount) {
-
 		Order order = orderDao.read(id);
 		order.setDamaged(true);
 		order.setStatus(OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT);
 		order.setDamageAmount(totalAmount);
 		orderDao.update(order);
-
 	}
 
 	@Override
-	public List<Order> getUserOrderList(int userId) {
-		
-		List<Order> userOrders = orderDao.readUserOrders(userId);
-		return userOrders;
+	public List<Order> getUserOrderList(int userId) {		
+		return orderDao.readUserOrders(userId);
 	}
 
 	@Override
-	public boolean checkForUnfinishedOrders(int userId) {
-		
+	public boolean checkForUnfinishedOrders(int userId) {	
 		List<Order> userOrders = orderDao.readUserOrders(userId);
 		if(userOrders == null) {
 			return false;
 		}
 		for(Order order: userOrders) {
-			if (order.getStatus() == OrderStatusEnum.PAID || order.getStatus() == OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT) {
+			if (order.getStatus() == OrderStatusEnum.PAID || 
+					order.getStatus() == OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT) {
 				return true;
 			}
 		}
@@ -95,8 +80,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<String> getResevedDatesList(int carId) {
-		
+	public List<String> getResevedDatesList(int carId) {		
 		List<Order> orderDatesList = orderDao.readReservedDatesForCar(carId);	
 		List<String> reservedDates = new ArrayList<>();		
 		for(Order order: orderDatesList) {

@@ -16,10 +16,6 @@ import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public class BeanDaoBuilders {
 
-	public BeanDaoBuilders() {
-		super();
-	}
-
 	protected Car buildCar(ResultSet resultSet) throws SQLException {
 		Car car = new Car();
 		car.setId(resultSet.getInt(CARS_COLUMN_ID));

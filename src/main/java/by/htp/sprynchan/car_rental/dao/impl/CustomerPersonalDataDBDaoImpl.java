@@ -25,10 +25,6 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 
 	private static final String DELETE_CUSTOMER_PERSONAL_DATA_BY_ID = "DELETE FROM customer_personal_data WHERE id = ?;";
 
-	public CustomerPersonalDataDBDaoImpl() {
-		super();
-	}
-
 	@Override
 	public int create(CustomerPersonalData entity) {
 

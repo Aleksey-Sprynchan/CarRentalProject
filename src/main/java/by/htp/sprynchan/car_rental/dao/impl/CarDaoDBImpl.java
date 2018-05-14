@@ -33,10 +33,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image FROM cars WHERE is_available = 1;";
 	
 	private static final String SET_UNAVAILABLE_CAR_STATUS = "UPDATE cars SET is_available = 0 WHERE id = ?;";
-	
-	public CarDaoDBImpl() {
-		super();
-	}
 
 	@Override
 	public int create(Car entity) {

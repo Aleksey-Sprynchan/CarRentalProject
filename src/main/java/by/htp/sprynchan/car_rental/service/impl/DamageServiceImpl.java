@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import by.htp.sprynchan.car_rental.bean.Damage;
+import by.htp.sprynchan.car_rental.dao.DamageDao;
 import by.htp.sprynchan.car_rental.dao.impl.DamageDaoDBImpl;
 import by.htp.sprynchan.car_rental.service.DamageService;
 
 public class DamageServiceImpl implements DamageService {
 	
-	DamageDaoDBImpl damageDao = new DamageDaoDBImpl();
-
-	public DamageServiceImpl() {
-		super();
-	}
+	private DamageDao damageDao = new DamageDaoDBImpl();
 
 	@Override
 	public List<Damage> getOrderDamages(int orderId) {
@@ -22,14 +19,11 @@ public class DamageServiceImpl implements DamageService {
 	}
 
 	@Override
-	public Map<Integer, List<Damage>> getCarDamageHistory(int carId) {
-		
+	public Map<Integer, List<Damage>> getCarDamageHistory(int carId) {		
 		Map<Integer, List<Damage>> carDamageHistory = new HashMap<>();
-		List<Integer> ordersId = damageDao.readUniqueOrdersId(carId);
-		
+		List<Integer> ordersId = damageDao.readUniqueOrdersId(carId);		
 		for(Integer id: ordersId) {
-			carDamageHistory.put(id, damageDao.readOrderDamages(id));
-			
+			carDamageHistory.put(id, damageDao.readOrderDamages(id));			
 		}
 		return carDamageHistory;
 	}
@@ -42,7 +36,6 @@ public class DamageServiceImpl implements DamageService {
 	@Override
 	public int getTotalDamageAmount(int orderId) {
 		return damageDao.countOrderDamageAmount(orderId);
-
 	}
 
 }

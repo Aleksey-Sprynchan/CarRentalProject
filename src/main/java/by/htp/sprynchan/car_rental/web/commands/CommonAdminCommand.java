@@ -24,7 +24,7 @@ public abstract class CommonAdminCommand {
 	}
 	
 	protected void setAttributetOrderStatusList(HttpServletRequest request) {
-		List<String> orderStatusList = new ArrayList<String>();
+		List<String> orderStatusList = new ArrayList<>();
 		for(OrderStatusEnum e: OrderStatusEnum.values()) {
 			orderStatusList.add(e.toString().replace('_', ' '));						
 		}		

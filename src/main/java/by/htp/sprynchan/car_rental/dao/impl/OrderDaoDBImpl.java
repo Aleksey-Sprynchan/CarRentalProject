@@ -54,10 +54,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 			+ "FROM (SELECT * FROM orders o WHERE o.car_id = ?) s "
 			+ "WHERE s.status = 'PAID' OR s.status = 'WAITING_FOR_APPROVE' OR s.status = 'WAITING_FOR_PAYMENT';";
 
-	public OrderDaoDBImpl() {
-		super();
-	}
-
 	@Override
 	public int create(Order entity) {
 

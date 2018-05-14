@@ -16,24 +16,17 @@ public class UserServiceImpl implements UserService {
 
 	private UserDao userDao = new UserDaoDBImpl();
 
-	public UserServiceImpl() {
-		super();
-	}
-
 	@Override
 	public User getUserByLoginPassword(String login, String password) throws UserNotFoundException {
-
 		User loggedInUser = userDao.login(login, password);
 		if (loggedInUser == null) {
 			throw new UserNotFoundException();
 		}
-
 		return loggedInUser;
 	}
 
 	@Override
 	public String createNewUser(String login, String password, String name, String surname, String email) {
-
 		User newUser = new User(login, password, name, surname, email);
 		int code = userDao.create(newUser);
 		String message = null;
@@ -57,7 +50,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String updateUserInfo(User user) {
-
 		int code = userDao.update(user);
 		String message = null;
 		if (code == DUPLICATE_EMAIL_CODE) {

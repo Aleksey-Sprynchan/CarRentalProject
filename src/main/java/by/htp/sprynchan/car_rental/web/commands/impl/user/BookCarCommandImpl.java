@@ -1,13 +1,13 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.*;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_BOOK_CAR;
+import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import org.json.simple.JSONArray;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.exeption.BaseException;
@@ -21,15 +21,11 @@ public class BookCarCommandImpl implements BaseCommand {
 	
 	private CarService carService = new CarServiceImpl();
 	private OrderService orderService = new OrderServiceImpl();
-	
-	private static final String PARAMETER_CAR_ID = "car_id";
-	private static final String PARAMETER_CAR = "car";
-	private static final String PARAMETER_RESERVED_DATES = "reserved_dates";
 
 	@Override
-	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws BaseException {
 					
-		int carId = Integer.parseInt(request.getParameter(PARAMETER_CAR_ID));	
+		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));	
 		List<String> reservedDates = orderService.getResevedDatesList(carId);
 	
 		@SuppressWarnings("unchecked")
@@ -37,12 +33,10 @@ public class BookCarCommandImpl implements BaseCommand {
 		for(String s: reservedDates) {
 			reservedDatesJSON.add(s);
 		}
-
-		request.setAttribute(PARAMETER_RESERVED_DATES, reservedDatesJSON);
+		request.setAttribute(REQUEST_PARAM_RESERVED_DATES, reservedDatesJSON);
 		Car bookingCar = carService.getCar(carId);	
-		request.setAttribute(PARAMETER_CAR, bookingCar);	
+		request.setAttribute(REQUEST_PARAM_CAR, bookingCar);	
 		return PAGE_BOOK_CAR;
-
 	}
 
 }

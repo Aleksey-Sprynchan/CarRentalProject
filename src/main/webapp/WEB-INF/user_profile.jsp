@@ -35,6 +35,11 @@
 		<button type="submit" name="command" value="DEPOSIT_PAGE">Make a deposit</button>
 		</form>
       
+      
+      <c:if test="${not empty info_message}">
+		<p><c:out value="${info_message}" /></p>	
+	</c:if>
+	
      <div class="block1">  
      <c:if test="${not empty car_list}">
      <c:forEach items="${car_list}" var="car">

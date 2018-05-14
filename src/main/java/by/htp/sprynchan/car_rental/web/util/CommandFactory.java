@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.AddCarCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.admin.AddingCarCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.CreateCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ApproveOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.DeleteCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.EditCarCommandImpl;
@@ -20,7 +20,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarDamageHistoryC
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarParkCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewOrderDetailsCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.AuthorizationCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.all.IndexPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.all.StartPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegisterCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegistrationPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.SignOutCommandImpl;
@@ -40,25 +40,26 @@ import by.htp.sprynchan.car_rental.web.commands.impl.user.DepositPageCommandImpl
 import by.htp.sprynchan.car_rental.web.commands.impl.user.MakeDepositCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForDamageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForOrderCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.user.SubmitOrderFormCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewAccountDetailsCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewMyOrdersCommandImpl;
 
 public class CommandFactory {
+	
+	private CommandFactory() {
+		throw new IllegalStateException("Utility class");
+	}	
 	
 	private static final String COMMAND = "command";
 
 	public static BaseCommand defineCommand(HttpServletRequest request) {
 		
 		BaseCommand command = null;
-		
 		String inputCommand =  request.getParameter(COMMAND);
 		if(inputCommand == null) {
 			inputCommand = "INDEX_PAGE";
 		}
 		
 		CommandEnum commandName = CommandEnum.valueOf(inputCommand);
-
 		
 		System.out.println(inputCommand);
 		
@@ -105,8 +106,8 @@ public class CommandFactory {
 		case SHOW_ORDERS_BY_STATUS:
 			command = new ShowOrdersByStatusCommandImpl();
 			 break;
-		case INDEX_PAGE:
-			command = new IndexPageCommandImpl();
+		case START_PAGE:
+			command = new StartPageCommandImpl();
 			break;
 		case TO_MY_PROFILE_PAGE:
 			command = new ToMyProfilePageCommandImpl();
@@ -141,9 +142,6 @@ public class CommandFactory {
 		case APPROVE_ORDER:
 			command = new ApproveOrderCommandImpl();
 			break;
-		case SUBMIT_ORDER_FORM:
-			command = new SubmitOrderFormCommandImpl();
-			break;
 		case VIEW_ORDER_DETAILS:
 			command = new ViewOrderDetailsCommandImpl();
 			break;
@@ -153,8 +151,8 @@ public class CommandFactory {
 		case BOOK_CAR:
 			command = new BookCarCommandImpl();
 			break;
-		case ADDING_CAR:
-			command = new AddingCarCommandImpl();
+		case CREATE_CAR:
+			command = new CreateCarCommandImpl();
 			break;
 		case ADD_CAR:
 			command = new AddCarCommandImpl();
@@ -185,6 +183,5 @@ public class CommandFactory {
 			break;
 		}
 		return command;
-
 	}
 }

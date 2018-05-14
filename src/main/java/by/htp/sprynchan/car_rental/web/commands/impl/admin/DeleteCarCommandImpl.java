@@ -1,35 +1,29 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.admin;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.*;
-
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ADMIN_PROFILE;
+import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
-
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
-
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
 
 public class DeleteCarCommandImpl extends CommonAdminCommand implements BaseCommand {
 
 	private CarService carService = new CarServiceImpl();
-	
-	private static final String PARAMETER_CAR_ID = "car_id";
-	private static final String PARAMETER_MESSAGE = "info_message";
-	private static final String MESSAGE = "Car was succsefully deleted from car park!";
+		
+	private static final String MESSAGE_VALUE = "Car was succsefully deleted from car park!";
 	
 	@Override
-	public String executeCommand(HttpServletRequest request, HttpServletResponse response) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws BaseException {
 		
-		int carId = Integer.parseInt(request.getParameter(PARAMETER_CAR_ID));
+		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));
 		carService.deleteCarFromCarPark(carId);
 		
-		request.setAttribute(PARAMETER_MESSAGE, MESSAGE);
+		request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_VALUE);
 		setAttributetOrderList(request, null);
 		setAttributetOrderStatusList(request);
 		return PAGE_ADMIN_PROFILE;

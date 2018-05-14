@@ -42,7 +42,7 @@ public class CarRentalServlet extends HttpServlet {
 		String path = null;
 		
 		try {
-			path = requestCommand.executeCommand(request, response);
+			path = requestCommand.executeCommand(request);
 			
 			request.setAttribute("user_type", request.getSession().getAttribute("user_type"));
 		} catch (BaseException e) {
