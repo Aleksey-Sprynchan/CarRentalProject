@@ -1,6 +1,6 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_USER_ORDERS;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_MY_ORDERS;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import java.time.LocalDate;
@@ -14,14 +14,15 @@ import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.bean.CustomerPersonalData;
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.CustomerPersonalDataService;
 import by.htp.sprynchan.car_rental.service.OrderService;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.CustomerPersonalDataServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class ChangeOrderCommandImpl implements BaseCommand {
 	
@@ -32,7 +33,7 @@ public class ChangeOrderCommandImpl implements BaseCommand {
 	private CarService carService = new CarServiceImpl();
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int customerId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CUSTOMER_ID));
 		String customerName = request.getParameter(REQUEST_PARAM_CUSTOMER_NAME);
@@ -56,10 +57,10 @@ public class ChangeOrderCommandImpl implements BaseCommand {
 		request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_VALUE);
 		Map<Integer, Car> orderCarMap = getCarsForOrderList(orderList);	
 		request.setAttribute(REQUEST_PARAM_ORDER_CAR_MAP, orderCarMap);
-		return PAGE_USER_ORDERS;
+		return PAGE_MY_ORDERS;
 	}
 	
-	private Map<Integer, Car> getCarsForOrderList(List<Order> orderList) {
+	private Map<Integer, Car> getCarsForOrderList(List<Order> orderList) throws ServiceException {
 		Map<Integer, Car> orderCarMap = new HashMap<Integer, Car>();
 		for (Order order : orderList) {
 			int carId = order.getCarId();

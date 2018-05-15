@@ -8,18 +8,19 @@ import by.htp.sprynchan.car_rental.bean.Damage;
 import by.htp.sprynchan.car_rental.dao.DamageDao;
 import by.htp.sprynchan.car_rental.dao.impl.DamageDaoDBImpl;
 import by.htp.sprynchan.car_rental.service.DamageService;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 
 public class DamageServiceImpl implements DamageService {
 	
 	private DamageDao damageDao = new DamageDaoDBImpl();
 
 	@Override
-	public List<Damage> getOrderDamages(int orderId) {
+	public List<Damage> getOrderDamages(int orderId) throws ServiceException {
 		return damageDao.readOrderDamages(orderId);
 	}
 
 	@Override
-	public Map<Integer, List<Damage>> getCarDamageHistory(int carId) {		
+	public Map<Integer, List<Damage>> getCarDamageHistory(int carId) throws ServiceException {		
 		Map<Integer, List<Damage>> carDamageHistory = new HashMap<>();
 		List<Integer> ordersId = damageDao.readUniqueOrdersId(carId);		
 		for(Integer id: ordersId) {
@@ -29,12 +30,12 @@ public class DamageServiceImpl implements DamageService {
 	}
 
 	@Override
-	public void addDamage(Damage damage) {
+	public void addDamage(Damage damage) throws ServiceException {
 		damageDao.create(damage);		
 	}
 
 	@Override
-	public int getTotalDamageAmount(int orderId) {
+	public int getTotalDamageAmount(int orderId) throws ServiceException {
 		return damageDao.countOrderDamageAmount(orderId);
 	}
 

@@ -42,7 +42,9 @@ public enum CommandEnum {
 	REPORT_DAMAGES(UserTypeEnum.ADMIN),
 	SEND_DAMAGE_REPORT(UserTypeEnum.ADMIN),
 	FINISH_ORDER(UserTypeEnum.ADMIN),
-	VIEW_CAR_DAMAGE_HISTORY(UserTypeEnum.ADMIN);
+	VIEW_CAR_DAMAGE_HISTORY(UserTypeEnum.ADMIN),
+	VIEW_USER_ORDERS(UserTypeEnum.ADMIN),
+	VIEW_USER_LIST(UserTypeEnum.ADMIN);
 
 	private UserTypeEnum userType;
 

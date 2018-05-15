@@ -19,6 +19,8 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.UpdateCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarDamageHistoryCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarParkCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewOrderDetailsCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserListCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserOrdersCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.AuthorizationCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.StartPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegisterCommandImpl;
@@ -56,7 +58,7 @@ public class CommandFactory {
 		BaseCommand command = null;
 		String inputCommand =  request.getParameter(COMMAND);
 		if(inputCommand == null) {
-			inputCommand = "INDEX_PAGE";
+			inputCommand = "START_PAGE";
 		}
 		
 		CommandEnum commandName = CommandEnum.valueOf(inputCommand);
@@ -64,6 +66,12 @@ public class CommandFactory {
 		System.out.println(inputCommand);
 		
 		switch(commandName) {
+		case VIEW_USER_ORDERS:
+			command = new ViewUserOrdersCommandImpl();
+			break;
+		case VIEW_USER_LIST:
+			command = new ViewUserListCommandImpl();
+			break;
 		case VIEW_CAR_DAMAGE_HISTORY:
 			command = new ViewCarDamageHistoryCommandImpl();
 			break;

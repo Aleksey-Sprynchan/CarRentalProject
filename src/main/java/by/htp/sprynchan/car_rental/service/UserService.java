@@ -1,15 +1,18 @@
 package by.htp.sprynchan.car_rental.service;
 
+import java.util.List;
+
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.UserNotFoundException;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 
 public interface UserService {
 	
-	User getUserByLoginPassword (String login, String password) throws UserNotFoundException;	
-	String createNewUser(String login, String password, String name, String surname, String email);	
-	void deleteUser (int id);	
-	User getUser (int id);	
-	String updateUserInfo (User user);	
-	void changeUserBalance (User user);	
-	void changeUserPassword (User user);	
+	User getUserByLoginPassword(String login, String password) throws ServiceException;	
+	String createNewUser(User user) throws ServiceException;	
+	void deleteUser(int id) throws ServiceException;	
+	User getUser(int id) throws ServiceException;	
+	String updateUserInfo(User user) throws ServiceException;	
+	void changeUserBalance(User user) throws ServiceException;	
+	void changeUserPassword(User user) throws ServiceException;	
+	List<User> getUsersList() throws ServiceException;
 }

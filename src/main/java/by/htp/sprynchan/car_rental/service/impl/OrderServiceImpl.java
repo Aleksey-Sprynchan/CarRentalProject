@@ -8,6 +8,7 @@ import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.dao.OrderDao;
 import by.htp.sprynchan.car_rental.dao.impl.OrderDaoDBImpl;
 import by.htp.sprynchan.car_rental.service.OrderService;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public class OrderServiceImpl implements OrderService {
@@ -15,24 +16,24 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDao orderDao = new OrderDaoDBImpl();
 
 	@Override
-	public int createNewOrder(Order order) {
+	public int createNewOrder(Order order) throws ServiceException {
 		return orderDao.create(order);
 	}
 
 	@Override
-	public Order getOrder(int id) {
+	public Order getOrder(int id) throws ServiceException {
 		return orderDao.read(id);
 	}
 
 	@Override
-	public void updateOrderStatus(int id, OrderStatusEnum orderStatus) {
+	public void updateOrderStatus(int id, OrderStatusEnum orderStatus) throws ServiceException {
 		Order order = orderDao.read(id);
 		order.setStatus(orderStatus);
 		orderDao.update(order);
 	}
 
 	@Override
-	public List<Order> getOrderList(OrderStatusEnum orderStatus) {
+	public List<Order> getOrderList(OrderStatusEnum orderStatus) throws ServiceException {
 		List<Order> orders = null;
 		if (orderStatus != null) {
 			orders = orderDao.readAllWithStatus(orderStatus);
@@ -43,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void rejectOrder(int id, String reason) {
+	public void rejectOrder(int id, String reason) throws ServiceException {
 		Order order = orderDao.read(id);
 		order.setStatus(OrderStatusEnum.REJECTED);
 		order.setRejectionReason(reason);
@@ -51,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void sendDamagesAmount(int id, int totalAmount) {
+	public void sendDamagesAmount(int id, int totalAmount) throws ServiceException {
 		Order order = orderDao.read(id);
 		order.setDamaged(true);
 		order.setStatus(OrderStatusEnum.WAITING_FOR_DAMAGE_PAYMENT);
@@ -60,12 +61,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getUserOrderList(int userId) {		
+	public List<Order> getUserOrderList(int userId) throws ServiceException {		
 		return orderDao.readUserOrders(userId);
 	}
 
 	@Override
-	public boolean checkForUnfinishedOrders(int userId) {	
+	public boolean checkForUnfinishedOrders(int userId) throws ServiceException {	
 		List<Order> userOrders = orderDao.readUserOrders(userId);
 		if(userOrders == null) {
 			return false;
@@ -80,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<String> getResevedDatesList(int carId) {		
+	public List<String> getResevedDatesList(int carId) throws ServiceException {		
 		List<Order> orderDatesList = orderDao.readReservedDatesForCar(carId);	
 		List<String> reservedDates = new ArrayList<>();		
 		for(Order order: orderDatesList) {

@@ -6,11 +6,11 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.Car;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class AddCarCommandImpl extends CommonAdminCommand implements BaseCommand {
 
@@ -19,7 +19,7 @@ public class AddCarCommandImpl extends CommonAdminCommand implements BaseCommand
 	private static final String MESSAGE_VALUE = "New car was succsefully added to car park!";
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		String brandName = request.getParameter(REQUEST_PARAM_BRAND_NAME);
 		String model = request.getParameter(REQUEST_PARAM_MODEL);
 		String type = request.getParameter(REQUEST_PARAM_TYPE);

@@ -6,10 +6,10 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.UserService;
 import by.htp.sprynchan.car_rental.service.impl.UserServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class DeleteAccountCommandImpl implements BaseCommand {
 	
@@ -18,7 +18,7 @@ public class DeleteAccountCommandImpl implements BaseCommand {
 	private static final String MESSAGE_ACCOUNT_DELETED = "Account was successfully deleted!";
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		User user = (User) request.getSession().getAttribute(REQUEST_PARAM_USER);
 		userService.deleteUser(user.getId());

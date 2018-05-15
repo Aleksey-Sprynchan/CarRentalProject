@@ -1,18 +1,17 @@
 package by.htp.sprynchan.car_rental.dao.impl;
 
-import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 
 import by.htp.sprynchan.car_rental.bean.CustomerPersonalData;
 import by.htp.sprynchan.car_rental.dao.CustomerPersonalDataDao;
+import by.htp.sprynchan.car_rental.dao.exception.DAOException;
+import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
-public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
+public class CustomerPersonalDataDBDaoImpl extends BeanDaoBuilders implements CustomerPersonalDataDao {
 
 	private static final String ADD_CUSTOMER_PERSONAL_DATA = "INSERT INTO customer_personal_data "
 			+ "(name, surname, passport_numb, date_of_birth, driving_exp) VALUES (?, ?, ?, ?, ?);";
@@ -24,9 +23,15 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 			+ "date_of_birth =?, driving_exp = ? WHERE id = ?;";
 
 	private static final String DELETE_CUSTOMER_PERSONAL_DATA_BY_ID = "DELETE FROM customer_personal_data WHERE id = ?;";
+	
+	private static final String ERROR_IN_CREATE_CPDATA = "Error while adding customer personal data to database";
+	private static final String ERROR_IN_READ_CPDATA = "Error while getting customer personal data from database";
+	private static final String ERROR_IN_UPDATE_CPDATA = "Error while trying to edit customer personal data in database";
+	private static final String ERROR_IN_DELETE_CPDATA = "Error while deleting customer personal data from database";
+	
 
 	@Override
-	public int create(CustomerPersonalData entity) {
+	public int create(CustomerPersonalData entity) throws DAOException {
 
 		int id = 0;
 		Connection connection = dataBaseConnection.getConnection();
@@ -46,7 +51,7 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_CREATE_CPDATA, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -54,7 +59,7 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 	}
 
 	@Override
-	public CustomerPersonalData read(int id) {
+	public CustomerPersonalData read(int id) throws DAOException {
 
 		CustomerPersonalData customerData = null;
 		Connection connection = dataBaseConnection.getConnection();
@@ -66,7 +71,7 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_READ_CPDATA, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -74,7 +79,7 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 	}
 
 	@Override
-	public int update(CustomerPersonalData entity) {
+	public int update(CustomerPersonalData entity) throws DAOException {
 
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CUSTOMER_PERSONAL_DATA_BY_ID)) {
@@ -87,7 +92,7 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_UPDATE_CPDATA, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -95,29 +100,17 @@ public class CustomerPersonalDataDBDaoImpl implements CustomerPersonalDataDao {
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws DAOException {
 
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CUSTOMER_PERSONAL_DATA_BY_ID)) {
 			preparedStatement.setInt(1, id);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_DELETE_CPDATA, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
-	}
-
-	private CustomerPersonalData buildCustomer(ResultSet resultSet) throws SQLException {
-
-		CustomerPersonalData customer = new CustomerPersonalData();
-		customer.setId(resultSet.getInt(CUSTPERSDATA_COLUMN_ID));
-		customer.setName(resultSet.getString(CUSTPERSDATA_COLUMN_NAME));
-		customer.setSurname(resultSet.getString(CUSTPERSDATA_COLUMN_SURNAME));
-		customer.setPassportNumb(resultSet.getString(CUSTPERSDATA_COLUMN_PASSPORT_NUMB));
-		customer.setDateOfBirth(LocalDate.parse(resultSet.getString(CUSTPERSDATA_COLUMN_DATE_OF_BIRTH)));
-		customer.setDrivingExp(resultSet.getInt(CUSTPERSDATA_COLUMN_DRIVING_EXP));
-		return customer;
 	}
 
 }

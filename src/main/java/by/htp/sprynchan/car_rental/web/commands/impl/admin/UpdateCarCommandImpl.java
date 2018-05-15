@@ -6,14 +6,13 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.Car;
-
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseCommand {
 
@@ -22,7 +21,7 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 	private static final String MESSAGE_VALUE = "Information was succsefully updated!";
 	
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));
 		String brandName = request.getParameter(REQUEST_PARAM_BRAND_NAME);

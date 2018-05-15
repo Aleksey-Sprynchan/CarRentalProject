@@ -18,7 +18,7 @@ public final class PagePathConstantPool {
 	public static final String PAGE_ORDER_DETAILS = "/WEB-INF/order_details.jsp";
 	public static final String PAGE_REJECTION_FORM = "/WEB-INF/rejection_form.jsp";	
 	public static final String PAGE_REPORT_DAMAGES = "/WEB-INF/report_damages.jsp";
-	public static final String PAGE_USER_ORDERS = "/WEB-INF/user_orders.jsp";	
+	public static final String PAGE_MY_ORDERS = "/WEB-INF/my_orders.jsp";	
 	public static final String PAGE_USER_ACCOUNT_SETTINGS = "/WEB-INF/account_settings.jsp";
 	public static final String PAGE_DEPOSIT = "/WEB-INF/deposit.jsp";
 	public static final String PAGE_DELETE_ACCOUNT = "/WEB-INF/delete_account.jsp";
@@ -26,9 +26,10 @@ public final class PagePathConstantPool {
 	public static final String PAGE_CHANGE_ACCOUNT_INFO = "/WEB-INF/change_account_info.jsp";	
 	public static final String PAGE_CHANGE_ORDER= "/WEB-INF/change_order.jsp";
 	public static final String PAGE_CAR_DAMAGE_HISTORY= "/WEB-INF/car_damage_history.jsp";
+	public static final String PAGE_USERS_LIST= "/WEB-INF/users_list.jsp";
+	public static final String PAGE_USER_ORDERS = "/WEB-INF/user_orders.jsp";	
 	
-
-	public static final String PAGE_SUBMIT_STEP = "/WEB-INF/submit_step.jsp";
-
 	
+	public static final String PAGE_ERROR = "/jsp/404.html";
+
 }

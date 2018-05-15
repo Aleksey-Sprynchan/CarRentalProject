@@ -51,7 +51,7 @@ public class AuthFilter implements Filter {
 					chain.doFilter(request, response);
 				} else {
 					request.setAttribute(PARAMETER_MESSAGE, MESSAGE_NO_RIGHTS);
-					request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+					request.getRequestDispatcher("/jsp/404.html").forward(request, response);
 				}
 
 			} else {
@@ -59,7 +59,7 @@ public class AuthFilter implements Filter {
 					chain.doFilter(request, response);
 				} else {
 					request.setAttribute(PARAMETER_MESSAGE, MESSAGE_NO_RIGHTS);
-					request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+					request.getRequestDispatcher("/jsp/404.html").forward(request, response);
 				}
 
 			}

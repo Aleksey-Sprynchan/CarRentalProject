@@ -7,10 +7,10 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.UserService;
 import by.htp.sprynchan.car_rental.service.impl.UserServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class ChangePasswordCommandImpl implements BaseCommand {
 	
@@ -21,7 +21,7 @@ public class ChangePasswordCommandImpl implements BaseCommand {
 	private static final String MESSAGE_PASS_CHANGED = "Password was succsessfully changed!";
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		String oldPassword = request.getParameter(REQUEST_PARAM_OLD_PASS);
 		String newPassword = request.getParameter(REQUEST_PARAM_NEW_PASS);

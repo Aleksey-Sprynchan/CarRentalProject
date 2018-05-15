@@ -1,10 +1,12 @@
 package by.htp.sprynchan.car_rental.service.impl;
 
+import java.util.List;
+
 import by.htp.sprynchan.car_rental.bean.User;
 import by.htp.sprynchan.car_rental.dao.UserDao;
 import by.htp.sprynchan.car_rental.dao.impl.UserDaoDBImpl;
-import by.htp.sprynchan.car_rental.exeption.UserNotFoundException;
 import by.htp.sprynchan.car_rental.service.UserService;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 
 public class UserServiceImpl implements UserService {
 
@@ -17,18 +19,13 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao = new UserDaoDBImpl();
 
 	@Override
-	public User getUserByLoginPassword(String login, String password) throws UserNotFoundException {
-		User loggedInUser = userDao.login(login, password);
-		if (loggedInUser == null) {
-			throw new UserNotFoundException();
-		}
-		return loggedInUser;
+	public User getUserByLoginPassword(String login, String password) throws ServiceException {
+		return userDao.login(login, password);
 	}
 
 	@Override
-	public String createNewUser(String login, String password, String name, String surname, String email) {
-		User newUser = new User(login, password, name, surname, email);
-		int code = userDao.create(newUser);
+	public String createNewUser(User user) throws ServiceException {		
+		int code = userDao.create(user);
 		String message = null;
 		if (code == DUPLICATE_LOGIN_CODE) {
 			message = DUPLICATE_LOGIN_MESSAGE;
@@ -39,17 +36,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(int id) {
+	public void deleteUser(int id) throws ServiceException {
 		userDao.delete(id);
 	}
 
 	@Override
-	public User getUser(int id) {
+	public User getUser(int id) throws ServiceException {
 		return userDao.read(id);
 	}
 
 	@Override
-	public String updateUserInfo(User user) {
+	public String updateUserInfo(User user) throws ServiceException {
 		int code = userDao.update(user);
 		String message = null;
 		if (code == DUPLICATE_EMAIL_CODE) {
@@ -59,13 +56,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changeUserBalance(User user) {
+	public void changeUserBalance(User user) throws ServiceException {
 		userDao.updateUserBalance(user);
 	}
 
 	@Override
-	public void changeUserPassword(User user) {
+	public void changeUserPassword(User user) throws ServiceException {
 		userDao.updateUserPassword(user);
+	}
+
+	@Override
+	public List<User> getUsersList() throws ServiceException {
+		return userDao.readAll();
 	}
 
 }

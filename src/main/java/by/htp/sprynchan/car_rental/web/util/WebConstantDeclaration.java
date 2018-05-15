@@ -36,8 +36,10 @@ public final class WebConstantDeclaration {
 	public static final String REQUEST_PARAM_TOTAL_PRICE = "total_price";
 	public static final String REQUEST_PARAM_INSURANCE = "insurance";
 	public static final String REQUEST_PARAM_ORDER_DAMAGE_MAP = "orderDam_map";
+	public static final String REQUEST_PARAM_ORDER_DAMAGES = "order_damages";
 	
 	public static final String REQUEST_PARAM_USER = "user";
+	public static final String REQUEST_PARAM_USER_ID = "user_id";
 	public static final String REQUEST_PARAM_PASS = "password";
 	public static final String REQUEST_PARAM_LOGIN = "login";
 	public static final String REQUEST_PARAM_USER_TYPE = "user_type";
@@ -49,6 +51,7 @@ public final class WebConstantDeclaration {
 	public static final String REQUEST_PARAM_NEW_PASS = "new_password";
 	public static final String REQUEST_PARAM_CONFIRM_NEW_PASS = "confirm_new_password";
 	public static final String REQUEST_PARAM_DEPOSIT_AMMOUNT = "deposit_ammount";
+	public static final String REQUEST_PARAM_USER_LIST = "user_list";
 	
 	public static final String REQUEST_PARAM_DAMAGE = "damage";
 	public static final String REQUEST_PARAM_DAMAGE_NAME = "damage_name";

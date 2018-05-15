@@ -7,12 +7,18 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import by.htp.sprynchan.car_rental.dao.pool.exception.ConnectionPoolException;
+
 public class ConnectionPool {
+	
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	private static volatile ConnectionPool instance;
 
 	private static final String DB_CONNECT_PROPERTY = "db_config";
-
 	private static final String RESOURCE_DRIVER_NAME = "db.driver.name";
 	private static final String RESOURCE_URL = "db.url";
 	private static final String RESOURCE_LOGIN = "db.login";
@@ -52,18 +58,18 @@ public class ConnectionPool {
 		try {
 			Class.forName(driverName);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			LOGGER.error(e.getMessage(), e);
 		}
 		for (int i = 0; i < MIN_CONNECTION_COUNT; i++) {
 			try {
 				pool.add(DriverManager.getConnection(url, login, pass));
 			} catch (SQLException e) {
-				e.printStackTrace();
+				LOGGER.error(e.getMessage(), e);
 			}
 		}
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws ConnectionPoolException {
 
 		Connection connection = null;
 		try {
@@ -71,13 +77,14 @@ public class ConnectionPool {
 				openAdditionalConnection();
 			}
 			connection = pool.take();
-		} catch (InterruptedException ex) {
-			ex.printStackTrace();
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+			throw new ConnectionPoolException(e);
 		}
 		return connection;
 	}
 
-	public void closeConnection(Connection connection) {
+	public void closeConnection(Connection connection) throws ConnectionPoolException {
 		if (connection != null) {
 
 			if (currentConnectionNumber > MIN_CONNECTION_COUNT) {
@@ -86,23 +93,24 @@ public class ConnectionPool {
 			try {
 				pool.put(connection);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				Thread.currentThread().interrupt();
+				throw new ConnectionPoolException(e);
 			}
 
 		}
 	}
 
-	private void openAdditionalConnection() {
+	private void openAdditionalConnection() throws ConnectionPoolException {
 		try {
 			Class.forName(driverName);
-		} catch (ClassNotFoundException exception) {
-			exception.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			throw new ConnectionPoolException(e);
 		}
 		try {
 			pool.add(DriverManager.getConnection(url, login, pass));
 			currentConnectionNumber++;
-		} catch (SQLException exception) {
-			exception.printStackTrace();
+		} catch (SQLException e) {
+			throw new ConnectionPoolException(e);
 		}
 	}
 

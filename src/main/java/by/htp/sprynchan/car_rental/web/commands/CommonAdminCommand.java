@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.service.OrderService;
+import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
@@ -18,7 +19,7 @@ public abstract class CommonAdminCommand {
 
 	public CommonAdminCommand() {}
 	
-	protected void setAttributetOrderList (HttpServletRequest request, OrderStatusEnum status) {	
+	protected void setAttributetOrderList (HttpServletRequest request, OrderStatusEnum status) throws ServiceException {	
 		List<Order> orderList= orderService.getOrderList(status);
 		request.setAttribute(PARAMETER_ORDER_LIST, orderList);
 	}

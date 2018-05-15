@@ -12,12 +12,12 @@ import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.bean.CustomerPersonalData;
 import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.OrderService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public class CreateOrderCommandImpl implements BaseCommand {
@@ -29,7 +29,7 @@ public class CreateOrderCommandImpl implements BaseCommand {
 			+ "Watch your orders at MY ORDERS section";
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 				
 		OrderStatusEnum orderStatus = OrderStatusEnum.WAITING_FOR_APPROVE;
 		LocalDate orderDate = LocalDate.now();

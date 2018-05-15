@@ -27,8 +27,8 @@
 
        
        <h1>Hello,
-       <c:out value="${user.getName()}"/>
-       <c:out value="${user.getSurname()} !" /></h1>
+       <c:out value="${sessionScope.user.getName()}"/>
+       <c:out value="${sessionScope.user.getSurname()} !" /></h1>
       
        <form action="CarRentalServlet" method="get">
        <p>Your balance: <strong><c:out value="${user.getBalance()}$ "></c:out></strong>

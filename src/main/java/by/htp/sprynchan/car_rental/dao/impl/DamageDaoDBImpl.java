@@ -12,6 +12,7 @@ import java.util.List;
 
 import by.htp.sprynchan.car_rental.bean.Damage;
 import by.htp.sprynchan.car_rental.dao.DamageDao;
+import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
 public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
@@ -26,8 +27,13 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 
 	private static final String READ_ORDER_DAMAGE_AMOUNT = "SELECT SUM(damage_cost) FROM damages Where order_id = ?";
 
+	private static final String ERROR_IN_CREATE_DAMAGE = "Error while adding damage to database";
+	private static final String ERROR_IN_READ_ORDER_DAMAGES = "Error while getting damages from database";
+	private static final String ERROR_IN_READ_UNIQUE_ORDERS_ID = "Error while getting unique orders id from database";
+	private static final String ERROR_IN_COUNT_DAMAGE_AMOUNT = "Error while getting damage amount from database";
+	
 	@Override
-	public int create(Damage entity) {
+	public int create(Damage entity) throws DAOException {
 
 		int id = 0;
 		Connection connection = dataBaseConnection.getConnection();
@@ -45,7 +51,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_CREATE_DAMAGE, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -53,22 +59,22 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 	}
 
 	@Override
-	public Damage read(int id) {
+	public Damage read(int id) throws DAOException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public int update(Damage entity) {
+	public int update(Damage entity) throws DAOException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void delete(int id) {
+	public void delete(int id) throws DAOException {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public List<Damage> readOrderDamages(int orderId) {
+	public List<Damage> readOrderDamages(int orderId) throws DAOException {
 
 		List<Damage> orderDamagesList = new ArrayList<>();
 		Damage damage = null;
@@ -83,7 +89,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_READ_ORDER_DAMAGES, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -91,7 +97,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 	}
 
 	@Override
-	public List<Integer> readUniqueOrdersId(int carId) {
+	public List<Integer> readUniqueOrdersId(int carId) throws DAOException {
 
 		List<Integer> ordersIdList = new ArrayList<>();
 		int id = 0;
@@ -105,7 +111,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_READ_UNIQUE_ORDERS_ID, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -113,7 +119,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 	}
 
 	@Override
-	public int countOrderDamageAmount(int orderId) {
+	public int countOrderDamageAmount(int orderId) throws DAOException {
 
 		int totalAmount = 0;
 		Connection connection = dataBaseConnection.getConnection();
@@ -126,7 +132,7 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DAOException(ERROR_IN_COUNT_DAMAGE_AMOUNT, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}

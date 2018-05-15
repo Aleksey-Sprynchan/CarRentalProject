@@ -5,11 +5,11 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class DeleteCarCommandImpl extends CommonAdminCommand implements BaseCommand {
 
@@ -18,7 +18,7 @@ public class DeleteCarCommandImpl extends CommonAdminCommand implements BaseComm
 	private static final String MESSAGE_VALUE = "Car was succsefully deleted from car park!";
 	
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));
 		carService.deleteCarFromCarPark(carId);

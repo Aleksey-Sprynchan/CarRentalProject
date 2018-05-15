@@ -5,13 +5,13 @@ import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class RejectOrderCommandImpl implements BaseCommand {
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));		
 		request.setAttribute(REQUEST_PARAM_ORDER_ID, orderId);	

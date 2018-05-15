@@ -1,5 +1,7 @@
 package by.htp.sprynchan.car_rental.web.controller;
 
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ERROR;
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 import by.htp.sprynchan.car_rental.web.util.CommandFactory;
 
 public class CarRentalServlet extends HttpServlet {
@@ -20,7 +22,7 @@ public class CarRentalServlet extends HttpServlet {
 	
 	public static final String PARAMETER_MESSAGE = "message";
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -43,12 +45,11 @@ public class CarRentalServlet extends HttpServlet {
 		
 		try {
 			path = requestCommand.executeCommand(request);
-			
-			request.setAttribute("user_type", request.getSession().getAttribute("user_type"));
-		} catch (BaseException e) {
-			path = "/jsp/error.jsp";
+
+		} catch (CommandException e) {
+			path = PAGE_ERROR;
 			request.setAttribute(PARAMETER_MESSAGE, e.getMessage());
-			logger.error(e.getMessage());
+			LOGGER.error(e.getMessage(), e);
 		}
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher(path);

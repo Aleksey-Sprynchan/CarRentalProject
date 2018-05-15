@@ -48,7 +48,7 @@
 	
 	<c:choose>
 	
-		<c:when test="${user_type == 'ADMIN'}">
+		<c:when test="${sessionScope.user_type == 'ADMIN'}">
 			<p> loggedIn as Admin</p>
 			<form action="CarRentalServlet" method="post">
 				<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>
@@ -57,7 +57,7 @@
 				<br><br><button type="submit" name="command" value="TO_MY_PROFILE_PAGE">My profile</button>	
 			</form>	
 		</c:when>
-		<c:when test="${user_type == 'USER'}">
+		<c:when test="${sessionScope.user_type == 'USER'}">
 			<p> loggedIn as User</p>
 			<form action="CarRentalServlet" method="post">
 				<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>

@@ -37,6 +37,10 @@
 	<input type="hidden" name="command" value="CREATE_CAR"/>
 	<input type="submit" value="Create car"/>
 	</form>
+	
+	<form action="CarRentalServlet" method="get">
+		<p><button type="submit" name="command" value="VIEW_USER_LIST">View users list</button>
+	</form>
 
 	<form action="CarRentalServlet" method="post">
 		<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>

@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.bean.Car;
 import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.exeption.BaseException;
 import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.UserService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.UserServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
+import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class MakeDepositCommandImpl implements BaseCommand {
 	
@@ -22,7 +22,7 @@ public class MakeDepositCommandImpl implements BaseCommand {
 	private CarService carService = new CarServiceImpl();
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws BaseException {
+	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int depositAmmount = Integer.parseInt(request.getParameter(REQUEST_PARAM_DEPOSIT_AMMOUNT));
 		User user = (User)request.getSession().getAttribute(REQUEST_PARAM_USER);
