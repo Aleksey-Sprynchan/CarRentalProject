@@ -1,5 +1,8 @@
 package by.htp.sprynchan.car_rental.web.controller;
 
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_ADMIN_URL;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_USER_URL;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_GUEST_URL;
 import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ERROR;
 
 import java.io.IOException;
@@ -19,9 +22,9 @@ import by.htp.sprynchan.car_rental.web.util.CommandFactory;
 
 public class CarRentalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String PARAMETER_MESSAGE = "message";
-	
+
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -31,18 +34,20 @@ public class CarRentalServlet extends HttpServlet {
 		process(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		System.out.println("doPost");
 		process(request, response);
 
-	}	
+	}
 
-	private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	private void process(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		BaseCommand requestCommand = CommandFactory.defineCommand(request);
 		String path = null;
-		
+
 		try {
 			path = requestCommand.executeCommand(request);
 
@@ -52,10 +57,17 @@ public class CarRentalServlet extends HttpServlet {
 			LOGGER.error(e.getMessage(), e);
 		}
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-		dispatcher.forward(request, response);
-	
+		if (path.equals(REDIRECT_ADMIN_URL)) {
+			response.sendRedirect(request.getContextPath() + REDIRECT_ADMIN_URL);
+		} else if (path.equals(REDIRECT_USER_URL)) {
+			response.sendRedirect(request.getContextPath() + REDIRECT_USER_URL);
+		} else if (path.equals(REDIRECT_GUEST_URL)) {
+			response.sendRedirect(request.getContextPath() + REDIRECT_GUEST_URL);
+		} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+			dispatcher.forward(request, response);
+		}
+
 	}
-	
 
 }

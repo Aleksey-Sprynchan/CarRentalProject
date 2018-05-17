@@ -39,8 +39,7 @@ public class ViewOrderDetailsCommandImpl implements BaseCommand {
 		request.setAttribute(REQUEST_PARAM_ORDER, order);
 		
 		List<Damage> orderDamages = damageService.getOrderDamages(orderId);
-		request.setAttribute(REQUEST_PARAM_ORDER_DAMAGES, orderDamages);
-		
+		request.setAttribute(REQUEST_PARAM_ORDER_DAMAGES, orderDamages);		
 		User currentUser = userService.getUser(order.getUserId());
 		request.setAttribute(REQUEST_PARAM_USER, currentUser);	
 		return PAGE_ORDER_DETAILS;

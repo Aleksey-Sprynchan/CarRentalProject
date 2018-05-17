@@ -39,4 +39,5 @@ public class BookCarCommandImpl implements BaseCommand {
 		return PAGE_BOOK_CAR;
 	}
 
+	
 }

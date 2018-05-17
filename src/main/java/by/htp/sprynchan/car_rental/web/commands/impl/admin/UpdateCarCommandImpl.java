@@ -1,6 +1,6 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.admin;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ADMIN_PROFILE;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_ADMIN_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +11,9 @@ import by.htp.sprynchan.car_rental.service.CarService;
 import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
 
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
-import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
 import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
-public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseCommand {
+public class UpdateCarCommandImpl implements BaseCommand {
 
 	private CarService carService = new CarServiceImpl();
 	
@@ -37,11 +36,10 @@ public class UpdateCarCommandImpl extends CommonAdminCommand implements BaseComm
 		
 		carService.updateCarInfo(new Car(carId, brandName, model, type, transmission, 
 				passengers, fuel, isAirCondition, pricePerDay, isAvailable, image));
-		request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_VALUE);
 		
-		setAttributetOrderList(request, null);
-		setAttributetOrderStatusList(request);
-		return PAGE_ADMIN_PROFILE;
+		request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_ADMIN_PROFILE);
+		request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, MESSAGE_VALUE);
+		return REDIRECT_ADMIN_URL;
 		
 	}
 

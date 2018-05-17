@@ -13,4 +13,5 @@ public class DepositPageCommandImpl implements BaseCommand {
 	public String executeCommand(HttpServletRequest request) throws CommandException {
 		return PAGE_DEPOSIT;
 	}
+	
 }

@@ -1,5 +1,7 @@
 package by.htp.sprynchan.car_rental.web.util;
 
+import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
@@ -10,6 +12,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.DeleteCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.EditCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.FinishOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.MarkAsReturnedCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.RedirectAdminCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.RejectOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ReportDamagesCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.SendDamageReportCommandImpl;
@@ -22,6 +25,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewOrderDetailsComma
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserListCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserOrdersCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.AuthorizationCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.all.RedirectGuestCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.StartPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegisterCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegistrationPageCommandImpl;
@@ -42,6 +46,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.user.DepositPageCommandImpl
 import by.htp.sprynchan.car_rental.web.commands.impl.user.MakeDepositCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForDamageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForOrderCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.RedirectUserCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewAccountDetailsCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewMyOrdersCommandImpl;
 
@@ -51,21 +56,28 @@ public class CommandFactory {
 		throw new IllegalStateException("Utility class");
 	}	
 	
-	private static final String COMMAND = "command";
-
 	public static BaseCommand defineCommand(HttpServletRequest request) {
 		
 		BaseCommand command = null;
-		String inputCommand =  request.getParameter(COMMAND);
+		String inputCommand =  request.getParameter(REQUEST_PARAM_COMMAND);
 		if(inputCommand == null) {
-			inputCommand = "START_PAGE";
+			inputCommand = COMMAND_START_PAGE;
 		}
-		
+
 		CommandEnum commandName = CommandEnum.valueOf(inputCommand);
 		
 		System.out.println(inputCommand);
 		
 		switch(commandName) {
+		case REDIRECT_GUEST:
+			command = new RedirectGuestCommandImpl();
+			break;
+		case REDIRECT_USER:
+			command = new RedirectUserCommandImpl();
+			break;
+		case REDIRECT_ADMIN:
+			command = new RedirectAdminCommandImpl();
+			break;
 		case VIEW_USER_ORDERS:
 			command = new ViewUserOrdersCommandImpl();
 			break;

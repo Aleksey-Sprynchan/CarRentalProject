@@ -10,8 +10,7 @@ import by.htp.sprynchan.car_rental.web.exception.CommandException;
 public class SignOutCommandImpl implements BaseCommand {
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {	
 		request.getSession().invalidate();
 		return PAGE_INDEX;
 	}

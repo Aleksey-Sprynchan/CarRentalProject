@@ -13,7 +13,7 @@
 	<form action="CarRentalServlet" method="post">
 		<p><strong>New car:</strong>
 		<p>Brand 
-		<input type="text" name="brand_name" list="brandList" placeholder="Select or enter brand">
+		<input type="text" name="brand_name" id="brand_name" list="brandList" placeholder="Select or enter brand">
 		
 		<datalist id="brandList">
 			<c:forEach items="${brand_names_list}" var="brand">

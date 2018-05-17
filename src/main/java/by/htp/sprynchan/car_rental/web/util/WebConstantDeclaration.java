@@ -30,6 +30,7 @@ public final class WebConstantDeclaration {
 	public static final String REQUEST_PARAM_ORDER_SET = "orderId_set";
 	public static final String REQUEST_PARAM_RESERVED_DATES = "reserved_dates";
 	public static final String REQUEST_PARAM_ORDER_LIST = "order_list";
+	public static final String REQUEST_PARAM_ORDER_STATUS_LIST = "order_status_list";
 	public static final String REQUEST_PARAM_ORDER_CAR_MAP = "orderCar_map";
 	public static final String REQUEST_PARAM_START_DATE = "start_date";
 	public static final String REQUEST_PARAM_END_DATE = "end_date";
@@ -66,5 +67,23 @@ public final class WebConstantDeclaration {
 	public static final String REQUEST_PARAM_DRIVING_EXP = "driving_exp";
 	
 	public static final String REQUEST_PARAM_INFO_MESSAGE = "info_message";
+	public static final String REQUEST_PARAM_COMMAND = "command";
+	public static final String COMMAND_START_PAGE = "START_PAGE";
+	
+	public static final String SESSION_ATR_SESSION_MESSAGE = "session_message";
+	public static final String SESSION_ATR_SESSION_ORDER_ID = "session_order_id";
+	public static final String SESSION_ATR_SESSION_PAGE_TYPE = "session_page_type";
+	
+	public static final String PAGE_TYPE_ADMIN_PROFILE = "admin_profile_page";
+	public static final String PAGE_TYPE_ORDER_DETAILS = "order_details_page";
+	
+	public static final String PAGE_TYPE_USER_PROFILE = "user_profile_page";
+	public static final String PAGE_TYPE_MY_ORDERS = "my_orders_page";
+	public static final String PAGE_TYPE_ACCOUNT_SETTINGS = "account_settings_page";
+	public static final String PAGE_TYPE_CHANGE_ACCOUNT_INFO = "change_account_info_page";
+	public static final String PAGE_TYPE_CHANGE_PASS = "change_password_page";
+	
+	
+	
 
 }

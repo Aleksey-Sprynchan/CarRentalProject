@@ -19,6 +19,7 @@ public class ViewUserOrdersCommandImpl implements BaseCommand {
 	
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {		
+		
 		int userId = Integer.parseInt(request.getParameter(REQUEST_PARAM_USER_ID));		
 		List<Order> orderList = orderService.getUserOrderList(userId);
 		request.setAttribute(REQUEST_PARAM_ORDER_LIST, orderList);	

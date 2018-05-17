@@ -15,6 +15,7 @@ public class ViewUserListCommandImpl implements BaseCommand {
 
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {
+		
 		request.setAttribute(REQUEST_PARAM_USER_LIST, userService.getUsersList());
 		return PAGE_USERS_LIST;
 	}

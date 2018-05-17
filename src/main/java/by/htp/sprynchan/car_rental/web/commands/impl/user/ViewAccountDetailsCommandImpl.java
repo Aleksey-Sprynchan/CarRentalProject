@@ -17,4 +17,5 @@ public class ViewAccountDetailsCommandImpl implements BaseCommand {
 		request.setAttribute(REQUEST_PARAM_USER, user);
 		return PAGE_USER_ACCOUNT_SETTINGS;
 	}
+	
 }

@@ -44,7 +44,7 @@
      <c:if test="${not empty car_list}">
      <c:forEach items="${car_list}" var="car">
 		<p>
-		<form action="CarRentalServlet" method="post"> 
+		<form action="CarRentalServlet" method="get"> 
 		<c:out value="${car}" />	
 		<button type="submit" name="command" value="BOOK_CAR">Book this car</button>
 		<input type="hidden" name="car_id" value="${car.getId()}"/>
@@ -57,13 +57,13 @@
 	</div> 
 	
 	<div align="left"><p>
-	<form action="CarRentalServlet" method="post"> 	
+	<form action="CarRentalServlet" method="get"> 	
 		<p><button type="submit" name="command" value="VIEW_MY_ORDERS">My orders</button>
 	</form>
-	<form action="CarRentalServlet" method="post">
+	<form action="CarRentalServlet" method="get">
 		<p><button type="submit" name="command" value="VIEW_ACCOUNT_DETAILS">My Account</button>
 	</form>
-	<form action="CarRentalServlet" method="post">
+	<form action="CarRentalServlet" method="get">
 		<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>
 	</form>
 	</div>

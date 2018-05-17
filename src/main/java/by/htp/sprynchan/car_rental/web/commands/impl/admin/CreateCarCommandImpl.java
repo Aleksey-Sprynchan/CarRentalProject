@@ -17,8 +17,7 @@ public class CreateCarCommandImpl implements BaseCommand {
 	private CarService carService = new CarServiceImpl();
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-			
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		Set<String> brandNames = carService.getBrandList();
 		request.setAttribute(REQUEST_PARAM_BRAND_NAMES_LIST, brandNames);
 		return PAGE_CREATE_CAR;

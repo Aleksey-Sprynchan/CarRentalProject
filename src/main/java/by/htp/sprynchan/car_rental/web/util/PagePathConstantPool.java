@@ -31,5 +31,9 @@ public final class PagePathConstantPool {
 	
 	
 	public static final String PAGE_ERROR = "/jsp/404.html";
+	
+	public static final String REDIRECT_ADMIN_URL = "/CarRentalServlet?command=REDIRECT_ADMIN";
+	public static final String REDIRECT_USER_URL = "/CarRentalServlet?command=REDIRECT_USER";
+	public static final String REDIRECT_GUEST_URL = "/CarRentalServlet?command=REDIRECT_GUEST";
 
 }

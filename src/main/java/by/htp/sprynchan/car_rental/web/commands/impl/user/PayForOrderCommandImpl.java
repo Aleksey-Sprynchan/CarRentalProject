@@ -1,9 +1,8 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_MY_ORDERS;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_USER_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
-
-import java.util.List;
+import static by.htp.sprynchan.car_rental.web.util.HttpRequestParamFormatter.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,21 +27,19 @@ public class PayForOrderCommandImpl implements BaseCommand {
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
-		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));	
+		int orderId = formatInt(request.getParameter(REQUEST_PARAM_ORDER_ID));	
 		Order order = orderService.getOrder(orderId);		
 		User user = (User)request.getSession().getAttribute(REQUEST_PARAM_USER);
 		if(user.getBalance() >= order.getTotalPrice()) {		
-			int newBalance = user.getBalance() - order.getTotalPrice();
-			user.setBalance(newBalance);
+			user.setBalance(user.getBalance() - order.getTotalPrice());
 			userService.changeUserBalance(user);		
 			orderService.updateOrderStatus(orderId, OrderStatusEnum.PAID);
-			request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_SUCCESSFULL_PAYMENT);
+			request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, MESSAGE_SUCCESSFULL_PAYMENT);
 		} else {
-			request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_NO_MONEY);
+			request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, MESSAGE_NO_MONEY);
 		}
-		List<Order> orderList= orderService.getUserOrderList(user.getId());
-		request.setAttribute(REQUEST_PARAM_ORDER_LIST, orderList);	
-		return PAGE_MY_ORDERS;
+		request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_MY_ORDERS);
+		return REDIRECT_USER_URL;
 	}
 
 }

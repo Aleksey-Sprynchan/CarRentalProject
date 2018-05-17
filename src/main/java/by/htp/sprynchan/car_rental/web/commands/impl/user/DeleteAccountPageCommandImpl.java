@@ -26,5 +26,5 @@ public class DeleteAccountPageCommandImpl implements BaseCommand {
 		}		
 		return PAGE_DELETE_ACCOUNT;
 	}
-
+	
 }

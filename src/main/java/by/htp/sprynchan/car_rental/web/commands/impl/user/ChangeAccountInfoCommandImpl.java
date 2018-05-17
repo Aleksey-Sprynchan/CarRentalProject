@@ -1,7 +1,6 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_USER_ACCOUNT_SETTINGS;
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_CHANGE_ACCOUNT_INFO;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_USER_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,11 +27,13 @@ public class ChangeAccountInfoCommandImpl implements BaseCommand {
 		user.setEmail(newEmail);
 
 		String message = userService.updateUserInfo(user);
-		if (message == null) {
-			return PAGE_USER_ACCOUNT_SETTINGS;
-		} else {
-			request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, message);
-			return PAGE_CHANGE_ACCOUNT_INFO;
+		if (message == null) {		
+			request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_ACCOUNT_SETTINGS);
+			return REDIRECT_USER_URL;
+		} else {		
+			request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, message);
+			request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_CHANGE_ACCOUNT_INFO);
+			return REDIRECT_USER_URL;
 		}
 	}
 

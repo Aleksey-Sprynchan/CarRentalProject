@@ -57,7 +57,7 @@
      <c:forEach items="${order_list}" var="order">
 		<p>
 		<li>
-		<form action="CarRentalServlet" method="post"> 
+	
 		<c:out value="${order.getCustomer().getName()}" />
 		<c:out value="${order.getCustomer().getSurname()}" />	
 		<c:out value="${order.getCarId()}" />
@@ -67,17 +67,21 @@
 		<strong><c:out value="${order.getStatus().name()}" /></strong>
 		<c:out value="${order.getTotalPrice()}$" />	
 		<c:choose>
-		
+		 
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_PAYMENT'}">	
-			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<button type="submit" name="command" value="PAY_FOR_ORDER">Pay for order</button>
-			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
+			<form action="CarRentalServlet" method="post">
+				<input type="hidden" name="order_id" value="${order.getId()}"/>
+				<button type="submit" name="command" value="PAY_FOR_ORDER">Pay for order</button>
+				<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>	
+			</form>	
 		</c:when>	
 		
-		<c:when test="${order.getStatus().name() == 'WAITING_FOR_DAMAGE_PAYMENT'}">		
-			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<strong><c:out value="${order.getDamageAmount()} USD" /></strong>
-			<button type="submit" name="command" value="PAY_FOR_DAMAGE">Pay for damage</button>	
+		<c:when test="${order.getStatus().name() == 'WAITING_FOR_DAMAGE_PAYMENT'}">	
+			<form action="CarRentalServlet" method="post">	
+				<input type="hidden" name="order_id" value="${order.getId()}"/>
+				<strong><c:out value="${order.getDamageAmount()} USD" /></strong>
+				<button type="submit" name="command" value="PAY_FOR_DAMAGE">Pay for damage</button>	
+			</form>
 			
 			<div class="container">		
   			<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#${order.getId()}">View damages</button>
@@ -94,9 +98,14 @@
 			<c:out value="(${order.getRejectionReason()})"/> 	
 		</c:when>
 		<c:when test="${order.getStatus().name() == 'WAITING_FOR_APPROVE'}">
-			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<button type="submit" name="command" value="CHANGING_ORDER_PAGE">Change order info</button>	
-			<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
+			<form action="CarRentalServlet" method="get">
+				<input type="hidden" name="order_id" value="${order.getId()}"/>
+				<button type="submit" name="command" value="CHANGING_ORDER_PAGE">Change order info</button>	
+			</form>
+			<form action="CarRentalServlet" method="post">
+				<button type="submit" name="command" value="CANCEL_ORDER">Cancel order</button>		
+				<input type="hidden" name="order_id" value="${order.getId()}"/>
+			</form>
 		</c:when>
 		
 		<c:when test="${order.getStatus().name() == 'PAID'}">
@@ -144,7 +153,7 @@
 		<strong>Error</strong>
 		</c:otherwise>
 		</c:choose>	
-		</form>	
+	
 		</li>
 	</c:forEach>
 	</c:if>

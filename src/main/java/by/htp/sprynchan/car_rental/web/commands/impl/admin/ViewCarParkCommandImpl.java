@@ -19,6 +19,7 @@ public class ViewCarParkCommandImpl implements BaseCommand {
 
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {	
+		
 		List<Car> carList = carService.getCarPark();
 		request.setAttribute(REQUEST_PARAM_CAR_LIST, carList);
 		return PAGE_CAR_PARK;

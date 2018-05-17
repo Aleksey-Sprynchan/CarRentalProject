@@ -36,7 +36,6 @@ function AddItem() {
     
     <input type="hidden" name="order_id" value="${order_id}"/> 
     <input type="hidden" name="car_id" value="${car_id}"/> 
- <!--   <p><button type="submit" name="command" value="ADD_DAMAGE">Add damage</button></p>-->  
 	<p><button type="submit" name="command" value="SEND_DAMAGE_REPORT">SEND damage report</button></p>
 	</div>
 	</form>

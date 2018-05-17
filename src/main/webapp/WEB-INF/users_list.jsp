@@ -18,7 +18,7 @@
 	<c:if test="${not empty user_list}">
 	<c:forEach items="${user_list}" var="user">
 		<p>
-		<form action="CarRentalServlet" method="post">
+		<form action="CarRentalServlet" method="get">
 			<c:out value="${user}" />
 			<input type="hidden" name="user_id" value="${user.getId()}" />
 			<button type="submit" name="command" value="VIEW_USER_ORDERS">View user orders</button>		

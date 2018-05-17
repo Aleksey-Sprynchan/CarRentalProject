@@ -19,7 +19,6 @@ public class StartPageCommandImpl implements BaseCommand {
 
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {
-
 		List<Car> carList = carService.getAvailableCarPark();
 		request.setAttribute(REQUEST_PARAM_CAR_LIST, carList);
 		return PAGE_START_PAGE;

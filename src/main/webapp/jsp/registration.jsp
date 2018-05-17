@@ -34,7 +34,7 @@
 	</form>
 	
 	<form action="CarRentalServlet" method="get">				
-		<p><button type="submit" name="command" value="TO_MY_PROFILE_PAGE">Home Page</button>
+		<p><button type="submit" name="command" value="START_PAGE">Home Page</button>
 	</form>
 
 </body>

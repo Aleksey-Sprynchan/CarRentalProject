@@ -29,24 +29,29 @@
 		<c:when test="${order.getStatus() == 'WAITING_FOR_APPROVE'}">
 			<form action="CarRentalServlet" method="post">
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<input type="hidden" name="car_id" value="${order.getCarId()}"/>
 			<p><button type="submit" name="command" value="APPROVE_ORDER">Approve order</button></p>
+			</form>
+			<form action="CarRentalServlet" method="get">
+			<input type="hidden" name="order_id" value="${order.getId()}"/>
 			<p><button type="submit" name="command" value="REJECT_ORDER">Reject order</button></p>
 			</form>
+			
 		</c:when>	
 		<c:when test="${order.getStatus() == 'PAID'}">
 			<form action="CarRentalServlet" method="post">
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
-			<input type="hidden" name="car_id" value="${order.getCarId()}"/>
 			<p><button type="submit" name="command" value="MARK_AS_RETURNED">Client returned car</button></p>
 			</form>
 		</c:when>
 		<c:when test="${order.getStatus() == 'RETURNED'}">
 			<form action="CarRentalServlet" method="post">
 			<input type="hidden" name="order_id" value="${order.getId()}"/>
+			<p><button type="submit" name="command" value="FINISH_ORDER">Finish order</button></p>
+			</form>
+			<form action="CarRentalServlet" method="get">
+			<input type="hidden" name="order_id" value="${order.getId()}"/>
 			<input type="hidden" name="car_id" value="${order.getCarId()}"/>
 			<p><button type="submit" name="command" value="REPORT_DAMAGES">Report damages</button></p>
-			<p><button type="submit" name="command" value="FINISH_ORDER">Finish order</button></p>
 			</form>
 		</c:when>
 		<c:otherwise>

@@ -1,6 +1,6 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.admin;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ADMIN_PROFILE;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_ADMIN_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +12,9 @@ import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 import by.htp.sprynchan.car_rental.service.impl.DamageServiceImpl;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
-import by.htp.sprynchan.car_rental.web.commands.CommonAdminCommand;
 import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
-public class SendDamageReportCommandImpl extends CommonAdminCommand implements BaseCommand {
+public class SendDamageReportCommandImpl implements BaseCommand {
 	
 	private OrderService orderService = new OrderServiceImpl();
 	private DamageService damageService = new DamageServiceImpl();
@@ -34,10 +33,10 @@ public class SendDamageReportCommandImpl extends CommonAdminCommand implements B
 				
 		int totalAmount = damageService.getTotalDamageAmount(orderId);
 		orderService.sendDamagesAmount(orderId, totalAmount);
-		setAttributetOrderList(request, null);
-		setAttributetOrderStatusList(request);
-		request.setAttribute(REQUEST_PARAM_INFO_MESSAGE, MESSAGE_VALUE);
-		return PAGE_ADMIN_PROFILE;
+
+		request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_ADMIN_PROFILE);
+		request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, MESSAGE_VALUE);
+		return REDIRECT_ADMIN_URL;
 	}
 	
 	private void addInputDamages(String[] damageNames, String[] damageCosts, int orderId, int carId) throws ServiceException {		

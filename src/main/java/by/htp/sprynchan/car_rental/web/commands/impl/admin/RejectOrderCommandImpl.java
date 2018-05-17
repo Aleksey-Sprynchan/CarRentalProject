@@ -11,8 +11,7 @@ import by.htp.sprynchan.car_rental.web.exception.CommandException;
 public class RejectOrderCommandImpl implements BaseCommand {
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));		
 		request.setAttribute(REQUEST_PARAM_ORDER_ID, orderId);	
 		return PAGE_REJECTION_FORM;

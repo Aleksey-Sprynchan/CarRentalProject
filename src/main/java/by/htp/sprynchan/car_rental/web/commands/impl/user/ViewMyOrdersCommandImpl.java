@@ -1,58 +1,19 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.user;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_MY_ORDERS;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_USER_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.sprynchan.car_rental.bean.Car;
-import by.htp.sprynchan.car_rental.bean.Damage;
-import by.htp.sprynchan.car_rental.bean.Order;
-import by.htp.sprynchan.car_rental.bean.User;
-import by.htp.sprynchan.car_rental.service.CarService;
-import by.htp.sprynchan.car_rental.service.DamageService;
-import by.htp.sprynchan.car_rental.service.OrderService;
-import by.htp.sprynchan.car_rental.service.exception.ServiceException;
-import by.htp.sprynchan.car_rental.service.impl.CarServiceImpl;
-import by.htp.sprynchan.car_rental.service.impl.DamageServiceImpl;
-import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
 import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
 public class ViewMyOrdersCommandImpl implements BaseCommand {
 
-	private OrderService orderService = new OrderServiceImpl();
-	private CarService carService = new CarServiceImpl();
-	private DamageService damageService = new DamageServiceImpl();
-
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-
-		User user = (User) request.getSession().getAttribute(REQUEST_PARAM_USER);
-		List<Order> orderList = orderService.getUserOrderList(user.getId());
-		Map<Integer, Car> orderCarMap = getCarsForOrderList(orderList);
-		Map<Integer, List<Damage>> orderDamageMap = new HashMap<Integer, List<Damage>>();
-		for (Order order : orderList) {
-			orderDamageMap.put(order.getId(), damageService.getOrderDamages(order.getId()));
-		}
-		request.setAttribute(REQUEST_PARAM_ORDER_LIST, orderList);
-		request.setAttribute(REQUEST_PARAM_ORDER_CAR_MAP, orderCarMap);
-		request.setAttribute(REQUEST_PARAM_ORDER_DAMAGE_MAP, orderDamageMap);
-		return PAGE_MY_ORDERS;
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
+		request.getSession().removeAttribute(SESSION_ATR_SESSION_MESSAGE);
+		request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_MY_ORDERS);
+		return REDIRECT_USER_URL;
 	}
-
-	private Map<Integer, Car> getCarsForOrderList(List<Order> orderList) throws ServiceException {
-		Map<Integer, Car> orderCarMap = new HashMap<Integer, Car>();
-		for (Order order : orderList) {
-			int carId = order.getCarId();
-			Car car = carService.getCar(carId);
-			orderCarMap.put(order.getId(), car);
-		}
-		return orderCarMap;
-	}
-
 }

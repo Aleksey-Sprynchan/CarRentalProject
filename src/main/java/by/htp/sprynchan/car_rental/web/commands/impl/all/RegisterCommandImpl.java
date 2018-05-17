@@ -1,7 +1,7 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.all;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_INDEX;
 import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_REGISTRATION;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_GUEST_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,8 @@ public class RegisterCommandImpl implements BaseCommand {
 
 	private UserService userService = new UserServiceImpl();
 	
+	private static final String MESSAGE_SUCCESFUL_REGISTRATION = "Succesful registration! Please enter login and password!";
+	
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
@@ -28,7 +30,8 @@ public class RegisterCommandImpl implements BaseCommand {
 		
 		String message = userService.createNewUser(user);	
 		if(message == null) {
-			return PAGE_INDEX;
+			request.getSession().setAttribute(SESSION_ATR_SESSION_MESSAGE, MESSAGE_SUCCESFUL_REGISTRATION);			
+			return REDIRECT_GUEST_URL;
 		} else {
 			request.setAttribute(REQUEST_PARAM_DUPLICATE_MESSAGE, message);
 			return PAGE_REGISTRATION;

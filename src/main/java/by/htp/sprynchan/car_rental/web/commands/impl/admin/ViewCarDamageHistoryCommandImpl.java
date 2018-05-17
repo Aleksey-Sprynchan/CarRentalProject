@@ -20,8 +20,7 @@ public class ViewCarDamageHistoryCommandImpl implements BaseCommand {
 	private DamageService damageService = new DamageServiceImpl();
 	
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));
 		Map<Integer, List<Damage>> carDamageHistoryMap = damageService.getCarDamageHistory(carId);
 		Set<Integer> orderIdSet = carDamageHistoryMap.keySet();	

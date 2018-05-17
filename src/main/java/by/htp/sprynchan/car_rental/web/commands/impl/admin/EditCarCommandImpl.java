@@ -18,8 +18,7 @@ public class EditCarCommandImpl implements BaseCommand {
 	private CarService carService = new CarServiceImpl();	
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		int carId = Integer.parseInt(request.getParameter(REQUEST_PARAM_CAR_ID));
 		Car car = carService.getCar(carId);
 		request.setAttribute(REQUEST_PARAM_CAR, car);	

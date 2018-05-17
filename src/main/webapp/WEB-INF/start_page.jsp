@@ -50,7 +50,7 @@
 	
 		<c:when test="${sessionScope.user_type == 'ADMIN'}">
 			<p> loggedIn as Admin</p>
-			<form action="CarRentalServlet" method="post">
+			<form action="CarRentalServlet" method="get">
 				<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>
  			 </form>
  			 <form action="CarRentalServlet" method="get">
@@ -59,7 +59,7 @@
 		</c:when>
 		<c:when test="${sessionScope.user_type == 'USER'}">
 			<p> loggedIn as User</p>
-			<form action="CarRentalServlet" method="post">
+			<form action="CarRentalServlet" method="get">
 				<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>
  			 </form>	
  			  <form action="CarRentalServlet" method="get">

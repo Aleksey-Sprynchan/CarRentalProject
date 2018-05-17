@@ -16,10 +16,19 @@
 <body>
 	
 	<c:if test="${not empty car_list}">
+
+		<tr>
+			<td>
+		</tr>
+	
+	
+	
+	<table>
 	<c:forEach items="${car_list}" var="car">
-		<p>
-		<form action="CarRentalServlet" method="post">
+		<tr>	
+			
 			<c:if test="${car.isAvailable()}">
+			<td>
 			<c:out value="${car.getBrandName()}" />
 			<c:out value="${car.getModel()}" />
 			<c:out value="(${car.getType()})" />
@@ -28,20 +37,37 @@
 			<c:out value="${car.getFuel()}" />
 			<c:out value="Air Condition: ${car.isAirCondition()}" />
 			<c:out value="Price:  ${car.getPricePerDay()}$" />
-			<input type="hidden" name="car_id" value="${car.getId()}" />
-			<button type="submit" name="command" value="DELETE_CAR">Delete this car</button>
-			<button type="submit" name="command" value="EDIT_CAR">Update this car info</button>
-			<button type="submit" name="command" value="VIEW_CAR_DAMAGE_HISTORY">View car damage history</button>
-		
+			</td>
+			<td>	
+				<form action="CarRentalServlet" method="post">			
+					<button type="submit" name="command" value="DELETE_CAR">Delete this car</button>
+					<input type="hidden" name="car_id" value="${car.getId()}" />
+				</form>
+			</td>	
+			<td>
+				<form action="CarRentalServlet" method="get">
+					<button type="submit" name="command" value="EDIT_CAR">Update this car info</button>
+					<input type="hidden" name="car_id" value="${car.getId()}" />
+				</form>
+			</td>	
+			<td>
+				<form action="CarRentalServlet" method="get">		
+					<button type="submit" name="command" value="VIEW_CAR_DAMAGE_HISTORY">View car damage history</button>
+					<input type="hidden" name="car_id" value="${car.getId()}" />
+				</form>
+			</td>	
+				
 		</c:if>
-		</form>
+		<tr>
+	
 	</c:forEach>
+	</table>
 	</c:if>
 	
 	<p><strong>Inactive cars, that were deleted from the car park:</strong></p>
 	<c:forEach items="${car_list}" var="car">
 	<c:if test="${!car.isAvailable()}">		
-		<form action="CarRentalServlet" method="post">
+		<form action="CarRentalServlet" method="get">
 			<c:out value="${car.getBrandName()}" />
 			<c:out value="${car.getModel()}" />
 			<c:out value="(${car.getType()})" />

@@ -8,6 +8,7 @@ public enum CommandEnum {
 	REGISTER(UserTypeEnum.ALL),
 	START_PAGE(UserTypeEnum.ALL),
 	TO_MY_PROFILE_PAGE(UserTypeEnum.ALL),
+	REDIRECT_GUEST(UserTypeEnum.ALL),
 	
 	BOOK_CAR(UserTypeEnum.USER),
 	CREATE_ORDER(UserTypeEnum.USER),
@@ -26,6 +27,7 @@ public enum CommandEnum {
 	CHANGING_ORDER_PAGE(UserTypeEnum.USER),
 	CHANGE_ORDER(UserTypeEnum.USER),
 	CANCEL_ORDER(UserTypeEnum.USER),
+	REDIRECT_USER(UserTypeEnum.USER),
 
 	CREATE_CAR(UserTypeEnum.ADMIN),
 	SHOW_ORDERS_BY_STATUS(UserTypeEnum.ADMIN),	
@@ -44,7 +46,8 @@ public enum CommandEnum {
 	FINISH_ORDER(UserTypeEnum.ADMIN),
 	VIEW_CAR_DAMAGE_HISTORY(UserTypeEnum.ADMIN),
 	VIEW_USER_ORDERS(UserTypeEnum.ADMIN),
-	VIEW_USER_LIST(UserTypeEnum.ADMIN);
+	VIEW_USER_LIST(UserTypeEnum.ADMIN),
+	REDIRECT_ADMIN(UserTypeEnum.ADMIN);
 
 	private UserTypeEnum userType;
 

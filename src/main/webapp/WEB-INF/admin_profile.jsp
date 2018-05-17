@@ -42,7 +42,7 @@
 		<p><button type="submit" name="command" value="VIEW_USER_LIST">View users list</button>
 	</form>
 
-	<form action="CarRentalServlet" method="post">
+	<form action="CarRentalServlet" method="get">
 		<p><button type="submit" name="command" value="SIGN_OUT">Sign out</button>
 	</form>
 	</div>
@@ -51,7 +51,7 @@
 		
 		
   		
-  		<form action="CarRentalServlet" method="post">
+  		<form action="CarRentalServlet" method="get">
   		<strong>Order status:</strong> 
     		<select name="order_status" >
     		<option selected>All orders</option>
@@ -66,7 +66,7 @@
   		
      <c:forEach items="${order_list}" var="order">
 		<p>
-		<form action="CarRentalServlet" method="post"> 
+		<form action="CarRentalServlet" method="get"> 
 		<c:out value="${order.getId()}"/>
 		<c:out value="${order.getStatus()}"/>
 		<c:out value="${order.getCustomer().getName()}"/>

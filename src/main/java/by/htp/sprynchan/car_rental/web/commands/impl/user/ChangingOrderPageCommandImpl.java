@@ -19,8 +19,7 @@ public class ChangingOrderPageCommandImpl implements BaseCommand {
 	private CustomerPersonalDataService customerService = new CustomerPersonalDataServiceImpl();
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));
 		Order order = orderService.getOrder(orderId);
 		order.setCustomer(customerService.getCustomerPersonalData(order.getCustomer().getId()));

@@ -13,4 +13,5 @@ public class ChangingPasswordPageCommandImpl implements BaseCommand {
 	public String executeCommand(HttpServletRequest request) throws CommandException {
 		return PAGE_CHANGE_PASS;
 	}
+	
 }

@@ -1,11 +1,10 @@
 package by.htp.sprynchan.car_rental.web.commands.impl.admin;
 
-import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.PAGE_ORDER_DETAILS;
+import static by.htp.sprynchan.car_rental.web.util.PagePathConstantPool.REDIRECT_ADMIN_URL;
 import static by.htp.sprynchan.car_rental.web.util.WebConstantDeclaration.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.service.OrderService;
 import by.htp.sprynchan.car_rental.service.impl.OrderServiceImpl;
 import by.htp.sprynchan.car_rental.web.commands.BaseCommand;
@@ -20,9 +19,9 @@ public class MarkAsReturnedCommandImpl implements BaseCommand {
 	public String executeCommand(HttpServletRequest request) throws CommandException {
 		
 		int orderId = Integer.parseInt(request.getParameter(REQUEST_PARAM_ORDER_ID));		
-		orderService.updateOrderStatus(orderId, OrderStatusEnum.RETURNED);	
-		Order order = orderService.getOrder(orderId);
-		request.setAttribute(REQUEST_PARAM_ORDER, order);		
-		return PAGE_ORDER_DETAILS;
+		orderService.updateOrderStatus(orderId, OrderStatusEnum.RETURNED);		
+		request.getSession().setAttribute(SESSION_ATR_SESSION_ORDER_ID, orderId); 
+		request.getSession().setAttribute(SESSION_ATR_SESSION_PAGE_TYPE, PAGE_TYPE_ORDER_DETAILS);
+		return REDIRECT_ADMIN_URL;
 	}
 }
