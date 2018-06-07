@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public final class HttpRequestParamFormatter {
 
 	private HttpRequestParamFormatter() {
-
+		throw new IllegalStateException("Utility class");
 	}
 
 	public static int formatInt(String param) {

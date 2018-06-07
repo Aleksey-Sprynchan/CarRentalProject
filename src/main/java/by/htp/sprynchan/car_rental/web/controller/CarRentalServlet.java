@@ -21,53 +21,39 @@ import by.htp.sprynchan.car_rental.web.exception.CommandException;
 import by.htp.sprynchan.car_rental.web.util.CommandFactory;
 
 public class CarRentalServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	public static final String PARAMETER_MESSAGE = "message";
 
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println("doGet");
 		process(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println("doPost");
 		process(request, response);
-
 	}
 
 	private void process(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		BaseCommand requestCommand = CommandFactory.defineCommand(request);
 		String path = null;
-
 		try {
 			path = requestCommand.executeCommand(request);
-
+			if (path.equals(REDIRECT_ADMIN_URL)) {
+				response.sendRedirect(request.getContextPath() + REDIRECT_ADMIN_URL);
+			} else if (path.equals(REDIRECT_USER_URL)) {
+				response.sendRedirect(request.getContextPath() + REDIRECT_USER_URL);
+			} else if (path.equals(REDIRECT_GUEST_URL)) {
+				response.sendRedirect(request.getContextPath() + REDIRECT_GUEST_URL);
+			} else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+				dispatcher.forward(request, response);
+			}
 		} catch (CommandException e) {
-			path = PAGE_ERROR;
-			request.setAttribute(PARAMETER_MESSAGE, e.getMessage());
+			request.getRequestDispatcher(PAGE_ERROR).forward(request, response);
 			LOGGER.error(e.getMessage(), e);
 		}
-
-		if (path.equals(REDIRECT_ADMIN_URL)) {
-			response.sendRedirect(request.getContextPath() + REDIRECT_ADMIN_URL);
-		} else if (path.equals(REDIRECT_USER_URL)) {
-			response.sendRedirect(request.getContextPath() + REDIRECT_USER_URL);
-		} else if (path.equals(REDIRECT_GUEST_URL)) {
-			response.sendRedirect(request.getContextPath() + REDIRECT_GUEST_URL);
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-			dispatcher.forward(request, response);
-		}
-
 	}
 
 }

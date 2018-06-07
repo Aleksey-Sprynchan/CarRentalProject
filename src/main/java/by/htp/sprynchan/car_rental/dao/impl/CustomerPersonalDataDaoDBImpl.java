@@ -11,7 +11,7 @@ import by.htp.sprynchan.car_rental.dao.CustomerPersonalDataDao;
 import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
-public class CustomerPersonalDataDBDaoImpl extends BeanDaoBuilders implements CustomerPersonalDataDao {
+public class CustomerPersonalDataDaoDBImpl extends BeanDaoBuilders implements CustomerPersonalDataDao {
 
 	private static final String ADD_CUSTOMER_PERSONAL_DATA = "INSERT INTO customer_personal_data "
 			+ "(name, surname, passport_numb, date_of_birth, driving_exp) VALUES (?, ?, ?, ?, ?);";

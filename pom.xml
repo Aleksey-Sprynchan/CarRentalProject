@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>by.htp.sprynchan.car_rental</groupId>
   <artifactId>CarRental</artifactId>
@@ -18,45 +19,80 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<properties>
+		<jstl.version>1.2</jstl.version>
+		<javax.servlet-api.version>4.0.0</javax.servlet-api.version>
+		<mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+		<log4j.version>2.11.0</log4j.version>
+		<json-simple.version>1.1.1</json-simple.version>
+		<jackson-databind.version>2.6.3</jackson-databind.version>
+		<jstl-api.version>1.2</jstl-api.version>
+		<commons-codec.version>1.10</commons-codec.version>
+		<junit.version>4.12</junit.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.0</version>
+			<version>${javax.servlet-api.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>6.0.6</version>
+			<version>${mysql-connector-java.version}</version>
 		</dependency>
 		
  	 	<dependency>
  	 		<groupId>org.apache.logging.log4j</groupId>
  	 		<artifactId>log4j-api</artifactId>
- 	 		<version>2.11.0</version>
+ 	 		<version>${log4j.version}</version>
  	 	</dependency>
  	 	
  	 	<dependency>
  			<groupId>org.apache.logging.log4j</groupId>
  			<artifactId>log4j-core</artifactId>
- 			<version>2.11.0</version>
+ 			<version>${log4j.version}</version>
  		</dependency>
  		
- 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
         	<groupId>com.googlecode.json-simple</groupId>
         	<artifactId>json-simple</artifactId>
-        	<version>1.1.1</version>
+        	<version>${json-simple.version}</version>
 		</dependency>
-
-
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson-databind.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>javax.servlet.jsp.jstl</groupId>
+    		<artifactId>jstl-api</artifactId>
+    		<version>${jstl-api.version}</version>
+		</dependency>
+		
+		<dependency>
+   			<groupId>commons-codec</groupId>
+    		<artifactId>commons-codec</artifactId>
+    		<version>${commons-codec.version}</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>${junit.version}</version>
+   			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 </project>

@@ -1,97 +1,247 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="Resource"/>
+
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>CAR PARK</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+  <title>
+    <fmt:message key="car_park" />
+  </title>
+  <c:import url="../jsp/head_layout.jsp" />
 </head>
+
 <body>
-	
-	<c:if test="${not empty car_list}">
+  <div class="container">
+    <c:import url="../jsp/header.jsp" />
+    <c:import url="../jsp/admin_navbar.jsp" />
+    <c:if test="${not empty info_message}">
+      <div class="row ">
+        <div class="col-sm text-center p-3 mb-2 bg-dark text-white">
+          <h4>
+            <strong>
+              <c:out value="${info_message}" />
+            </strong>
+          </h4>
+        </div>
+      </div>
+    </c:if>
+    <hr>
+    <div class="row">
+      <div class="col-sm">
+        <div class="col-sm text-center p-3 mb-2 bg-dark text-white">
+          <h4>
+            <fmt:message key="car_park" /> </h4>
+        </div>
+      </div>
+    </div>
+    <c:if test="${not empty car_list}">
+      <div class="row">
+        <div class="col-sm">
+          <div class="text-center p-3 mb-2 bg-dark text-white">
+            <h5>
+              <fmt:message key="available_cars" /> </h5>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" class="text-center">#</th>
+              <th scope="col" class="text-center">
+                <fmt:message key="image" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="brand_and_model" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="type" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="transmission" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="passengers" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="fuel" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="air_cond" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="price_per_day" />
+              </th>
+              <th scope="col" class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach items="${car_list}" var="car">
+              <tr>
+                <th scope="row" class="align-middle">
+                  <c:out value="${car.getId()}" />
+                </th>
+                <td class="align-middle">
+                  <img src="${car.getImage()}" width="135" height="90" alt="${car.getBrandName()}">
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getBrandName()}" />
+                  <c:out value="${car.getModel()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getType()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getTransmission()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getPassengers()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getFuel()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:if test="${car.isAirCondition()}">
+                    <span class="fas fa-check-circle fa-lg"></span>
+                  </c:if>
+                  <c:if test="${not car.isAirCondition()}">
+                    <span class="fas fa-times-circle fa-lg"></span>
+                  </c:if>
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getPricePerDay()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <form action="CarRentalServlet" method="post">
+                    <div class="btn-group-vertical" role="group">
+                      <button type="submit" class="btn btn-danger" name="command" value="delete_car">
+                        <fmt:message key="delete_from_carpark" />
+                      </button>
+                      <input type="hidden" name="car_id" value="${car.getId()}" />
 
-		<tr>
-			<td>
-		</tr>
-	
-	
-	
-	<table>
-	<c:forEach items="${car_list}" var="car">
-		<tr>	
-			
-			<c:if test="${car.isAvailable()}">
-			<td>
-			<c:out value="${car.getBrandName()}" />
-			<c:out value="${car.getModel()}" />
-			<c:out value="(${car.getType()})" />
-			<c:out value="${car.getTransmission()} transmission" />
-			<c:out value="${car.getPassengers()} passengers" />
-			<c:out value="${car.getFuel()}" />
-			<c:out value="Air Condition: ${car.isAirCondition()}" />
-			<c:out value="Price:  ${car.getPricePerDay()}$" />
-			</td>
-			<td>	
-				<form action="CarRentalServlet" method="post">			
-					<button type="submit" name="command" value="DELETE_CAR">Delete this car</button>
-					<input type="hidden" name="car_id" value="${car.getId()}" />
-				</form>
-			</td>	
-			<td>
-				<form action="CarRentalServlet" method="get">
-					<button type="submit" name="command" value="EDIT_CAR">Update this car info</button>
-					<input type="hidden" name="car_id" value="${car.getId()}" />
-				</form>
-			</td>	
-			<td>
-				<form action="CarRentalServlet" method="get">		
-					<button type="submit" name="command" value="VIEW_CAR_DAMAGE_HISTORY">View car damage history</button>
-					<input type="hidden" name="car_id" value="${car.getId()}" />
-				</form>
-			</td>	
-				
-		</c:if>
-		<tr>
-	
-	</c:forEach>
-	</table>
-	</c:if>
-	
-	<p><strong>Inactive cars, that were deleted from the car park:</strong></p>
-	<c:forEach items="${car_list}" var="car">
-	<c:if test="${!car.isAvailable()}">		
-		<form action="CarRentalServlet" method="get">
-			<c:out value="${car.getBrandName()}" />
-			<c:out value="${car.getModel()}" />
-			<c:out value="(${car.getType()})" />
-			<c:out value="${car.getTransmission()} transmission" />
-			<c:out value="${car.getPassengers()} passengers" />
-			<c:out value="${car.getFuel()}" />
-			<c:out value="Air Condition: ${car.isAirCondition()}" />
-			<c:out value="Price:  ${car.getPricePerDay()}$" />
-			<input type="hidden" name="car_id" value="${car.getId()}" />
-			<button type="submit" name="command" value="VIEW_CAR_DAMAGE_HISTORY">View car damage history</button>
-		</form>
-	</c:if>
-	</c:forEach>
-	
-	<c:if test="${empty car_list}">
-		There are no cars in the car park!
-	</c:if>
-	
-	
-	<form action="CarRentalServlet" method="get">
-		<br><br><button type="submit" name="command" value="TO_MY_PROFILE_PAGE">My profile</button>	
-	</form>	
-
-
-
+                      <a href="/CarRental/CarRentalServlet?command=edit_car&car_id=${car.getId()}" class="btn btn-success" role="button">
+                        <fmt:message key="edit" />
+                      </a>
+                      <a href="/CarRental/CarRentalServlet?command=view_car_damage_history&car_id=${car.getId()}" class="btn btn-primary" role="button">
+                        <fmt:message key="damage_history" />
+                      </a>
+                    </div>
+                  </form>
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </c:if>
+    <c:if test="${not empty inactive_cars}">
+      <div class="row">
+        <div class="col-sm">
+          <div class="text-center p-3 mb-2 bg-dark text-white">
+            <h5>
+              <fmt:message key="inactive_carpark" />
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col" class="text-center">#</th>
+              <th scope="col" class="text-center">
+                <fmt:message key="image" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="brand_and_model" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="type" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="transmission" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="Passengers" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="fuel" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="air_cond" />
+              </th>
+              <th scope="col" class="text-center">
+                <fmt:message key="price_per_day" />
+              </th>
+              <th scope="col" class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <c:forEach items="${inactive_cars}" var="car">
+              <tr>
+                <th scope="row" class="align-middle">
+                  <c:out value="${car.getId()}" />
+                </th>
+                <td class="align-middle">
+                  <img src="${car.getImage()}" width="135" height="90" alt="${car.getBrandName()}">
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getBrandName()}" />
+                  <c:out value="${car.getModel()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getType()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getTransmission()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getPassengers()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getFuel()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <c:if test="${car.isAirCondition()}">
+                    <span class="fas fa-check-circle fa-lg"></span>
+                  </c:if>
+                  <c:if test="${not car.isAirCondition()}">
+                    <span class="fas fa-times-circle fa-lg"></span>
+                  </c:if>
+                </td>
+                <td class="text-center align-middle">
+                  <c:out value="${car.getPricePerDay()}" />
+                </td>
+                <td class="text-center align-middle">
+                  <a href="/CarRental/CarRentalServlet?command=view_car_damage_history&car_id=${car.getId()}" class="btn btn-primary" role="button">
+                    <fmt:message key="damage_history" />
+                  </a>
+                </td>
+              </tr>
+            </c:forEach>
+          </tbody>
+        </table>
+      </div>
+    </c:if>
+    <c:if test="${empty car_list && empty inactive_cars}">
+      <div class="row">
+        <div class="mx-auto text-danger">
+          <h5>
+            <strong>
+              <fmt:message key="empty_carpark" />
+            </strong>
+          </h5>
+        </div>
+      </div>
+    </c:if>
+  </div>
+  <ctg:footer/>
+  <c:import url="../js/optional_js.jsp" />
 </body>
+
 </html>

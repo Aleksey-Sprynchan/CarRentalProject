@@ -22,7 +22,7 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			+ "fuel, is_air_condition, price_per_day, is_available, image FROM cars WHERE id = ?;";
 
 	private static final String UPDATE_CAR_BY_ID = "UPDATE cars SET brand_name = ?, model = ?, type = ?, transmission = ?, "
-			+ "passengers = ?, fuel = ?, is_air_condition = ?, price_per_day = ?, is_available = ? "
+			+ "passengers = ?, fuel = ?, is_air_condition = ?, price_per_day = ?, is_available = ?, "
 			+ "image = ? WHERE id = ?;";
 
 	private static final String DELETE_CAR_BY_ID = "DELETE FROM cars WHERE id = ?;";
@@ -30,8 +30,8 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 	private static final String READ_ALL_CARS = "SELECT id, brand_name, model, type, transmission, "
 			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image FROM cars;";
 	
-	private static final String READ_ALL_AVAILABLE_CARS = "SELECT id, brand_name, model, type, transmission, "
-			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image FROM cars WHERE is_available = 1;";
+	private static final String READ_ALL_BY_STATUS = "SELECT id, brand_name, model, type, transmission, "
+			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image FROM cars WHERE is_available = ?;";
 	
 	private static final String SET_UNAVAILABLE_CAR_STATUS = "UPDATE cars SET is_available = 0 WHERE id = ?;";
 		
@@ -156,18 +156,19 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 	}
 
 	@Override
-	public List<Car> readAllAvailable() throws DAOException {
-
+	public List<Car> readAllByStatus(boolean isAvailable) throws DAOException {
+		
 		List<Car> carList = new ArrayList<Car>();
 		Car car = null;
 		Connection connection = dataBaseConnection.getConnection();
-		try (Statement statement = connection.createStatement()) {
-
-			ResultSet resultSet = statement.executeQuery(READ_ALL_AVAILABLE_CARS);
+		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL_BY_STATUS)) {
+			preparedStatement.setBoolean(1, isAvailable);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				car = buildCar(resultSet);
 				carList.add(car);
 			}
+			
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_AVAILABLE_CARS, e);
 		} finally {

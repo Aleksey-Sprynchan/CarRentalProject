@@ -11,6 +11,7 @@ public interface CarService {
 	
 	List<Car> getCarPark() throws ServiceException;
 	List<Car> getAvailableCarPark() throws ServiceException;
+	List<Car> getInactiveCarPark() throws ServiceException;
 	void addCarToCarPark(Car car) throws ServiceException;
 	Set<String> getBrandList() throws ServiceException;
 	Car getCar(int id) throws ServiceException;

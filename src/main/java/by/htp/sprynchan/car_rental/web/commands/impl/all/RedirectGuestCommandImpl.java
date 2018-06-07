@@ -15,7 +15,6 @@ public class RedirectGuestCommandImpl implements BaseCommand {
 
 	@Override
 	public String executeCommand(HttpServletRequest request) throws CommandException {
-
 		request.setAttribute(REQUEST_PARAM_INFO_MESSAGE,
 				request.getSession().getAttribute(SESSION_ATR_SESSION_MESSAGE));
 		UserTypeEnum userType = (UserTypeEnum) request.getSession().getAttribute(REQUEST_PARAM_USER_TYPE);

@@ -9,10 +9,11 @@ public enum CommandEnum {
 	START_PAGE(UserTypeEnum.ALL),
 	TO_MY_PROFILE_PAGE(UserTypeEnum.ALL),
 	REDIRECT_GUEST(UserTypeEnum.ALL),
+	SIGN_IN_PAGE(UserTypeEnum.ALL),
+	CHANGE_LOCALE(UserTypeEnum.ALL),
 	
 	BOOK_CAR(UserTypeEnum.USER),
 	CREATE_ORDER(UserTypeEnum.USER),
-	VIEW_MY_ORDERS(UserTypeEnum.USER),
 	PAY_FOR_ORDER(UserTypeEnum.USER),
 	PAY_FOR_DAMAGE(UserTypeEnum.USER),
 	VIEW_ACCOUNT_DETAILS(UserTypeEnum.USER),
@@ -22,11 +23,12 @@ public enum CommandEnum {
 	DELETE_ACCOUNT(UserTypeEnum.USER),
 	CHANGING_PASSWORD_PAGE(UserTypeEnum.USER),
 	CHANGE_PASSWORD(UserTypeEnum.USER),
-	CHANGING_ACCOUNT_INFO_PAGE(UserTypeEnum.USER),
-	CHANGE_ACCOUNT_INFO(UserTypeEnum.USER),
+	CHANGING_PERSONAL_INFO_PAGE(UserTypeEnum.USER),
+	CHANGE_PERSONAL_INFO(UserTypeEnum.USER),
 	CHANGING_ORDER_PAGE(UserTypeEnum.USER),
 	CHANGE_ORDER(UserTypeEnum.USER),
 	CANCEL_ORDER(UserTypeEnum.USER),
+	VIEW_ORDER_DETAILS(UserTypeEnum.USER),
 	REDIRECT_USER(UserTypeEnum.USER),
 
 	CREATE_CAR(UserTypeEnum.ADMIN),
@@ -36,7 +38,7 @@ public enum CommandEnum {
 	DELETE_CAR(UserTypeEnum.ADMIN),
 	EDIT_CAR(UserTypeEnum.ADMIN),
 	UPDATE_CAR(UserTypeEnum.ADMIN),
-	VIEW_ORDER_DETAILS(UserTypeEnum.ADMIN),
+	MANAGE_ORDER(UserTypeEnum.ADMIN),
 	APPROVE_ORDER(UserTypeEnum.ADMIN),
 	REJECT_ORDER(UserTypeEnum.ADMIN),
 	MARK_AS_RETURNED(UserTypeEnum.ADMIN),
@@ -57,6 +59,15 @@ public enum CommandEnum {
 
 	public UserTypeEnum getUserType() {
 		return userType;
+	}
+	
+	public static CommandEnum valueOfOrDefault(String value) {
+		for(CommandEnum command: CommandEnum.class.getEnumConstants()) {
+			if(command.name().equals(value)) {
+				return command;
+			}
+		}
+		return CommandEnum.START_PAGE;
 	}
 
 }

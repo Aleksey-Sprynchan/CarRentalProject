@@ -1,5 +1,7 @@
 package by.htp.sprynchan.car_rental.dao.impl;
 
+import static by.htp.sprynchan.car_rental.dao.util.TablesColumnNamesDeclaration.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,10 +20,10 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 	private static final String ADD_USER = "INSERT INTO users (login, password, name, surname, email)"
 			+ " VALUES (?, ?, ?, ?,?);";
 
-	private static final String FIND_USER_BY_LOGIN_PASSWORD = "SELECT id, login, password, "
+	private static final String FIND_USER_BY_LOGIN_PASSWORD = "SELECT id, login, "
 			+ "name, surname, email, balance, is_admin FROM users WHERE login= ? and password = ?;";
 
-	private static final String READ_USER_BY_ID = "SELECT id, login, password, "
+	private static final String READ_USER_BY_ID = "SELECT id, login, "
 			+ "name, surname, email, balance, is_admin FROM users WHERE id = ?;";
 
 	private static final String UPDATE_USER_PERSONAL_INFO = "UPDATE users SET name = ?, surname = ?, "
@@ -30,14 +32,16 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 	private static final String UPDATE_USER_BALANCE = "UPDATE users SET balance = ? WHERE id = ?;";
 	private static final String UPDATE_USER_PASS = "UPDATE users SET password = ? WHERE id = ?;";
 	private static final String DELETE_USER_BY_ID = "DELETE FROM users WHERE id = ?;";
-	
+
 	private static final String READ_ALL_USERS = "SELECT id, login, password, "
 			+ "name, surname, email, balance, is_admin FROM users WHERE is_admin = 0;";
+
+	private static final String READ_USER_PASS = "SELECT password FROM users WHERE id = ?;";
 
 	private static final int ER_DUP_ENTRY_CODE = 1062;
 	private static final String ENDS_WITH_LOGIN = "key 'login'";
 	private static final String ENDS_WITH_EMAIL = "key 'email'";
-	
+
 	private static final String ERROR_IN_CREATE_USER = "Error while adding user to database";
 	private static final String ERROR_IN_READ_USER = "Error while getting user from database";
 	private static final String ERROR_IN_UPDATE_USER = "Error while trying to update user in database";
@@ -46,7 +50,8 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 	private static final String ERROR_IN_UPDATE_PASS = "Error while updating user password";
 	private static final String ERROR_IN_UPDATE_BALANCE = "Error while updating user balance";
 	private static final String ERROR_IN_READ_ALL_USERS = "Error while getting user list from database";
-	
+	private static final String ERROR_IN_READ_PASS = "Error while getting user's password from database";
+
 	@Override
 	public int create(User entity) throws DAOException {
 
@@ -104,8 +109,9 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 		} catch (SQLException e) {
 			if (e.getErrorCode() == ER_DUP_ENTRY_CODE) {
 				code = 2;
+			} else {
+				throw new DAOException(ERROR_IN_UPDATE_USER, e);
 			}
-			throw new DAOException(ERROR_IN_UPDATE_USER, e);
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
@@ -179,12 +185,12 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public List<User> readAll() throws DAOException {
-		
+
 		List<User> usersList = new ArrayList<User>();
 		User user = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (Statement statement = connection.createStatement()) {
-			
+
 			ResultSet resultSet = statement.executeQuery(READ_ALL_USERS);
 			while (resultSet.next()) {
 				user = buildUser(resultSet);
@@ -195,9 +201,9 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 		} finally {
 			dataBaseConnection.closeConnection(connection);
 		}
-		return usersList;	
+		return usersList;
 	}
-	
+
 	private int identifyDuplicateField(String excMessage) {
 
 		if (excMessage.endsWith(ENDS_WITH_LOGIN)) {
@@ -207,6 +213,25 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 		} else {
 			return 0;
 		}
+	}
+
+	@Override
+	public String readUserPassword(int id) throws DAOException {
+
+		String pass = null;
+		Connection connection = dataBaseConnection.getConnection();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_USER_PASS)) {
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				pass = resultSet.getString(USERS_COLUMN_PASSWORD);
+			}
+		} catch (SQLException e) {
+			throw new DAOException(ERROR_IN_READ_PASS, e);
+		} finally {
+			dataBaseConnection.closeConnection(connection);
+		}
+		return pass;
 	}
 
 }

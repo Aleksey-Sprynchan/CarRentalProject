@@ -15,4 +15,5 @@ public interface UserService {
 	void changeUserBalance(User user) throws ServiceException;	
 	void changeUserPassword(User user) throws ServiceException;	
 	List<User> getUsersList() throws ServiceException;
+	String getUserPassword(int id) throws ServiceException;
 }

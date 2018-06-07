@@ -10,8 +10,7 @@ import by.htp.sprynchan.car_rental.web.exception.CommandException;
 public class RegistrationPageCommandImpl implements BaseCommand {
 
 	@Override
-	public String executeCommand(HttpServletRequest request) throws CommandException {	
-		
+	public String executeCommand(HttpServletRequest request) throws CommandException {		
 		return PAGE_REGISTRATION;
 	}
 }

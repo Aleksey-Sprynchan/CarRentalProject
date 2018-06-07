@@ -11,5 +11,6 @@ public interface UserDao extends BaseDao<User> {
 	void updateUserBalance(User entity) throws DAOException;
 	User login(String login, String password) throws DAOException;
 	List<User> readAll() throws DAOException;
+	String readUserPassword (int id) throws DAOException;
 
 }

@@ -39,7 +39,7 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	private static final String READ_ALL_ORDERS = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, o.start_date, "
 			+ "o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, c.name, "
 			+ "c.surname, c.passport_numb, c.date_of_birth, c.driving_exp "
-			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id;";
+			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id ORDER BY o.id DESC;";
 
 	private static final String READ_ORDERS_WITH_STATUS = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, "
 			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, "
@@ -49,7 +49,7 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	private static final String READ_USER_ORDERS_BY_USER_ID = "SELECT o.id, o.status, o.order_date, o.user_id, o.car_id, "
 			+ "o.start_date, o.end_date, o.customer_id, o.total_price, o.insurance, o.is_damaged, o.damage_amount, o.rejection_reason, "
 			+ "c.name, c.surname, c.passport_numb, c.date_of_birth, c.driving_exp "
-			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id WHERE o.user_id = ?;";
+			+ "FROM orders o JOIN customer_personal_data c ON o.customer_id = c.id WHERE o.user_id = ? ORDER BY o.order_date DESC;";
 	
 	private static final String READ_RESERVED_DATES_BY_CAR_ID = "SELECT s.start_date, s.end_date "
 			+ "FROM (SELECT * FROM orders o WHERE o.car_id = ?) s "

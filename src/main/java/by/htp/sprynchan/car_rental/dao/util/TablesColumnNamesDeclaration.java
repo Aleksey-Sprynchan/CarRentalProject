@@ -2,7 +2,9 @@ package by.htp.sprynchan.car_rental.dao.util;
 
 public final class TablesColumnNamesDeclaration {
 
-	private TablesColumnNamesDeclaration() {}
+	private TablesColumnNamesDeclaration() {
+		throw new IllegalStateException("Utility class");
+	}
 	
 	public static final String CARS_COLUMN_ID = "id";
 	public static final String CARS_COLUMN_BRAND_NAME = "brand_name";

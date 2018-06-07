@@ -9,6 +9,11 @@ public interface BaseDao<T extends Entity>{
 	
 	ConnectionPool dataBaseConnection = ConnectionPool.getInstance();
 	
+	/**jsdbfshdfsdbbfkjsadb jhgfz cjhgsd f
+	 * @param entity
+	 * @return
+	 * @throws DAOException
+	 */
 	int create(T entity) throws DAOException;
 	T read(int id) throws DAOException;
 	int update(T entity) throws DAOException;

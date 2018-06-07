@@ -75,7 +75,6 @@ public class BeanDaoBuilders {
 		User user = new User();
 		user.setId(resultSet.getInt(USERS_COLUMN_ID));
 		user.setLogin(resultSet.getString(USERS_COLUMN_LOGIN));
-		user.setPassword(resultSet.getString(USERS_COLUMN_PASSWORD));
 		user.setName(resultSet.getString(USERS_COLUMN_NAME));
 		user.setSurname(resultSet.getString(USERS_COLUMN_SURNAME));
 		user.setEmail(resultSet.getString(USERS_COLUMN_EMAIL));

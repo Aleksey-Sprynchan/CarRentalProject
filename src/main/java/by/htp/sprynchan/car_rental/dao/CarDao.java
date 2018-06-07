@@ -8,7 +8,7 @@ import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 public interface CarDao extends BaseDao<Car> {
 	
 	List<Car> readAll() throws DAOException;	
-	List<Car> readAllAvailable() throws DAOException;
+	List<Car> readAllByStatus(boolean isAvailable) throws DAOException;
 	void setUnavailableStatus(int id) throws DAOException;
 	
 }

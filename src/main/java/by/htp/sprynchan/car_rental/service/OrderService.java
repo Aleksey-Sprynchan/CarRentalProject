@@ -8,7 +8,8 @@ import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
 public interface OrderService {
 	
-	List<Order> getOrderList(OrderStatusEnum orderStatus) throws ServiceException;	
+	List<Order> getOrderList() throws ServiceException;
+	List<Order> getOrderListByStatus(OrderStatusEnum orderStatus) throws ServiceException;
 	int createNewOrder (Order order) throws ServiceException;	
 	Order getOrder(int id) throws ServiceException;	
 	void updateOrderStatus(int id, OrderStatusEnum orderStatus) throws ServiceException;	

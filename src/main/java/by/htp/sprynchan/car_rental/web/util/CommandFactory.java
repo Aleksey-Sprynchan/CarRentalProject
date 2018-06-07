@@ -21,22 +21,24 @@ import by.htp.sprynchan.car_rental.web.commands.impl.admin.ShowOrdersByStatusCom
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.UpdateCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarDamageHistoryCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewCarParkCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewOrderDetailsCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.admin.ManageOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserListCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.admin.ViewUserOrdersCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.AuthorizationCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.all.ChangeLocaleCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RedirectGuestCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.StartPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegisterCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.RegistrationPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.all.SignInPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.SignOutCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.all.ToMyProfilePageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.BookCarCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.CancelOrderCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangeAccountInfoCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangePersonalInfoCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangeOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangePasswordCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingAccountInfoPageCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingPersonalInfoPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingOrderPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ChangingPasswordPageCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.CreateOrderCommandImpl;
@@ -48,7 +50,7 @@ import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForDamageCommandImp
 import by.htp.sprynchan.car_rental.web.commands.impl.user.PayForOrderCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.RedirectUserCommandImpl;
 import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewAccountDetailsCommandImpl;
-import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewMyOrdersCommandImpl;
+import by.htp.sprynchan.car_rental.web.commands.impl.user.ViewOrderDetailsCommandImpl;
 
 public class CommandFactory {
 	
@@ -60,15 +62,21 @@ public class CommandFactory {
 		
 		BaseCommand command = null;
 		String inputCommand =  request.getParameter(REQUEST_PARAM_COMMAND);
-		if(inputCommand == null) {
+		if(inputCommand == null || inputCommand.isEmpty()) {
 			inputCommand = COMMAND_START_PAGE;
 		}
+		CommandEnum commandName = CommandEnum.valueOfOrDefault(inputCommand.toUpperCase());
 
-		CommandEnum commandName = CommandEnum.valueOf(inputCommand);
-		
-		System.out.println(inputCommand);
-		
 		switch(commandName) {
+		case VIEW_ORDER_DETAILS:
+			command = new ViewOrderDetailsCommandImpl();
+			break;
+		case CHANGE_LOCALE:
+			command = new ChangeLocaleCommandImpl();
+			break;
+		case SIGN_IN_PAGE:
+			command = new SignInPageCommandImpl();
+			break;
 		case REDIRECT_GUEST:
 			command = new RedirectGuestCommandImpl();
 			break;
@@ -96,11 +104,11 @@ public class CommandFactory {
 		case CHANGING_ORDER_PAGE:
 			command = new ChangingOrderPageCommandImpl();
 			break;
-		case CHANGE_ACCOUNT_INFO:
-			command = new ChangeAccountInfoCommandImpl();
+		case CHANGE_PERSONAL_INFO:
+			command = new ChangePersonalInfoCommandImpl();
 			break;
-		case CHANGING_ACCOUNT_INFO_PAGE:
-			command = new ChangingAccountInfoPageCommandImpl();
+		case CHANGING_PERSONAL_INFO_PAGE:
+			command = new ChangingPersonalInfoPageCommandImpl();
 			break;
 		case CHANGE_PASSWORD:
 			command = new ChangePasswordCommandImpl();
@@ -138,9 +146,6 @@ public class CommandFactory {
 		case PAY_FOR_ORDER:
 			command = new PayForOrderCommandImpl();
 			break;
-		case VIEW_MY_ORDERS:
-			command = new ViewMyOrdersCommandImpl();
-			break;		
 		case FINISH_ORDER:
 			command = new FinishOrderCommandImpl();
 			break;
@@ -162,8 +167,8 @@ public class CommandFactory {
 		case APPROVE_ORDER:
 			command = new ApproveOrderCommandImpl();
 			break;
-		case VIEW_ORDER_DETAILS:
-			command = new ViewOrderDetailsCommandImpl();
+		case MANAGE_ORDER:
+			command = new ManageOrderCommandImpl();
 			break;
 		case CREATE_ORDER:
 			command = new CreateOrderCommandImpl();
@@ -200,6 +205,9 @@ public class CommandFactory {
 			break;
 		case AUTHORIZATION:
 			command = new AuthorizationCommandImpl();
+			break;
+		default:
+			command = new StartPageCommandImpl();
 			break;
 		}
 		return command;

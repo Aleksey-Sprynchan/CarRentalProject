@@ -1,51 +1,93 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="Resource"/>
+
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Change Order</title>
-
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-
-<script type="text/javascript">
-
-$(function() {		
-	$("#birthDatePicker").datepicker({
-		showAnim:"slide", 
-		dateFormat:"yy-mm-dd", 
-		changeYear : true, 
-		yearRange : "-80:+0", 
-		changeMonth : true});
-});
-
-</script>
-
+  <title>
+    <fmt:message key="change_order" />
+  </title>
+  <c:import url="../jsp/head_layout.jsp" />
+  <c:import url="../js/change_order_js.jsp" />
 </head>
-<body>
 
-	<form action="CarRentalServlet" method="post"> 
-		<p><strong>Name:</strong> 
-		<input size="30" name="customer_name" value="${order.getCustomer().getName()}" placeholder="Enter name" required></p>
-		
-		<p><strong>Surname:</strong> 
-		<input size="30" name="customer_surname" value="${order.getCustomer().getSurname()}" placeholder="Enter surname" required></p>
-		
-		<p><strong>Passport №:</strong> 
-		<input size="30" name="passport_numb" value="${order.getCustomer().getPassportNumb()}" placeholder="Enter passport number" required></p>
-		
-		<p><strong>Date of birth:</strong> 
-		<input type="text" id="birthDatePicker" name="date_of_birth" value="${order.getCustomer().getDateOfBirth().toString()}" required></p>
-		
-		<p><strong>Driving experience (years):</strong> 
-		<input size="30" name="driving_exp" value="${order.getCustomer().getDrivingExp()}" placeholder="Enter driving expirience" required pattern="^[0-9]+$"></p>	
-		<input type="hidden" name="customer_id" value="${order.getCustomer().getId()}"/>
-		<p><button type="submit" name="command" value="CHANGE_ORDER">Change info</button>		
-	</form>
-	
-
+<body onload="loadData()">
+  <div class="container">
+    <c:import url="../jsp/header.jsp" />
+    <c:import url="../jsp/user_navbar.jsp" />
+    <hr>
+    <div class="row">
+      <div class="col-sm text-center p-3 mb-2 bg-dark text-white">
+        <h4>
+          <fmt:message key="change_order_customer_info" />
+        </h4>
+      </div>
+    </div>
+    <form name="main" action="CarRentalServlet" method="post">
+      <div id="div_one" class="form-group row">
+        <div id="div_two" class="col-sm-3 mx-auto">
+          <label>
+            <fmt:message key="name" />:</label>
+          <c:if test="${not empty invalid_name}">
+            <small class="form-text text-danger">
+              <c:out value="${invalid_name}" />
+            </small>
+          </c:if>
+          <input class="form-control" name="customer_name" required>
+          <label class="mt-1">
+            <fmt:message key="surname" />:</label>
+          <c:if test="${not empty invalid_surname}">
+            <small class="form-text text-danger">
+              <c:out value="${invalid_surname}" />
+            </small>
+          </c:if>
+          <input class="form-control" name="customer_surname" required>
+          <label class="mt-1">
+            <fmt:message key="passport_numb" />:</label>
+          <c:if test="${not empty invalid_passport_numb}">
+            <small class="form-text text-danger">
+              <c:out value="${invalid_passport_numb}" />
+            </small>
+          </c:if>
+          <input class="form-control" name="passport_numb" required>
+          <label class="mt-1">
+            <fmt:message key="date_of_birth" />:</label>
+          <c:if test="${not empty invalid_birth_date}">
+            <small class="form-text text-danger">
+              <c:out value="${invalid_birth_date}" />
+            </small>
+          </c:if>
+          <input class="form-control" type="text" id="birthDatePicker" name="date_of_birth" required>
+          <label class="mt-1">
+            <fmt:message key="driving_exp" />:</label>
+          <c:if test="${not empty invalid_driving_exp}">
+            <small class="form-text text-danger">
+              <c:out value="${invalid_driving_exp}" />
+            </small>
+          </c:if>
+          <input class="form-control" name="driving_exp" required pattern="^[0-9]+$">
+          <input type="hidden" name="customer_id" />
+          <div class="row">
+            <div class="col-sm text-center">
+              <button type="submit" class="btn btn-primary my-2" name="command" value="change_order">
+                <fmt:message key="change" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <ctg:footer/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>

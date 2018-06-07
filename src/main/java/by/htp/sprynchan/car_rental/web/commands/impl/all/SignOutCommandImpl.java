@@ -14,5 +14,5 @@ public class SignOutCommandImpl implements BaseCommand {
 		request.getSession().invalidate();
 		return PAGE_INDEX;
 	}
-
+	
 }
