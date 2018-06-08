@@ -1,12 +1,30 @@
 package by.htp.sprynchan.car_rental.bean;
 
+/**
+ * Class describing Damage entity from database
+ * 
+ * @author Aleksey Sprynchan
+ *
+ */
 public class Damage extends Entity {
 
 	private static final long serialVersionUID = 4157582143657734882L;
 
+	/**
+	 * Id of order where damages where detected
+	 */
 	private int orderId;
+	/**
+	 * Id of car which were damaged
+	 */
 	private int carId;
+	/**
+	 * Name of damage
+	 */
 	private String damageName;
+	/**
+	 * Cost of repair
+	 */
 	private int damageCost;
 		
 	public Damage() {}

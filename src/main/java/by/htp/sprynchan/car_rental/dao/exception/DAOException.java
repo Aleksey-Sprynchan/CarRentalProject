@@ -2,6 +2,14 @@ package by.htp.sprynchan.car_rental.dao.exception;
 
 import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 
+/**
+ * @author Aleksey Sprynchan
+ *         <code>DAOException</code>
+ *         <p/>
+ *         Exception class created specifically to describe the exceptional
+ *         situation arises in the DAO layer application.
+ * @see package by.htp.sprynchan.car_rental.service.exception.ServiceException
+ */
 public class DAOException extends ServiceException  {
 
 	private static final long serialVersionUID = -2600278547668796167L;

@@ -30,7 +30,7 @@
           </h4>
           <h4>
             <fmt:message key="status" />:
-            <c:out value="${order.getStatus().toString()}" />
+            <c:out value="${order.getStatus().toString().replace('_',' ')}" />
           </h4>
         </div>
       </div>

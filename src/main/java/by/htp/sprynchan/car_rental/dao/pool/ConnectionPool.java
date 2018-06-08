@@ -12,12 +12,24 @@ import org.apache.logging.log4j.Logger;
 
 import by.htp.sprynchan.car_rental.dao.pool.exception.ConnectionPoolException;
 
+/**
+ * @author Aleksey Sprynchan
+ *         <p/>
+ *         The class <code>ConnectionPool</code>
+ *         provides connections to the database.
+ */
 public class ConnectionPool {
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 
+	/**
+     * Singleton instance
+     */
 	private static volatile ConnectionPool instance;
 
+	/**
+     * Configuration constants for the need to create a pool
+     */
 	private static final String DB_CONNECT_PROPERTY = "db_config";
 	private static final String RESOURCE_DRIVER_NAME = "db.driver.name";
 	private static final String RESOURCE_URL = "db.url";
@@ -25,6 +37,7 @@ public class ConnectionPool {
 	private static final String RESOURCE_PASS = "db.pass";
 	private static final int MAX_CONNECTION_COUNT = 10;
 	private static final int MIN_CONNECTION_COUNT = 5;
+	
 	private static String url;
 	private static String login;
 	private static String pass;
@@ -37,11 +50,19 @@ public class ConnectionPool {
 		pass = rb.getString(RESOURCE_PASS);
 		driverName = rb.getString(RESOURCE_DRIVER_NAME);
 	}
-
+	
+	
+	/**
+     * Variable leading accounting of current connections
+     */
 	private volatile int currentConnectionNumber = MIN_CONNECTION_COUNT;
-
 	private BlockingQueue<Connection> pool = new ArrayBlockingQueue<Connection>(MAX_CONNECTION_COUNT, true);
 
+	/**
+     * Singleton of connection pool
+     *
+     * @return instance
+     */ 
 	public static ConnectionPool getInstance() {
 		if (instance == null) {
 			synchronized (ConnectionPool.class) {
@@ -53,8 +74,11 @@ public class ConnectionPool {
 		return instance;
 	}
 
+     /**
+      * The constructor creates an instance of the pool.
+      * Initializes a constant number of connections = 5.
+      */
 	private ConnectionPool() {
-
 		try {
 			Class.forName(driverName);
 		} catch (ClassNotFoundException e) {
@@ -69,6 +93,12 @@ public class ConnectionPool {
 		}
 	}
 
+	/**
+	 * The method provides the user with a copy of connection from pool
+	 * 
+	 * @return Connection
+	 * @throws ConnectionPoolException
+	 */
 	public Connection getConnection() throws ConnectionPoolException {
 
 		Connection connection = null;
@@ -84,6 +114,13 @@ public class ConnectionPool {
 		return connection;
 	}
 
+	/**
+	 * The method return the connection back to the pool
+     * when you are finished work with him.
+	 * 
+	 * @param connection
+	 * @throws ConnectionPoolException
+	 */
 	public void closeConnection(Connection connection) throws ConnectionPoolException {
 		if (connection != null) {
 
@@ -100,6 +137,12 @@ public class ConnectionPool {
 		}
 	}
 
+	/**
+	 * Method providing additional
+     * connection to the database if necessary
+	 * 
+	 * @throws ConnectionPoolException
+	 */
 	private void openAdditionalConnection() throws ConnectionPoolException {
 		try {
 			Class.forName(driverName);

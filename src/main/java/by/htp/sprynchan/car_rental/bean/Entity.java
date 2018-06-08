@@ -2,10 +2,19 @@ package by.htp.sprynchan.car_rental.bean;
 
 import java.io.Serializable;
 
+/**
+ * Class parent for all this application entities
+ * 
+ * @author Aleksey Sprynchan
+ *
+ */
 public abstract class Entity implements Serializable{
 	
 	private static final long serialVersionUID = -6942013610688656186L;
 
+	/**
+	 * Common ID field for all entities
+	 */
 	private int id;
 
 	public Entity() {

@@ -21,6 +21,7 @@
     <c:import url="../jsp/user_navbar.jsp" />
     <hr>
     <div class="row">
+     <div class="col-sm">
       <div class="col-sm text-center p-3 mb-2 bg-dark text-white">
         <h4>
           <fmt:message key="order_numb" />
@@ -28,8 +29,9 @@
         </h4>
         <h4>
           <fmt:message key="status" />:
-          <c:out value="${order.getStatus().toString()}" />
+          <c:out value="${order.getStatus().toString().replace('_',' ')}" />
         </h4>
+      </div>
       </div>
     </div>
     <div class="row">
@@ -228,7 +230,7 @@
               <fmt:message key="rejection_reason" />:</strong>
           </p>
           <div class="d-inline-flex p-2 bd-highlight bg-danger text-white">
-            <c:out value="(${order.getRejectionReason()})" />
+            <c:out value="${order.getRejectionReason()}" />
           </div>
         </div>
       </c:if>

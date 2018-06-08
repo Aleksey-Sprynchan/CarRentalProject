@@ -14,6 +14,11 @@ import by.htp.sprynchan.car_rental.bean.Order;
 import by.htp.sprynchan.car_rental.bean.User;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
+/**
+ * Utility class for building entities from database
+ * 
+ * @author Aleksey Sprynchan
+ */
 public class BeanDaoBuilders {
 
 	protected Car buildCar(ResultSet resultSet) throws SQLException {

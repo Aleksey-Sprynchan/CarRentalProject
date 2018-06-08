@@ -1,18 +1,55 @@
 package by.htp.sprynchan.car_rental.bean;
 
+/**
+ * Class describing Car entity from database
+ * 
+ * @author Aleksey Sprynchan
+ *
+ */
 public class Car extends Entity {
 	
 	private static final long serialVersionUID = 1937498168638918279L;
 	
+	
+	/**
+	 * Name of car brand
+	 */
 	private String brandName;
+	/**
+	 * Car model
+	 */
 	private String model;
+	/**
+	 * Car type
+	 */
 	private String type;
+	/**
+	 * Type of car transmission
+	 */
 	private String transmission;
+	/**
+	 * Number of passengers 
+	 */
 	private int passengers;
+	/**
+	 * Fuel type for a car
+	 */
 	private String fuel;
+	/**
+	 * Variable that show whether car has an air conditioner
+	 */
 	private boolean isAirCondition;
+	/**
+	 * Price per one day rent
+	 */
 	private int pricePerDay;
+	/**
+	 * Variable that show whether car is in car park or deleted
+	 */
 	private boolean isAvailable;
+	/**
+	 * Link for a car image in cloud
+	 */
 	private String image;
 
 	public Car() {}

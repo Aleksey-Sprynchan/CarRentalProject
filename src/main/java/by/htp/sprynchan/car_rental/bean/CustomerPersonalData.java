@@ -2,14 +2,34 @@ package by.htp.sprynchan.car_rental.bean;
 
 import java.time.LocalDate;
 
+/**
+ * Class describing CustomerPersonalData entity from database
+ * 
+ * @author Aleksey Sprynchan
+ */
 public class CustomerPersonalData extends Entity {
 	
 	private static final long serialVersionUID = -1864812238811847229L;
 	
+	/**
+	 * Name of customer (driver)
+	 */
 	private String name;
+	/**
+	 * Surname of customer (driver)
+	 */
 	private String surname;
+	/**
+	 * Passport number of customer (driver)
+	 */
 	private String passportNumb;
+	/**
+	 * Date of birth of customer (driver)
+	 */
 	private LocalDate dateOfBirth;
+	/**
+	 * Driving experience of customer (driver)
+	 */
 	private int drivingExp;
 		
 	public CustomerPersonalData() {}

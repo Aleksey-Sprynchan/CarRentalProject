@@ -2,6 +2,13 @@ package by.htp.sprynchan.car_rental.service.util;
 
 import by.htp.sprynchan.car_rental.service.exception.ServiceException;
 
+/**
+ * Class that provides not null validation for
+ * input parameters in service layer
+ * 
+ * @author Aleksey Sprynchan
+ *      
+ */
 public final class ServiceInputParamNullValidator {
 
 	private static final String ERROR_EMPTY_PARAMETER = "Empty parameter recieved";

@@ -167,7 +167,7 @@
                 <fmt:message key="transmission" />
               </th>
               <th scope="col" class="text-center">
-                <fmt:message key="Passengers" />
+                <fmt:message key="passengers" />
               </th>
               <th scope="col" class="text-center">
                 <fmt:message key="fuel" />

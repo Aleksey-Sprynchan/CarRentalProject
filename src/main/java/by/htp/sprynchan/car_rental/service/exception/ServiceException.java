@@ -2,6 +2,14 @@ package by.htp.sprynchan.car_rental.service.exception;
 
 import by.htp.sprynchan.car_rental.web.exception.CommandException;
 
+/**
+ * @author Aleksey Sprynchan
+ *         <code>ServiceException</code>
+ *         <p/>
+ *         Exception class created specifically to describe the exceptional
+ *         situation arises in the service layer application.
+ * @see package by.htp.sprynchan.car_rental.web.exception.CommandException
+ */
 public class ServiceException extends CommandException {
 
 	private static final long serialVersionUID = -9046743623305322740L;

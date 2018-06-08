@@ -1,15 +1,42 @@
 package by.htp.sprynchan.car_rental.bean;
 
+/**
+ * Class describing User entity from database
+ * 
+ * @author Aleksey Sprynchan
+ *
+ */
 public class User extends Entity {
 	
 	private static final long serialVersionUID = -6195181364789221777L;
 	
+	/**
+	 * Login of user
+	 */
 	private String login;
+	/**
+	 * Password of user
+	 */
 	private String password;
+	/**
+	 * Name of user
+	 */
 	private String name;
+	/**
+	 * Surname of user
+	 */
 	private String surname;
+	/**
+	 * Email of user
+	 */
 	private String email;
+	/**
+	 * Account actual balance of user
+	 */
 	private int balance;
+	/**
+	 * Variable that shows the role of user
+	 */
 	private boolean isAdmin;
 	
 	public User() {}

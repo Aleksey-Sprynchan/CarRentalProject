@@ -15,8 +15,15 @@ import by.htp.sprynchan.car_rental.dao.UserDao;
 import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
+/**
+ * Class for working with the users table from database
+ * @author Aleksey Sprynchan
+ */
 public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
+	/**
+     * SQL-statements
+     */
 	private static final String ADD_USER = "INSERT INTO users (login, password, name, surname, email)"
 			+ " VALUES (?, ?, ?, ?,?);";
 
@@ -38,10 +45,16 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	private static final String READ_USER_PASS = "SELECT password FROM users WHERE id = ?;";
 
+	/**
+	 * Fields to identify SQL error type
+	 */
 	private static final int ER_DUP_ENTRY_CODE = 1062;
 	private static final String ENDS_WITH_LOGIN = "key 'login'";
 	private static final String ENDS_WITH_EMAIL = "key 'email'";
 
+	/**
+	 * Error causes fields
+	 */
 	private static final String ERROR_IN_CREATE_USER = "Error while adding user to database";
 	private static final String ERROR_IN_READ_USER = "Error while getting user from database";
 	private static final String ERROR_IN_UPDATE_USER = "Error while trying to update user in database";
@@ -54,7 +67,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public int create(User entity) throws DAOException {
-
 		int code = 0;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER)) {
@@ -78,7 +90,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public User read(int id) throws DAOException {
-
 		User user = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_USER_BY_ID)) {
@@ -97,7 +108,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public int update(User entity) throws DAOException {
-
 		int code = 0;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PERSONAL_INFO)) {
@@ -120,7 +130,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public void delete(int id) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_BY_ID);) {
 			preparedStatement.setInt(1, id);
@@ -134,13 +143,11 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public User login(String login, String password) throws DAOException {
-
 		User user = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_LOGIN_PASSWORD)) {
 			preparedStatement.setString(1, login);
 			preparedStatement.setString(2, password);
-
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				user = buildUser(resultSet);
@@ -155,7 +162,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public void updateUserPassword(User entity) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASS)) {
 			preparedStatement.setString(1, entity.getPassword());
@@ -170,7 +176,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public void updateUserBalance(User entity) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_BALANCE)) {
 			preparedStatement.setInt(1, entity.getBalance());
@@ -185,7 +190,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public List<User> readAll() throws DAOException {
-
 		List<User> usersList = new ArrayList<User>();
 		User user = null;
 		Connection connection = dataBaseConnection.getConnection();
@@ -205,7 +209,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 	}
 
 	private int identifyDuplicateField(String excMessage) {
-
 		if (excMessage.endsWith(ENDS_WITH_LOGIN)) {
 			return 1;
 		} else if (excMessage.endsWith(ENDS_WITH_EMAIL)) {
@@ -217,7 +220,6 @@ public class UserDaoDBImpl extends BeanDaoBuilders implements UserDao {
 
 	@Override
 	public String readUserPassword(int id) throws DAOException {
-
 		String pass = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_USER_PASS)) {

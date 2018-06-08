@@ -7,6 +7,12 @@ import by.htp.sprynchan.car_rental.service.OrderService;
 import by.htp.sprynchan.car_rental.service.UserService;
 import by.htp.sprynchan.car_rental.service.impl.*;
 
+/**
+ * Class that provides instances of Service objects 
+ * 
+ * @author Aleksey Sprynchan
+ *      
+ */
 public class ServiceFactory {
 
 	private ServiceFactory() {

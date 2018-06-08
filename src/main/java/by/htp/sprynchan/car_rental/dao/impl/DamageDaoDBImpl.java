@@ -15,8 +15,16 @@ import by.htp.sprynchan.car_rental.dao.DamageDao;
 import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
+/**
+ * Class for working with the cars table from database
+ * 
+ * @author Aleksey Sprynchan
+ */
 public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 
+	/**
+     * SQL-statements
+     */
 	private static final String ADD_DAMAGE = "INSERT INTO damages (order_id, car_id, damage_name, damage_cost) "
 			+ "VALUES(?, ?, ?, ?);";
 
@@ -25,8 +33,11 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 
 	private static final String READ_UNIQUE_ORDERS_ID = "SELECT DISTINCT order_id FROM damages WHERE car_id = ?";
 
-	private static final String READ_ORDER_DAMAGE_AMOUNT = "SELECT SUM(damage_cost) FROM damages Where order_id = ?";
+	private static final String READ_ORDER_DAMAGE_AMOUNT = "SELECT SUM(damage_cost) FROM damages WHERE order_id = ?";
 
+	/**
+	 * Error causes fields
+	 */
 	private static final String ERROR_IN_CREATE_DAMAGE = "Error while adding damage to database";
 	private static final String ERROR_IN_READ_ORDER_DAMAGES = "Error while getting damages from database";
 	private static final String ERROR_IN_READ_UNIQUE_ORDERS_ID = "Error while getting unique orders id from database";
@@ -44,12 +55,10 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			preparedStatement.setString(3, entity.getDamageName());
 			preparedStatement.setInt(4, entity.getDamageCost());
 			preparedStatement.executeUpdate();
-
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_CREATE_DAMAGE, e);
 		} finally {
@@ -87,7 +96,6 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 				damage = buildDamage(resultSet);
 				orderDamagesList.add(damage);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_ORDER_DAMAGES, e);
 		} finally {
@@ -109,7 +117,6 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 				id = resultSet.getInt(DAMAGES_COLUMN_ORDER_ID);
 				ordersIdList.add(id);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_UNIQUE_ORDERS_ID, e);
 		} finally {
@@ -130,7 +137,6 @@ public class DamageDaoDBImpl extends BeanDaoBuilders implements DamageDao {
 			if (resultSet.next()) {
 				totalAmount = resultSet.getInt(1);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_COUNT_DAMAGE_AMOUNT, e);
 		} finally {

@@ -18,10 +18,9 @@
       div = document.getElementById("items");
       button = document.getElementById("add");
       newitem = "<div class=\"row\"><div class=\"col-sm-6 mb-3\">";
-      newitem += "<label for=\"damage\">Damage type:</label>";
       newitem += "<input type=\"text\" class=\"form-control\" id=\"damage\" ";
       newitem += "name=\"damage_name\" required></div>";
-      newitem += "<div class=\"col-sm-6 mb-3\"><label for=\"damage_cost\">Damage cost:</label>";
+      newitem += "<div class=\"col-sm-6 mb-3\">";
       newitem += "<input type=\"text\" class=\"form-control\" id=\"damage_cost\" name=\"damage_cost\" ";
       newitem += "required pattern=\"([1-9])([0-9]{0,3})\"></div></div>";
       newnode = document.createElement("span");
@@ -73,8 +72,7 @@
             <div class="col-sm-6 mb-3">
               <label for="damage_cost">
                 <fmt:message key="damage_cost" />:</label>
-              <input type="text" class="form-control" id="damage_cost" name="damage_cost" placeholder="<fmt:message key=" price_message
-                " />" required pattern="([1-9])([0-9]{0,3})">
+              <input type="text" class="form-control" id="damage_cost" name="damage_cost" placeholder="<fmt:message key="price_message" />" required pattern="([1-9])([0-9]{0,3})">
               <c:if test="${not empty invalid_cost}">
                 <small class="form-text text-danger">
                   <c:out value="${invalid_cost}" />
@@ -83,7 +81,7 @@
             </div>
           </div>
           <div id="add">
-            <input class="btn btn-primary mb-2" type="button" value="<fmt:message key=" add_damage " />" onClick="addItem();">
+            <input class="btn btn-primary mb-2" type="button" value="<fmt:message key="add_damage" />" onClick="addItem();">
           </div>
           <input type="hidden" name="order_id" value="${order_id}" />
           <input type="hidden" name="car_id" value="${car_id}" />

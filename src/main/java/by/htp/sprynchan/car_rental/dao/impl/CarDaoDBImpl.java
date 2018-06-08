@@ -13,8 +13,15 @@ import by.htp.sprynchan.car_rental.dao.CarDao;
 import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 
+/**
+ * Class for working with the cars table from database
+ * @author Aleksey Sprynchan
+ */
 public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 
+	/**
+     * SQL-statements
+     */
 	private static final String ADD_CAR = "INSERT INTO cars (brand_name, model, type, transmission, "
 			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -34,7 +41,10 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			+ "passengers, fuel, is_air_condition, price_per_day, is_available, image FROM cars WHERE is_available = ?;";
 	
 	private static final String SET_UNAVAILABLE_CAR_STATUS = "UPDATE cars SET is_available = 0 WHERE id = ?;";
-		
+			
+	/**
+	 * Error causes fields
+	 */
 	private static final String ERROR_IN_CREATE_CAR = "Error while adding car to database";
 	private static final String ERROR_IN_READ_CAR = "Error while getting car from database";
 	private static final String ERROR_IN_UPDATE_CAR = "Error while trying to edit car in database";
@@ -45,7 +55,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 	
 	@Override
 	public int create(Car entity) throws DAOException {
-
 		int id = 0;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(ADD_CAR,
@@ -61,7 +70,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			preparedStatement.setBoolean(9, entity.isAvailable());
 			preparedStatement.setString(10, entity.getImage());
 			preparedStatement.executeUpdate();
-
 			ResultSet resultSet = preparedStatement.getGeneratedKeys();
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);
@@ -76,7 +84,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 
 	@Override
 	public Car read(int id) throws DAOException {
-
 		Car car = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_CAR_BY_ID)) {
@@ -95,10 +102,8 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 
 	@Override
 	public int update(Car entity) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CAR_BY_ID)) {
-
 			preparedStatement.setString(1, entity.getBrandName());
 			preparedStatement.setString(2, entity.getModel());
 			preparedStatement.setString(3, entity.getType());
@@ -111,7 +116,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			preparedStatement.setString(10, entity.getImage());
 			preparedStatement.setInt(11, entity.getId());
 			preparedStatement.executeUpdate();
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_UPDATE_CAR, e);
 		} finally {
@@ -122,7 +126,6 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 
 	@Override
 	public void delete(int id) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CAR_BY_ID)) {
 			preparedStatement.setInt(1, id);
@@ -136,12 +139,10 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 
 	@Override
 	public List<Car> readAll() throws DAOException {
-
 		List<Car> carList = new ArrayList<Car>();
 		Car car = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (Statement statement = connection.createStatement()) {
-
 			ResultSet resultSet = statement.executeQuery(READ_ALL_CARS);
 			while (resultSet.next()) {
 				car = buildCar(resultSet);
@@ -156,8 +157,7 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 	}
 
 	@Override
-	public List<Car> readAllByStatus(boolean isAvailable) throws DAOException {
-		
+	public List<Car> readAllByStatus(boolean isAvailable) throws DAOException {		
 		List<Car> carList = new ArrayList<Car>();
 		Car car = null;
 		Connection connection = dataBaseConnection.getConnection();
@@ -167,8 +167,7 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 			while (resultSet.next()) {
 				car = buildCar(resultSet);
 				carList.add(car);
-			}
-			
+			}			
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_AVAILABLE_CARS, e);
 		} finally {
@@ -179,8 +178,7 @@ public class CarDaoDBImpl extends BeanDaoBuilders implements CarDao {
 	}
 
 	@Override
-	public void setUnavailableStatus(int id) throws DAOException {
-		
+	public void setUnavailableStatus(int id) throws DAOException {		
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(SET_UNAVAILABLE_CAR_STATUS)) {
 			preparedStatement.setInt(1, id);

@@ -18,8 +18,15 @@ import by.htp.sprynchan.car_rental.dao.exception.DAOException;
 import by.htp.sprynchan.car_rental.dao.util.BeanDaoBuilders;
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
+/**
+ * Class for working with the orders table from database
+ * @author Aleksey Sprynchan
+ */
 public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	
+	/**
+     * SQL-statements
+     */
 	private static final String ADD_CUSTOMER_PERSONAL_DATA = "INSERT INTO customer_personal_data "
 			+ "(name, surname, passport_numb, date_of_birth, driving_exp) VALUES (?, ?, ?, ?, ?);";
 
@@ -55,6 +62,9 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 			+ "FROM (SELECT * FROM orders o WHERE o.car_id = ?) s "
 			+ "WHERE s.status = 'PAID' OR s.status = 'WAITING_FOR_APPROVE' OR s.status = 'WAITING_FOR_PAYMENT';";
 	
+	/**
+	 * Error causes fields
+	 */
 	private static final String ERROR_IN_CREATE_ORDER = "Error while adding order to database";
 	private static final String ERROR_IN_READ_ORDER = "Error while getting order from database";
 	private static final String ERROR_IN_UPDATE_USER = "Error while trying to update order in database";
@@ -66,25 +76,20 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 	@Override
 	public int create(Order entity) throws DAOException {
-
 		int id = 0;
 		Connection connection = dataBaseConnection.getConnection();
-
 		try {
-			connection.setAutoCommit(false);
-			
+			connection.setAutoCommit(false);		
 			try (PreparedStatement customerPreparedStatement = connection.prepareStatement(ADD_CUSTOMER_PERSONAL_DATA,
 					Statement.RETURN_GENERATED_KEYS);
 					PreparedStatement orderPreparedStatement = connection.prepareStatement(ADD_ORDER,
 							Statement.RETURN_GENERATED_KEYS)) {
-
 				customerPreparedStatement.setString(1, entity.getCustomer().getName());
 				customerPreparedStatement.setString(2, entity.getCustomer().getSurname());
 				customerPreparedStatement.setString(3, entity.getCustomer().getPassportNumb());
 				customerPreparedStatement.setString(4, entity.getCustomer().getDateOfBirth().toString());
 				customerPreparedStatement.setInt(5, entity.getCustomer().getDrivingExp());
 				customerPreparedStatement.executeUpdate();
-
 				ResultSet resultSet = customerPreparedStatement.getGeneratedKeys();
 				if (resultSet.next()) {
 					entity.getCustomer().setId(resultSet.getInt(1));
@@ -100,14 +105,11 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 				orderPreparedStatement.setInt(8, entity.getTotalPrice());
 				orderPreparedStatement.setBoolean(9, entity.isInsurance());
 				orderPreparedStatement.executeUpdate();
-
 				resultSet = orderPreparedStatement.getGeneratedKeys();
 				if (resultSet.next()) {
 					id = resultSet.getInt(1);
 				}
-
 				connection.commit();
-
 			} catch (SQLException e) {
 				connection.rollback();
 				throw new DAOException(ERROR_IN_CREATE_ORDER, e);
@@ -124,7 +126,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 	@Override
 	public Order read(int id) throws DAOException {
-
 		Order order = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_ORDER_BY_ID)) {
@@ -142,11 +143,9 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	}
 
 	@Override
-	public int update(Order entity) throws DAOException {
-		
+	public int update(Order entity) throws DAOException {		
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDER)) {
-
 			preparedStatement.setString(1, entity.getStatus().toString());
 			preparedStatement.setString(2, entity.getOrderDate().toString());
 			preparedStatement.setInt(3, entity.getUserId());
@@ -161,7 +160,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 			preparedStatement.setString(12, entity.getRejectionReason());
 			preparedStatement.setInt(13, entity.getId());
 			preparedStatement.executeUpdate();
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_UPDATE_USER, e);
 		} finally {
@@ -172,7 +170,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 	@Override
 	public void delete(int id) throws DAOException {
-
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER_BY_ID)) {
 			preparedStatement.setInt(1, id);
@@ -186,7 +183,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 	@Override
 	public List<Order> readAll() throws DAOException {
-
 		List<Order> orderList = new ArrayList<>();
 		Order order = null;
 		Connection connection = dataBaseConnection.getConnection();
@@ -208,7 +204,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 	@Override
 	public List<Order> readAllWithStatus(OrderStatusEnum orderStatus) throws DAOException {
-
 		List<Order> orderList = new ArrayList<>();
 		Order order = null;
 		Connection connection = dataBaseConnection.getConnection();
@@ -221,7 +216,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 				order.setCustomer(buildCustomer(resultSet));
 				orderList.add(order);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_ALL_WITH_STATUS, e);
 		} finally {
@@ -232,13 +226,11 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 
 
 	@Override
-	public List<Order> readUserOrders(int userId) throws DAOException {
-		
+	public List<Order> readUserOrders(int userId) throws DAOException {		
 		List<Order> userOrderList = new ArrayList<>();
 		Order order = null;
 		Connection connection = dataBaseConnection.getConnection();
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_USER_ORDERS_BY_USER_ID)) {
-
 			preparedStatement.setInt(1, userId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -246,7 +238,6 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 				order.setCustomer(buildCustomer(resultSet));
 				userOrderList.add(order);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_USER_ORDERS, e);
 		} finally {
@@ -257,22 +248,18 @@ public class OrderDaoDBImpl extends BeanDaoBuilders implements OrderDao {
 	
 	@Override
 	public List<Order> readReservedDatesForCar(int carId) throws DAOException {
-
 		List<Order> orderDatesList = new ArrayList<>();
 		Order order = null;
 		Connection connection = dataBaseConnection.getConnection();		
 		try (PreparedStatement preparedStatement = connection.prepareStatement(READ_RESERVED_DATES_BY_CAR_ID)) {
-
 			preparedStatement.setInt(1, carId);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
+			ResultSet resultSet = preparedStatement.executeQuery();			
 			while (resultSet.next()) {
 				order = new Order();
 				order.setStartDate(LocalDate.parse(resultSet.getString(ORDERS_COLUMN_START_DATE)));
 				order.setEndDate(LocalDate.parse(resultSet.getString(ORDERS_COLUMN_END_DATE)));
 				orderDatesList.add(order);
 			}
-
 		} catch (SQLException e) {
 			throw new DAOException(ERROR_IN_READ_RESERVED_DATES, e);
 		} finally {

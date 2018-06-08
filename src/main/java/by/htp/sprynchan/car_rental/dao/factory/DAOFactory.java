@@ -7,6 +7,12 @@ import by.htp.sprynchan.car_rental.dao.OrderDao;
 import by.htp.sprynchan.car_rental.dao.UserDao;
 import by.htp.sprynchan.car_rental.dao.impl.*;
 
+/**
+ * Class that provides instances of DAO 
+ * 
+ * @author Aleksey Sprynchan
+ *      
+ */
 public class DAOFactory {
 
 	private DAOFactory() {

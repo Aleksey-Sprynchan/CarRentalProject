@@ -1,5 +1,11 @@
 package by.htp.sprynchan.car_rental.dao.util;
 
+/**
+ * Utility class where declared all columns names 
+ * database tables
+ * 
+ * @author Aleksey Sprynchan
+ */
 public final class TablesColumnNamesDeclaration {
 
 	private TablesColumnNamesDeclaration() {
@@ -31,7 +37,6 @@ public final class TablesColumnNamesDeclaration {
 	public static final String ORDERS_COLUMN_IS_DAMAGED = "is_damaged";
 	public static final String ORDERS_COLUMN_DAMAGE_AMOUNT = "damage_amount";
 	public static final String ORDERS_COLUMN_REJECTION_REASON = "rejection_reason";
-
 	
 	public static final String CUSTPERSDATA_COLUMN_ID = "id";
 	public static final String CUSTPERSDATA_COLUMN_NAME = "name";

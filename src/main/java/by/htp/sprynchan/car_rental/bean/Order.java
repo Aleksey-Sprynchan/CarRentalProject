@@ -4,21 +4,63 @@ import java.time.LocalDate;
 
 import by.htp.sprynchan.car_rental.web.util.OrderStatusEnum;
 
+/**
+ * Class describing Order entity from database
+ * 
+ * @author Aleksey Sprynchan
+ *
+ */
 public class Order extends Entity {
 
 	private static final long serialVersionUID = 6603138063504802529L;
 	
+	/**
+	 * Status of order
+	 */
 	private OrderStatusEnum status;
+	/**
+	 * Date of order
+	 */
 	private LocalDate orderDate;
+	/**
+	 * Id of user who made the order
+	 */
 	private int userId; 
+	/**
+	 * Id of car that was booked
+	 */
 	private int carId;
+	/**
+	 * First day of rental
+	 */
 	private LocalDate startDate;
+	/**
+	 * Last day of rental
+	 */
 	private LocalDate endDate;
+	/**
+	 * Object describing customer (driver) personal info that is needed for order
+	 */
 	private CustomerPersonalData customer;
+	/**
+	 * Total price for rental period
+	 */
 	private int totalPrice;
+	/**
+	 * Variable that show whether insurance is needed (default fixed price is 1 USD)
+	 */
 	private boolean isInsurance;
+	/**
+	 * Variable that show whether damages were detected 
+	 */
 	private boolean isDamaged;
+	/**
+	 * Total amount of damages that was detected
+	 */
 	private int damageAmount;
+	/**
+	 * Message describing the reason of reject
+	 */
 	private String rejectionReason;
 
 	public Order() {}
